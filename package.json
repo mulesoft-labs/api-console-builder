@@ -1,0 +1,24 @@
+{
+  "name": "api-console-builder",
+  "version": "0.0.1",
+  "description": "A module to build a minified and concatenated file for the API console",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/advanced-rest-client/api-console-builder.git"
+  },
+  "keywords": [
+    "api-console",
+    "builder",
+    "node"
+  ],
+  "author": "Pawel Psztyc, Advanced Rest Client Authors",
+  "license": "CC-BY-2.0",
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/api-console-builder/issues"
+  },
+  "homepage": "https://github.com/advanced-rest-client/api-console-builder#readme"
+}
