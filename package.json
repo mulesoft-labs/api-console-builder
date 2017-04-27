@@ -1,6 +1,6 @@
 {
   "name": "api-console-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/advanced-rest-client/api-console-builder/issues"
   },
-  "homepage": "https://github.com/advanced-rest-client/api-console-builder#readme"
+  "homepage": "https://github.com/advanced-rest-client/api-console-builder#readme",
+  "dependencies": {
+    "del": "^2.2.2",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-html-minifier": "^0.1.8",
+    "gulp-if": "^2.0.2",
+    "gulp-strip-comments": "^2.4.5",
+    "merge-stream": "^1.0.1",
+    "path": "^0.12.7",
+    "polymer-build": "^1.1.0",
+    "through2": "^2.0.3"
+  }
 }
