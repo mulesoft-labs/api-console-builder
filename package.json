@@ -27,9 +27,12 @@
     "gulp-html-minifier": "^0.1.8",
     "gulp-if": "^2.0.2",
     "gulp-strip-comments": "^2.4.5",
+    "https": "^1.0.0",
     "merge-stream": "^1.0.1",
     "path": "^0.12.7",
     "polymer-build": "^1.1.0",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "tmp": "0.0.31",
+    "unzip": "^0.1.11"
   }
 }
