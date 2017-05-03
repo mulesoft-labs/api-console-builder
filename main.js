@@ -37,3 +37,5 @@ module.exports = function(options) {
   const builder = new ApiConsoleBuilder(options);
   return builder.build();
 };
+
+module.exports.ApiConsoleBuilderOptions = ApiConsoleBuilderOptions;

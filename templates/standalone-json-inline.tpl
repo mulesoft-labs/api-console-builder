@@ -25,7 +25,7 @@
         if (!webComponentsSupported) {
           var script = document.createElement('script');
           script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
           script.onload = onload;
           document.head.appendChild(script);
         } else {
@@ -41,10 +41,10 @@
   <api-console></api-console>
   <script>
   function init() {
-    var apiConsole = document.querySelector('api-console');
-    apiConsole.json = [[API-DATA]];
+    document.querySelector('api-console').raml = [[API-DATA]];
   }
-  window.addEventListener('WebComponentsReady', init);
+  // Components are already loaded and attached at this point.
+  init();
   </script>
 </body>
 </html>

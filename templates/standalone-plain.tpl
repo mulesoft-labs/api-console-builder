@@ -25,7 +25,7 @@
         if (!webComponentsSupported) {
           var script = document.createElement('script');
           script.async = true;
-          script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
           script.onload = onload;
           document.head.appendChild(script);
         } else {
@@ -40,32 +40,8 @@
 <body>
   <api-console></api-console>
   <script>
-  function fetchApiData() {
-    return fetch('./api.json')
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      }
-    });
-  }
-
-  function notifyInitError(message) {
-    window.alert('Cannot initialize API console. ' + message);
-  }
-
   function init() {
-    fetchApiData()
-    .then(function(json) {
-      if (json) {
-        var apiConsole = document.querySelector('api-console');
-        apiConsole.raml = json;
-      } else {
-        notifyInitError('Data not available.');
-      }
-    })
-    .catch(function(cause) {
-      notifyInitError(cause.message);
-    });
+    // load data somehow
   }
   // Components are already loaded and attached at this point.
   init();

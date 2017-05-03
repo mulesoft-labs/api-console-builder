@@ -34,6 +34,8 @@
       })();
     </script>
     <link rel="import" href="api-console.html">
+    <link rel="import" href="bower_components/raml-js-parser/raml-js-parser.html">
+    <link rel="import" href="bower_components/raml-json-enhance/raml-json-enhance.html">
     <link rel="import" href="bower_components/fetch-polyfill/fetch-polyfill.html">
     <link rel="import" href="bower_components/promise-polyfill/promise-polyfill.html">
   </head>
@@ -58,14 +60,15 @@
     });
     window.addEventListener('raml-json-enhance-ready', function(e) {
       var apiConsole = document.querySelector('api-console');
-      apiConsole.json = e.detail.json;
+      apiConsole.raml = e.detail.json;
     });
     parser.loadApi('[[API-FILE-URL]]')
     .catch(function(cause) {
       notifyInitError(cause.message);
     });
   }
-  window.addEventListener('WebComponentsReady', init);
+  // Components are already loaded and attached at this point.
+  init();
   </script>
 </body>
 </html>

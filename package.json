@@ -4,7 +4,7 @@
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha 'test/*.test.js' --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/advanced-rest-client/api-console-builder#readme",
   "dependencies": {
-    "del": "^2.2.2",
+    "fs-extra": "^3.0.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-html-minifier": "^0.1.8",
     "gulp-if": "^2.0.2",
@@ -31,8 +31,13 @@
     "merge-stream": "^1.0.1",
     "path": "^0.12.7",
     "polymer-build": "^1.1.0",
+    "raml-json-enhance-node": "^0.2.0",
     "through2": "^2.0.3",
     "tmp": "0.0.31",
     "unzip": "^0.1.11"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }
