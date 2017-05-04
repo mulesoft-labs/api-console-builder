@@ -58,6 +58,8 @@ builder(options);
 | `proxy` | String | Will set the `proxy` attribute on the `<api-console>` element. Sets the proxy URL for the HTTP requests sent from the console. If set then all URLs will be altered before sending the data to a transport library by prefixing the URL with this value. Defaults to `undefined` |
 | `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |
 | `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |
+| `compileJavaScript` | Boolean | If true then the application will perform JavaScript compilation using Google Closure Compiler. Note that this will make build process much longer. Defaults to `false`. |
+| `compileJavaScripLevel` | String | Level of compilation passed to the Google Closure Compiler. Only valid if `compileJavaScript` is set. Possible options are WHITESPACE_ONLY and SIMPLE. Never use ADVANCED option available for the compiler. Option SIMPLE will make the build process longer than WHITESPACE_ONLY but it will produce less code. Defaults to WHITESPACE_ONLY |
 
 ## Building embeddable console
 
