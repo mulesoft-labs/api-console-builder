@@ -16,7 +16,7 @@
     "node"
   ],
   "author": "Pawel Psztyc, Advanced Rest Client Authors",
-  "license": "CC-BY-2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/advanced-rest-client/api-console-builder/issues"
   },
