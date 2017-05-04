@@ -1,6 +1,7 @@
 'use strict';
 
-const {ACBuilder} = require('./lib/api-console-builder.js');
+const {ApiConsoleBuilder} = require('./lib/api-console-builder.js');
+const {ApiConsoleBuilderOptions} = require('./lib/api-console-builder-options.js');
 
 /**
  * Copyrigt (C) Mulesoft
@@ -25,8 +26,16 @@ const {ACBuilder} = require('./lib/api-console-builder.js');
  *   dest: 'build'
  * })
  * .then(() => console.log('Build complete'));
+ *
+ * You can also pass the options in the `ApiConsoleBuilderOptions` object.
+ * See the `lib/lib/api-console-builder-options` for list of available options.
  */
 module.exports = function(options) {
-  const builder = new ACBuilder(options);
+  if (!(options instanceof ApiConsoleBuilderOptions)) {
+    options = new ApiConsoleBuilderOptions(options);
+  }
+  const builder = new ApiConsoleBuilder(options);
   return builder.build();
 };
+
+module.exports.ApiConsoleBuilderOptions = ApiConsoleBuilderOptions;
