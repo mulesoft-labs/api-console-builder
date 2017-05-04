@@ -59,6 +59,62 @@ builder(options);
 | `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |
 | `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |
 
+## Building embeddable console
+
+The API console can be embedded in your website or blog post. To build the console out of the RAML spec, use the `embedded` option.
+
+The output will containt two main files:
+- import.html - bundled source code of the console
+- example.html - working example of use
+
+**To embed the console on your website**
+1. You have to include polyfill in the website's `<head>` section.
+2. You have to import the `import.html` file as regular web component
+3. Place the `<api-console></api-console>` anywhere on your website
+4. Initialize data depening on the build method. Examples of initialization you will find in the `example.html` file.
+
+#### 1. Polyfill
+
+Include the following polyfil in the `<head>` section
+```html
+<head>
+  ...
+  <script>
+  (function() {
+    'use strict';
+    var onload=function(){window.HTMLImports||document.dispatchEvent(new CustomEvent("WebComponentsReady",{bubbles:!0}))},webComponentsSupported="registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template");if(webComponentsSupported)onload();else{var script=document.createElement("script");script.async=!0;script.src="bower_components/webcomponentsjs/webcomponents-lite.min.js";script.onload=onload;document.head.appendChild(script)};
+  })();
+  </script>
+</head>
+```
+
+#### 2. Import bundle
+
+```html
+<head>
+  ...
+  <script>
+  ...
+  </script>
+  <link rel="import" href="import.html">
+</head>
+```
+
+#### 3. Place the console
+
+```html
+<div style="position:relative; height:500px;">
+  <api-console></api-console>
+</div>
+```
+
+The API console should be placed in a relatively positioned parent element with explicitly set height. Otherwise it won't renders correctly.
+By explicitly set height meaning either use of the height value in pixels or by using [flex layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes).
+
+#### 4. Initialize the data
+
+This step depends on selected build method (with JSON or not, is JSON is inlined). See build example to see how to do it.
+
 ## Custom build
 
 You can customize the API Console by creating your own html file that contains the `<api-console>` element.
