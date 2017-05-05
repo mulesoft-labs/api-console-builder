@@ -16,14 +16,16 @@
     "node"
   ],
   "author": "Pawel Psztyc, Advanced Rest Client Authors",
-  "license": "CC-BY-2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/advanced-rest-client/api-console-builder/issues"
   },
   "homepage": "https://github.com/advanced-rest-client/api-console-builder#readme",
   "dependencies": {
     "colors": "^1.1.2",
+    "css-slam": "^1.2.1",
     "fs-extra": "^3.0.0",
+    "google-closure-compiler-js": "^20170423.0.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-html-minifier": "^0.1.8",
     "gulp-if": "^2.0.2",

@@ -14,7 +14,7 @@ describe('api-console-builder', () => {
         dest: 'build',
         raml: 'test/api.raml',
         sourceIsZip: true,
-        verbose: true,
+        verbose: false,
         useJson: true,
         noTryit: true,
         narrowView: true,

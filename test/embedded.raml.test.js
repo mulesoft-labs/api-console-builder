@@ -14,7 +14,7 @@ describe('api-console-builder', () => {
         sourceIsZip: true,
         dest: 'build',
         raml: 'test/api.raml',
-        embedded: true,
+        embedded: false,
         verbose: false
       });
     });
