@@ -4,8 +4,8 @@ const {ApiConsoleBuilder} = require('./lib/api-console-builder.js');
 const {ApiConsoleBuilderOptions} = require('./lib/api-console-builder-options.js');
 
 /**
- * Copyrigt (C) Mulesoft
- * All rights reserved.
+ * Copyright (C) Mulesoft.
+ * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc
  */
@@ -37,3 +37,5 @@ module.exports = function(options) {
   const builder = new ApiConsoleBuilder(options);
   return builder.build();
 };
+
+module.exports.ApiConsoleBuilderOptions = ApiConsoleBuilderOptions;
