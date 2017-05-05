@@ -58,6 +58,11 @@ builder(options);
 | `proxy` | String | Will set the `proxy` attribute on the `<api-console>` element. Sets the proxy URL for the HTTP requests sent from the console. If set then all URLs will be altered before sending the data to a transport library by prefixing the URL with this value. Defaults to `undefined` |
 | `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |
 | `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |
+| `jsCompilationLevel` | String | Level of JavaScript compilation used by [Google Closure Compiler](https://developers.google.com/closure/compiler/). Possible options are `WHITESPACE_ONLY` and `SIMPLE`. Don not use `ADVANCED` level. Option `SIMPLE` will make the build process longer than WHITESPACE_ONLY but it will produce less code. Defaults to `WHITESPACE_ONLY` |
+| `noOptimisation` | Boolean | If set it will not perform any code optimisation. It will disable: comments removal, JS compilation, HTML minification, and CSS minification. It should be used only for development to reduce build time. Output will contain more data and therefore will be bigger. Defaults to `false`. |
+| `noCssOptimisation` | Boolean | Disables CSS minification (CSS files and `<style>` declarations). Defaults to `false`. |
+| `noHtmlOptimisation` | Boolean | Disables HTML minification. Also disables comments removal. Defaults to `false`. |
+| `noJsOptimisation` | Boolean | Disables JavaScript compilation with Google Closure Compiler. Defaults to `false`. |
 
 ## Building embeddable console
 
