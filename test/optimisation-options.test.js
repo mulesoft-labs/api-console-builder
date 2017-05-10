@@ -5,39 +5,39 @@ const {ApiConsoleBuilderOptions} = require('../lib/api-console-builder-options.j
 const assert = require('chai').assert;
 
 describe('api-console-builder', () => {
-  describe('Optimisation options', () => {
-    describe('Optimisation disabled', () => {
+  describe('Optimization options', () => {
+    describe('Optimization disabled', () => {
       var builder;
       before(function() {
         const options = new ApiConsoleBuilderOptions({
-          noOptimisation: true
+          noOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
         builder._setOptymisationConditions();
       });
 
-      it('Should set no comment optimisation', function() {
+      it('Should set no comment optimization', function() {
         assert.isFalse(builder._optConditions.commenets);
       });
 
-      it('Should set no html optimisation', function() {
+      it('Should set no html optimization', function() {
         assert.isFalse(builder._optConditions.html);
       });
 
-      it('Should set no js optimisation', function() {
+      it('Should set no js optimization', function() {
         assert.isFalse(builder._optConditions.js);
       });
 
-      it('Should set no css files optimisation', function() {
+      it('Should set no css files optimization', function() {
         assert.isFalse(builder._optConditions.css);
       });
 
-      it('Should set no html style optimisation', function() {
+      it('Should set no html style optimization', function() {
         assert.isFalse(builder._optConditions.styles);
       });
     });
 
-    describe('Optimisation enabled', () => {
+    describe('Optimization enabled', () => {
       var builder;
       before(function() {
         const options = new ApiConsoleBuilderOptions({});
@@ -45,116 +45,116 @@ describe('api-console-builder', () => {
         builder._setOptymisationConditions();
       });
 
-      it('Should set no comment optimisation', function() {
+      it('Should set no comment optimization', function() {
         assert.typeOf(builder._optConditions.commenets, 'regexp');
       });
 
-      it('Should set no html optimisation', function() {
+      it('Should set no html optimization', function() {
         assert.typeOf(builder._optConditions.html, 'regexp');
       });
 
-      it('Should set no js optimisation', function() {
+      it('Should set no js optimization', function() {
         assert.typeOf(builder._optConditions.js, 'regexp');
       });
 
-      it('Should set no css files optimisation', function() {
+      it('Should set no css files optimization', function() {
         assert.typeOf(builder._optConditions.css, 'regexp');
       });
 
-      it('Should set no html style optimisation', function() {
+      it('Should set no html style optimization', function() {
         assert.typeOf(builder._optConditions.styles, 'regexp');
       });
     });
 
-    describe('CSS optimisation disabled only', () => {
+    describe('CSS optimization disabled only', () => {
       var builder;
       before(function() {
         const options = new ApiConsoleBuilderOptions({
-          noCssOptimisation: true
+          noCssOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
         builder._setOptymisationConditions();
       });
 
-      it('Should set no comment optimisation', function() {
+      it('Should set no comment optimization', function() {
         assert.typeOf(builder._optConditions.commenets, 'regexp');
       });
 
-      it('Should set no html optimisation', function() {
+      it('Should set no html optimization', function() {
         assert.typeOf(builder._optConditions.html, 'regexp');
       });
 
-      it('Should set no js optimisation', function() {
+      it('Should set no js optimization', function() {
         assert.typeOf(builder._optConditions.js, 'regexp');
       });
 
-      it('Should set no css files optimisation', function() {
+      it('Should set no css files optimization', function() {
         assert.isFalse(builder._optConditions.css);
       });
 
-      it('Should set no html style optimisation', function() {
+      it('Should set no html style optimization', function() {
         assert.isFalse(builder._optConditions.styles);
       });
     });
 
-    describe('HTML optimisation disabled only', () => {
+    describe('HTML optimization disabled only', () => {
       var builder;
       before(function() {
         const options = new ApiConsoleBuilderOptions({
-          noHtmlOptimisation: true
+          noHtmlOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
         builder._setOptymisationConditions();
       });
 
-      it('Should set no comment optimisation', function() {
+      it('Should set no comment optimization', function() {
         assert.isFalse(builder._optConditions.commenets);
       });
 
-      it('Should set no html optimisation', function() {
+      it('Should set no html optimization', function() {
         assert.isFalse(builder._optConditions.html);
       });
 
-      it('Should set no js optimisation', function() {
+      it('Should set no js optimization', function() {
         assert.typeOf(builder._optConditions.js, 'regexp');
       });
 
-      it('Should set no css files optimisation', function() {
+      it('Should set no css files optimization', function() {
         assert.typeOf(builder._optConditions.css, 'regexp');
       });
 
-      it('Should set no html style optimisation', function() {
+      it('Should set no html style optimization', function() {
         assert.typeOf(builder._optConditions.styles, 'regexp');
       });
     });
 
-    describe('JS optimisation disabled only', () => {
+    describe('JS optimization disabled only', () => {
       var builder;
       before(function() {
         const options = new ApiConsoleBuilderOptions({
-          noJsOptimisation: true
+          noJsOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
         builder._setOptymisationConditions();
       });
 
-      it('Should set no comment optimisation', function() {
+      it('Should set no comment optimization', function() {
         assert.typeOf(builder._optConditions.commenets, 'regexp');
       });
 
-      it('Should set no html optimisation', function() {
+      it('Should set no html optimization', function() {
         assert.typeOf(builder._optConditions.html, 'regexp');
       });
 
-      it('Should set no js optimisation', function() {
+      it('Should set no js optimization', function() {
         assert.isFalse(builder._optConditions.js);
       });
 
-      it('Should set no css files optimisation', function() {
+      it('Should set no css files optimization', function() {
         assert.typeOf(builder._optConditions.css, 'regexp');
       });
 
-      it('Should set no html style optimisation', function() {
+      it('Should set no html style optimization', function() {
         assert.typeOf(builder._optConditions.styles, 'regexp');
       });
     });

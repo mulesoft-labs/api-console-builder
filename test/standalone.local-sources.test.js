@@ -16,7 +16,7 @@ describe('api-console-builder', () => {
     it('Build the console', function() {
       this.timeout(120000);
       return builder({
-        noOptimisation: true,
+        noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
         dest: 'build',
         raml: 'test/api.raml',
