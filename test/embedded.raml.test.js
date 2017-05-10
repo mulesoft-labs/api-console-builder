@@ -10,7 +10,7 @@ describe('api-console-builder', () => {
     before(function() {
       this.timeout(120000);
       return builder({
-        noOptimisation: true,
+        noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
         sourceIsZip: true,
         dest: 'build',

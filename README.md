@@ -1,17 +1,17 @@
 # api-console-builder
 
-The node module to build the API console from the 
+The node module to build the API console from the
 [api-console element](https://github.com/mulesoft/api-console/tree/release/4.0.0).
 
-This module will bundle required elements (web components and libraries) into the main file where 
+This module will bundle required elements (web components and libraries) into the main file where
 the `<link rel="import">` is defined.
 
 ## Using the module
 
-This module provides you with tools to: 
+This module provides you with tools to:
 - build your own version of the API Console
 - generate API documentation from the RAML file using latest version of the console
-- tweak the build process to optymise loading time of the API console
+- tweak the build process to optimize loading time of the API console
 
 ### Basic usage
 
@@ -49,7 +49,7 @@ builder(options);
 | `mainFile` | String | Source index file, an entry point to the application. Don't set when downloading the `api-console` source code from GitHub. Then it will use one of the build-in templates depending on options. Should point to a file that contains web components imports. |
 | `sourceIsZip` | Boolean | Set to true if the API console source (`src`) points to a zip file that should be uncopressed. If the `src` is an URL then it will be set to `true`. Defaults to `false`. |
 | `dest` | String | Output directory. Defaults to `./build`. |
-| `useJson` | Boolean | If set, it will generate a JSON file out of the RAML file and will use pre-generated data in the console. Use this option to optymise console's load time. It will not include `raml-json-enhance` and `raml-js-parser` elements into the build and will use pre-generated JSON to load it into the console. Note that you will have to regenerate the API console each time your API spec changes. Defaults to `false`. |
+| `useJson` | Boolean | If set, it will generate a JSON file out of the RAML file and will use pre-generated data in the console. Use this option to optimize console's load time. It will not include `raml-json-enhance` and `raml-js-parser` elements into the build and will use pre-generated JSON to load it into the console. Note that you will have to regenerate the API console each time your API spec changes. Defaults to `false`. |
 | `inlineJson` | Boolean | Set to true to inline pre-generated JSON data in the main file instead of creating external JSON file. Only valid if `embedded` is not set to `true` and with `useJson` set to true. Embeded version of the API console always require external JSON file. Defaults to `false`. |
 | `embedded` | Boolean | If true it will generate an import file for the web components that can be used in any web application. It will not generate a standalone application. Generated source file will contain an example of using the api-console on any web page. Defaults to `false`. |
 | `raml` | String | The RAML file from which produce the documentation. If not set then it will generate a plain API console application without any documentation attached. Defaults to `undefined`. |
@@ -59,10 +59,10 @@ builder(options);
 | `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |
 | `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |
 | `jsCompilationLevel` | String | Level of JavaScript compilation used by [Google Closure Compiler](https://developers.google.com/closure/compiler/). Possible options are `WHITESPACE_ONLY` and `SIMPLE`. Don not use `ADVANCED` level. Option `SIMPLE` will make the build process longer than WHITESPACE_ONLY but it will produce less code. Defaults to `WHITESPACE_ONLY` |
-| `noOptimisation` | Boolean | If set it will not perform any code optimisation. It will disable: comments removal, JS compilation, HTML minification, and CSS minification. It should be used only for development to reduce build time. Output will contain more data and therefore will be bigger. Defaults to `false`. |
-| `noCssOptimisation` | Boolean | Disables CSS minification (CSS files and `<style>` declarations). Defaults to `false`. |
-| `noHtmlOptimisation` | Boolean | Disables HTML minification. Also disables comments removal. Defaults to `false`. |
-| `noJsOptimisation` | Boolean | Disables JavaScript compilation with Google Closure Compiler. Defaults to `false`. |
+| `noOptimization` | Boolean | If set it will not perform any code optimization. It will disable: comments removal, JS compilation, HTML minification, and CSS minification. It should be used only for development to reduce build time. Output will contain more data and therefore will be bigger. Defaults to `false`. |
+| `noCssOptimization` | Boolean | Disables CSS minification (CSS files and `<style>` declarations). Defaults to `false`. |
+| `noHtmlOptimization` | Boolean | Disables HTML minification. Also disables comments removal. Defaults to `false`. |
+| `noJsOptimization` | Boolean | Disables JavaScript compilation with Google Closure Compiler. Defaults to `false`. |
 
 ## Building embeddable console
 
@@ -205,7 +205,7 @@ with actual content of imported files and their dependencies.
 
 Because the API console is build out of the elements that require resources from the `bower_components` folder (for example not directly linked javascript files like libraries or web workers) this module will generate a `bower_components` folder with files that may be required by the application. Scripts from this folder will be loaded on demand.
 
-## Optimisation
+## Optimization
 
 Application based on the API Console loads a RAML file(s), parses it and generates JSON data that are recognizable by the console. This process can be slow and consumes lot of computing power. This can affect user experience, especially on mobile devices.
 
