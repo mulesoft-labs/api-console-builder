@@ -5,7 +5,7 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 describe('api-console-builder', () => {
-  describe('using local sources', () => {
+  describe('standalone-local-sources', () => {
     afterEach(function(done) {
       fs.remove('build')
       .then(() => {
@@ -16,6 +16,7 @@ describe('api-console-builder', () => {
     it('Build the console', function() {
       this.timeout(120000);
       return builder({
+        noOptimisation: true,
         src: 'test/api-console-release-4.0.0.zip',
         dest: 'build',
         raml: 'test/api.raml',
