@@ -67,20 +67,20 @@ describe('api-console-builder', () => {
       assert.equal(options.jsCompilationLevel, 'WHITESPACE_ONLY');
     });
 
-    it('Should set noOptimisation default option', function() {
-      assert.isFalse(options.noOptimisation);
+    it('Should set noOptimization default option', function() {
+      assert.isFalse(options.noOptimization);
     });
 
-    it('Should set noCssOptimisation default option', function() {
-      assert.isFalse(options.noCssOptimisation);
+    it('Should set noCssOptimization default option', function() {
+      assert.isFalse(options.noCssOptimization);
     });
 
-    it('Should set noHtmlOptimisation default option', function() {
-      assert.isFalse(options.noHtmlOptimisation);
+    it('Should set noHtmlOptimization default option', function() {
+      assert.isFalse(options.noHtmlOptimization);
     });
 
-    it('Should set noJsOptimisation default option', function() {
-      assert.isFalse(options.noJsOptimisation);
+    it('Should set noJsOptimization default option', function() {
+      assert.isFalse(options.noJsOptimization);
     });
   });
 });

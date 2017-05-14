@@ -1,3 +1,2 @@
-- The build fails for `src` = `./`
 - Add "powered by Mulesoft" for standalone builds
 - Add custom theme include.

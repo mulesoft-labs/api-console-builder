@@ -5,11 +5,12 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 describe('api-console-builder', () => {
-  describe('standalone with RAML', () => {
+  describe('embedded-json-inline', () => {
 
     before(function() {
       this.timeout(120000);
       return builder({
+        noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
         sourceIsZip: true,
         dest: 'build',
