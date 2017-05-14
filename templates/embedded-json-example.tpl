@@ -24,40 +24,8 @@
 
   <!-- The API console should be placed in a relatively positioned parent with explicitly set height -->
   <div style="position:relative; height:500px; max-width: 1200px;">
-    <api-console></api-console>
+    <!-- The element support "json-file" attribute that will be downloaded after initialization -->
+    <api-console json-file="api.json"></api-console>
   </div>
-
-  <script>
-  // This script is an example of how to get generated "api.json" file and sent data
-  // to the api-console element
-  function fetchApiData() {
-    return fetch('./api.json')
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      }
-    });
-  }
-
-  function notifyInitError(message) {
-    window.alert('Cannot initialize API console. ' + message);
-  }
-
-  function init() {
-    fetchApiData()
-    .then(function(json) {
-      if (json) {
-        var apiConsole = document.querySelector('api-console');
-        apiConsole.raml = json;
-      } else {
-        notifyInitError('Data not available.');
-      }
-    })
-    .catch(function(cause) {
-      notifyInitError(cause.message);
-    });
-  }
-  init();
-  </script>
 </body>
 </html>
