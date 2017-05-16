@@ -38,37 +38,68 @@
     <link rel="import" href="bower_components/raml-json-enhance/raml-json-enhance.html">
     <link rel="import" href="bower_components/fetch-polyfill/fetch-polyfill.html">
     <link rel="import" href="bower_components/promise-polyfill/promise-polyfill.html">
+    <link rel="import" href="bower_components/app-route/app-location.html">
+    <link rel="import" href="bower_components/app-route/app-route.html">
   </head>
 <body>
-  <api-console></api-console>
+  <app-location route="{{route}}" use-hash-as-path></app-location>
+  <app-route id="route" route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+  <app-route id="subroute" route="{{subroute}}" pattern="/:path" data="{{subrouteData}}"></app-route>
+
+  <api-console page="{{page}}" path="{{path}}"></api-console>
   <raml-js-parser json></raml-js-parser>
   <raml-json-enhance></raml-json-enhance>
   <script>
-  function notifyInitError(message) {
-    window.alert('Cannot initialize API console. ' + message);
-  }
+  var ApiConsole = {
+    init: function() {
+      this.addListeners();
+      document.querySelector('raml-js-parser').loadApi('[[API-FILE-URL]]')
+      .catch(function(cause) {
+        ApiConsole.notifyInitError(cause.message);
+      });
+    },
 
-  function init() {
-    var parser = document.querySelector('raml-js-parser');
-    parser.addEventListener('api-parse-ready', function(e) {
-      var enhacer = document.querySelector('raml-json-enhance');
-      enhacer.json = e.detail.json.specification;
-    });
-    document.querySelector('raml-json-enhance')
-    .addEventListener('error', function(e) {
-      notifyInitError(e.detail.message);
-    });
-    window.addEventListener('raml-json-enhance-ready', function(e) {
+    addListeners: function() {
+      window.addEventListener('raml-json-enhance-ready', function(e) {
+        var apiConsole = document.querySelector('api-console');
+        apiConsole.raml = e.detail.json;
+      });
+      window.addEventListener('api-parse-ready', function(e) {
+        var enhacer = document.querySelector('raml-json-enhance');
+        enhacer.json = e.detail.json.specification;
+      });
+      document.querySelector('raml-json-enhance')
+      .addEventListener('error', function(e) {
+        ApiConsole.notifyInitError(e.detail.message);
+      });
+    },
+
+    observeRouteEvents: function() {
       var apiConsole = document.querySelector('api-console');
-      apiConsole.raml = e.detail.json;
-    });
-    parser.loadApi('[[API-FILE-URL]]')
-    .catch(function(cause) {
-      notifyInitError(cause.message);
-    });
-  }
+      var location = document.querySelector('app-location');
+      var route = document.getElementById('route');
+      var subroute = document.getElementById('subroute');
+
+      apiConsole.addEventListener('path-changed', ApiConsole._pathChanged);
+      apiConsole.addEventListener('page-changed', ApiConsole._pageChanged);
+      location.addEventListener('route-changed', ApiConsole._routeChanged);
+      route.addEventListener('route-changed', ApiConsole._routeChanged);
+      route.addEventListener('data-changed', ApiConsole._routeDataChanged);
+      route.addEventListener('tail-changed', ApiConsole._subrouteChanged);
+      subroute.addEventListener('route-changed', ApiConsole._subrouteChanged);
+      subroute.addEventListener('data-changed', ApiConsole._subrouteDataChanged);
+    },
+
+    pathChanged: function(e) {
+
+    },
+
+    notifyInitError: function(message) {
+      window.alert('Cannot initialize API console. ' + message);
+    }
+  };
   // Components are already loaded and attached at this point.
-  init();
+  ApiConsole.init();
   </script>
 </body>
 </html>
