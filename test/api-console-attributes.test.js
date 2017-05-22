@@ -9,7 +9,7 @@ describe('api-console-builder', () => {
     describe('Optimisation enabled', () => {
       var content;
       before(function() {
-        this.timeout(180000);
+        this.timeout(270000);
         return builder({
           noOptimization: false,
           src: 'test/api-console-release-4.0.0.zip',
@@ -74,7 +74,7 @@ describe('api-console-builder', () => {
     describe('Optimisation disabled', () => {
       var content;
       before(function() {
-        this.timeout(120000);
+        this.timeout(270000);
         return builder({
           noOptimization: true,
           src: 'test/api-console-release-4.0.0.zip',

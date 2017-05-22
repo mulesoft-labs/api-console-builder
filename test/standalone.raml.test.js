@@ -18,7 +18,7 @@ describe('api-console-builder', () => {
     });
 
     it('Build the console', function() {
-      this.timeout(120000);
+      this.timeout(270000);
       return builder({
         noOptimization: true,
         src: 'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip',
