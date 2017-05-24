@@ -10,15 +10,12 @@ describe('api-console-builder', () => {
     var api = 'https://raw.githubusercontent.com/advanced-rest-client/';
     api += 'raml-example-api/master/api.raml';
 
-    afterEach(function(done) {
-      fs.remove('build')
-      .then(() => {
-        done();
-      });
+    afterEach(function() {
+      return fs.remove('build');
     });
 
     it('Build the console with the inlined json', function() {
-      this.timeout(120000);
+      this.timeout(270000);
       return builder({
         noOptimization: true,
         src: 'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip',
