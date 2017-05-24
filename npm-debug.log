@@ -1,0 +1,125 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.10.9
+3 info using node@v7.1.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/pawelpsztyc/workspace/advanced-rest-client/api-console-builder',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/pawelpsztyc/.npm correctMkdir not in flight; initializing
+10 info lifecycle api-console-builder@0.2.3~prepublish: api-console-builder@0.2.3
+11 silly lifecycle api-console-builder@0.2.3~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package.tgz',
+12 verbose tar pack   '/Users/pawelpsztyc/workspace/advanced-rest-client/api-console-builder' ]
+13 verbose tarball /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package.tgz
+14 verbose folder /Users/pawelpsztyc/workspace/advanced-rest-client/api-console-builder
+15 verbose addLocalTarball adding from inside cache /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package.tgz
+16 verbose correctMkdir /Users/pawelpsztyc/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd api-console-builder@0.2.3
+18 verbose afterAdd /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/pawelpsztyc/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package/package.json written
+21 silly publish { name: 'api-console-builder',
+21 silly publish   version: '0.2.3',
+21 silly publish   description: 'A module to build a minified and concatenated file for the API console',
+21 silly publish   main: 'main.js',
+21 silly publish   scripts: { test: 'mocha \'test/*.test.js\' --reporter spec' },
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+ssh://git@github.com/advanced-rest-client/api-console-builder.git' },
+21 silly publish   keywords: [ 'api-console', 'builder', 'node' ],
+21 silly publish   author: { name: 'Pawel Psztyc, Advanced Rest Client Authors' },
+21 silly publish   license: 'Apache-2.0',
+21 silly publish   bugs: { url: 'https://github.com/advanced-rest-client/api-console-builder/issues' },
+21 silly publish   homepage: 'https://github.com/advanced-rest-client/api-console-builder#readme',
+21 silly publish   dependencies:
+21 silly publish    { colors: '^1.1.2',
+21 silly publish      'css-slam': '^1.2.1',
+21 silly publish      'fs-extra': '^3.0.0',
+21 silly publish      'google-closure-compiler-js': '^20170423.0.0',
+21 silly publish      gulp: 'github:gulpjs/gulp#4.0',
+21 silly publish      'gulp-html-minifier': '^0.1.8',
+21 silly publish      'gulp-if': '^2.0.2',
+21 silly publish      'gulp-strip-comments': '^2.4.5',
+21 silly publish      https: '^1.0.0',
+21 silly publish      'merge-stream': '^1.0.1',
+21 silly publish      path: '^0.12.7',
+21 silly publish      'polymer-build': '^1.1.0',
+21 silly publish      'raml-json-enhance-node': '^0.2.0',
+21 silly publish      through2: '^2.0.3',
+21 silly publish      tmp: '0.0.31',
+21 silly publish      unzip: '^0.1.11' },
+21 silly publish   devDependencies: { chai: '^3.5.0', mocha: '^3.2.0' },
+21 silly publish   readme: '# api-console-builder\n\nThe node module to build the API console from the\n[api-console element](https://github.com/mulesoft/api-console/tree/release/4.0.0).\n\nThis module will bundle required elements (web components and libraries) into the main file where\nthe `<link rel="import">` is defined.\n\n## Using the module\n\nThis module provides you with tools to:\n- build your own version of the API Console\n- generate API documentation from the RAML file using latest version of the console\n- tweak the build process to optimize loading time of the API console\n\n### Basic usage\n\n```javascript\nconst builder = require(\'api-console-builder\');\n\nbuilder({\n  src: \'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip\',\n  dest: \'build\',\n  raml: \'path/to/api.raml\'\n})\n.then(() => console.log(\'Build complete\'))\n.catch((cause) => console.log(\'Build error\', cause.message));\n```\n\n### Options\n\nAll available options are defined in the [ApiConsoleBuilderOptions](lib/api-console-source-control.js)\nclass. You can initialize options using simple map or options class, that is setting app defaults:\n\n```javascript\nconst builder = require(\'api-console-builder\');\nconst options = new builder.ApiConsoleBuilderOptions({\n  dest: \'build\',\n  raml: \'path/to/api.raml\'\n});\noptions.src = \'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip\';\nconsole.log(options.useJson); // prints false\nbuilder(options);\n```\n\n| Option | Type | Description |\n| --- | --- | --- |\n| `src` | String | Source of the API console. If the `src` is an URL then it expects it to be a zip file that will be uncopressed to a working directory. If it points to a local destination and it is a zip file, set `sourceIsZip` option to true. Defaults to current directory ("./") to build plain API console. |\n| `mainFile` | String | Source index file, an entry point to the application. Don\'t set when downloading the `api-console` source code from GitHub. Then it will use one of the build-in templates depending on options. Should point to a file that contains web components imports. |\n| `sourceIsZip` | Boolean | Set to true if the API console source (`src`) points to a zip file that should be uncopressed. If the `src` is an URL then it will be set to `true`. Defaults to `false`. |\n| `dest` | String | Output directory. Defaults to `./build`. |\n| `useJson` | Boolean | If set, it will generate a JSON file out of the RAML file and will use pre-generated data in the console. Use this option to optimize console\'s load time. It will not include `raml-json-enhance` and `raml-js-parser` elements into the build and will use pre-generated JSON to load it into the console. Note that you will have to regenerate the API console each time your API spec changes. Defaults to `false`. |\n| `inlineJson` | Boolean | Set to true to inline pre-generated JSON data in the main file instead of creating external JSON file. Only valid if `embedded` is not set to `true` and with `useJson` set to true. Embeded version of the API console always require external JSON file. Defaults to `false`. |\n| `embedded` | Boolean | If true it will generate an import file for the web components that can be used in any web application. It will not generate a standalone application. Generated source file will contain an example of using the api-console on any web page. Defaults to `false`. |\n| `raml` | String | The RAML file from which produce the documentation. If not set then it will generate a plain API console application without any documentation attached. Defaults to `undefined`. |\n| `noTryit` | Boolean | Will set `no-tryit` attribute on the `<api-console>` element that will disable request / response panels. Defaults to `false`. |\n| `narrowView` | Boolean | Will set the `narrow` attribute on the `<api-console>` element that will force the console to render the mobile like view. Defaults to `false` |\n| `proxy` | String | Will set the `proxy` attribute on the `<api-console>` element. Sets the proxy URL for the HTTP requests sent from the console. If set then all URLs will be altered before sending the data to a transport library by prefixing the URL with this value. Defaults to `undefined` |\n| `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |\n| `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |\n| `jsCompilationLevel` | String | Level of JavaScript compilation used by [Google Closure Compiler](https://developers.google.com/closure/compiler/). Possible options are `WHITESPACE_ONLY` and `SIMPLE`. Don not use `ADVANCED` level. Option `SIMPLE` will make the build process longer than WHITESPACE_ONLY but it will produce less code. Defaults to `WHITESPACE_ONLY` |\n| `noOptimization` | Boolean | If set it will not perform any code optimization. It will disable: comments removal, JS compilation, HTML minification, and CSS minification. It should be used only for development to reduce build time. Output will contain more data and therefore will be bigger. Defaults to `false`. |\n| `noCssOptimization` | Boolean | Disables CSS minification (CSS files and `<style>` declarations). Defaults to `false`. |\n| `noHtmlOptimization` | Boolean | Disables HTML minification. Also disables comments removal. Defaults to `false`. |\n| `noJsOptimization` | Boolean | Disables JavaScript compilation with Google Closure Compiler. Defaults to `false`. |\n\n## Building embeddable console\n\nThe API console can be embedded in your website or blog post. To build the console out of the RAML spec, use the `embedded` option.\n\nThe output will containt two main files:\n- import.html - bundled source code of the console\n- example.html - working example of use\n\n**To embed the console on your website**\n1. You have to include polyfill in the website\'s `<head>` section.\n2. You have to import the `import.html` file as regular web component\n3. Place the `<api-console></api-console>` anywhere on your website\n4. Initialize data depening on the build method. Examples of initialization you will find in the `example.html` file.\n\n#### 1. Polyfill\n\nInclude the following polyfil in the `<head>` section\n```html\n<head>\n  ...\n  <script>\n  (function() {\n    \'use strict\';\n    var onload=function(){window.HTMLImports||document.dispatchEvent(new CustomEvent("WebComponentsReady",{bubbles:!0}))},webComponentsSupported="registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template");if(webComponentsSupported)onload();else{var script=document.createElement("script");script.async=!0;script.src="bower_components/webcomponentsjs/webcomponents-lite.min.js";script.onload=onload;document.head.appendChild(script)};\n  })();\n  </script>\n</head>\n```\n\n#### 2. Import bundle\n\n```html\n<head>\n  ...\n  <script>\n  ...\n  </script>\n  <link rel="import" href="import.html">\n</head>\n```\n\n#### 3. Place the console\n\n```html\n<div style="position:relative; height:500px;">\n  <api-console></api-console>\n</div>\n```\n\nThe API console should be placed in a relatively positioned parent element with explicitly set height. Otherwise it won\'t renders correctly.\nBy explicitly set height meaning either use of the height value in pixels or by using [flex layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes).\n\n#### 4. Initialize the data\n\nThis step depends on selected build method (with JSON or not, is JSON is inlined). See build example to see how to do it.\n\n## Custom build\n\nYou can customize the API Console by creating your own html file that contains the `<api-console>` element.\n\n### Example source file\n\nAs defined in the [api-console element](https://github.com/mulesoft/api-console/tree/release/4.0.0) readme file.\n\n```html\n<!-- index.html -->\n<!doctype html>\n<html lang="en">\n<head>\n    <meta charset="utf-8">\n    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">\n    <script>\n        window.Polymer = {\n          dom: \'shadow\'\n        };\n        // Load webcomponentsjs polyfill if browser does not support native Web Components\n        (function() {\n          \'use strict\';\n          var onload = function() {\n            // For native Imports, manually fire WebComponentsReady so user code\n            // can use the same code path for native and polyfill\'d imports.\n            if (!window.HTMLImports) {\n              document.dispatchEvent(new CustomEvent(\'WebComponentsReady\', {bubbles: true}));\n            }\n          };\n          var webComponentsSupported = (\n            \'registerElement\' in document &&\n            \'import\' in document.createElement(\'link\') &&\n            \'content\' in document.createElement(\'template\')\n          );\n          if (!webComponentsSupported) {\n            var script = document.createElement(\'script\');\n            script.async = true;\n            script.src = \'bower_components/webcomponentsjs/webcomponents-lite.min.js\';\n            script.onload = onload;\n            document.head.appendChild(script);\n          } else {\n            document.addEventListener(\'DOMContentLoaded\', function() {\n              onload();\n            });\n          }\n        })();\n    </script>\n    <link rel="import" href="bower_components/api-console/api-console.html">\n    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">\n    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>\n</head>\n<body>\n  <api-console></api-console>\n</body>\n</html>\n```\n\nThis example omits the way of passing data to the `api-console`. This has been described in the [Passing the raml data](https://github.com/mulesoft/api-console/tree/release/4.0.0#passing-the-raml-data) section.\n\n```javascript\nconst builder = require(\'api-console-builder\');\n\nbuilder({\n  src: \'./\',\n  dest: \'build\',\n  raml: \'https://domain.com/api.raml\',\n  useJson: true,\n  mainFile: \'index.html\'\n})\n.then(() => {\n  console.log(\'Build complete\');\n  // run polymer serve build/ --open\n})\n.catch((cause) => console.log(\'Build error\', cause.message));\n```\n\nThe module will replace imports section:\n```html\n<link rel="import" href="bower_components/api-console/api-console.html">\n<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">\n```\nwith actual content of imported files and their dependencies.\n\nBecause the API console is build out of the elements that require resources from the `bower_components` folder (for example not directly linked javascript files like libraries or web workers) this module will generate a `bower_components` folder with files that may be required by the application. Scripts from this folder will be loaded on demand.\n\n## Optimization\n\nApplication based on the API Console loads a RAML file(s), parses it and generates JSON data that are recognizable by the console. This process can be slow and consumes lot of computing power. This can affect user experience, especially on mobile devices.\n\nIf the API spec doesn\'t change very often you can tell the builder to generate a JSON file out of the RAML spec and use it instead of parsing RAML content all over again. You have to set `useJson` option when initializing the builder. It will generate a `api.json` file that will be used by the API console.\n\nIf you are creating custom build then your application should handle JSON file load. See the [standalone-json.tpl](templates/standalone-json.tpl) file for example.\n\nIf you don\'t want the console to download the JSON file but rather use a JavaScript object embedded in the source file, then you can set `inlineJson` builder option. Note that this option currently is not working with custom builds.\n\n## Alpha version notice\nThis is pre-relase version of the `api-console-builder` and this module **will** change in the future.\n\nFile an issue report for issues, feature requests and improvements.\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '343919f906a1fdfbc6cae0105c372306a8b9c238',
+21 silly publish   _id: 'api-console-builder@0.2.3',
+21 silly publish   _shasum: '7b511faa90a2f77839171df9b1111ea27307aacb',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name api-console-builder
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'api-console-builder',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'api-console-builder',
+26 silly mapToRegistry   name: 'api-console-builder',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/api-console-builder
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /Users/pawelpsztyc/.npm/api-console-builder/0.2.3/package.tgz
+30 verbose request uri https://registry.npmjs.org/api-console-builder
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 6:58:11 PM
+33 verbose request using bearer token for auth
+34 verbose request id 7f2fc7e123d00561
+35 http request PUT https://registry.npmjs.org/api-console-builder
+36 http 403 https://registry.npmjs.org/api-console-builder
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=300',
+37 verbose headers   'content-length': '95',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Wed, 24 May 2017 17:58:13 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'x-served-by': 'cache-cdg8735-CDG',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1495648692.622195,VS0,VE1497',
+37 verbose headers   vary: 'Accept-Encoding' }
+38 verbose request invalidating /Users/pawelpsztyc/.npm/registry.npmjs.org/api-console-builder on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: "You cannot publish over the previously published version 0.2.3." : api-console-builder
+40 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+40 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+40 verbose stack     at emitTwo (events.js:106:13)
+40 verbose stack     at Request.emit (events.js:191:7)
+40 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1048:10)
+40 verbose stack     at emitOne (events.js:96:13)
+40 verbose stack     at Request.emit (events.js:188:7)
+40 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:969:12)
+41 verbose statusCode 403
+42 verbose pkgid api-console-builder
+43 verbose cwd /Users/pawelpsztyc/workspace/advanced-rest-client/api-console-builder
+44 error Darwin 16.6.0
+45 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+46 error node v7.1.0
+47 error npm  v3.10.9
+48 error code E403
+49 error "You cannot publish over the previously published version 0.2.3." : api-console-builder
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
