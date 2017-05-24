@@ -30,11 +30,8 @@ describe('api-console-builder', () => {
         });
       });
 
-      after(function(done) {
-        fs.remove('build')
-        .then(() => {
-          done();
-        });
+      after(function() {
+        return fs.remove('build');
       });
 
       function readAttribute(attribute) {
@@ -95,11 +92,8 @@ describe('api-console-builder', () => {
         });
       });
 
-      after(function(done) {
-        fs.remove('build')
-        .then(() => {
-          done();
-        });
+      after(function() {
+        return fs.remove('build');
       });
 
       function readAttribute(attribute) {

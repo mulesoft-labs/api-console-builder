@@ -6,11 +6,8 @@ const fs = require('fs-extra');
 
 describe('api-console-builder', () => {
   describe('standalone-local-sources', () => {
-    afterEach(function(done) {
-      fs.remove('build')
-      .then(() => {
-        done();
-      });
+    afterEach(function() {
+      return fs.remove('build');
     });
 
     it('Build the console', function() {

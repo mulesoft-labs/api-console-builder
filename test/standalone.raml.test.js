@@ -10,11 +10,8 @@ describe('api-console-builder', () => {
     var api = 'https://raw.githubusercontent.com/advanced-rest-client/';
     api += 'raml-example-api/master/api.raml';
 
-    afterEach(function(done) {
-      fs.remove('build')
-      .then(() => {
-        done();
-      });
+    afterEach(function() {
+      return fs.remove('build');
     });
 
     it('Build the console', function() {
