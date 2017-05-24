@@ -6,15 +6,12 @@ const fs = require('fs-extra');
 
 describe('api-console-builder', () => {
   describe('standalone-local-sources', () => {
-    afterEach(function(done) {
-      fs.remove('build')
-      .then(() => {
-        done();
-      });
+    afterEach(function() {
+      return fs.remove('build');
     });
 
     it('Build the console', function() {
-      this.timeout(120000);
+      this.timeout(270000);
       return builder({
         noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',

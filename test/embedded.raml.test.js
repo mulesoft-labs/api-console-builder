@@ -8,7 +8,7 @@ describe('api-console-builder', () => {
   describe('embedded-RAML', () => {
 
     before(function() {
-      this.timeout(120000);
+      this.timeout(270000);
       return builder({
         noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
@@ -20,11 +20,8 @@ describe('api-console-builder', () => {
       });
     });
 
-    after(function(done) {
-      fs.remove('build')
-      .then(() => {
-        done();
-      });
+    after(function() {
+      return fs.remove('build');
     });
 
     it('Build exists', function() {
