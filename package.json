@@ -33,11 +33,14 @@
     "https": "^1.0.0",
     "merge-stream": "^1.0.1",
     "path": "^0.12.7",
-    "polymer-build": "^1.1.0",
     "raml-json-enhance-node": "^0.2.0",
     "through2": "^2.0.3",
     "tmp": "0.0.31",
-    "unzip": "^0.1.11"
+    "unzip": "^0.1.11",
+
+    "polymer-analyzer": "2.0.0-alpha.34",
+    "polymer-build": "1.1.0",
+    "polymer-bundler": "2.0.0-pre.11"
   },
   "devDependencies": {
     "chai": "^3.5.0",
