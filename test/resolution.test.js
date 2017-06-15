@@ -10,7 +10,7 @@ describe('api-console-builder', () => {
     before(function() {
       this.timeout(270000);
       return builder({
-        noOptimization: true,
+        noJsOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
         sourceIsZip: true,
         dest: 'build',
@@ -25,11 +25,13 @@ describe('api-console-builder', () => {
       });
     });
 
-    after(function() {
-      return fs.remove('build');
-    });
+    // after(function() {
+    //   return fs.remove('build');
+    // });
 
     it('All imports are resolved', function() {
+      // in comments there are examples matching regexp so for this test optimisation must be
+      // enabled
       var reg = /<link rel="import" href="[^"]*">/;
       var match = content.match(reg);
       assert.isNull(match);
