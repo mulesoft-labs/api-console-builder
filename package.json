@@ -37,10 +37,7 @@
     "through2": "^2.0.3",
     "tmp": "0.0.31",
     "unzip": "^0.1.11",
-
-    "polymer-analyzer": "2.0.0-alpha.34",
-    "polymer-build": "1.1.0",
-    "polymer-bundler": "2.0.0-pre.11"
+    "polymer-build": "1.5.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
