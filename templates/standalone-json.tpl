@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <title>[[API-TITLE]]</title>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <script>
       window.Polymer = {
         dom: 'shadow'
@@ -14,7 +15,6 @@
         );
       }
     </script>
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="api-console.html">
     <link rel="import" href="bower_components/fetch-polyfill/fetch-polyfill.html">
     <link rel="import" href="bower_components/promise-polyfill/promise-polyfill.html">
@@ -78,6 +78,8 @@
         if (apiconsole.app.__initialPath && apiconsole.app.__initialPath !== e.target.path) {
           apiconsole.app.pathChanged(apiconsole.app.__initialPath);
           apiconsole.app.__initialPath = undefined;
+        } else {
+          apiconsole.app.pathChanged('summary');
         }
       });
     };
@@ -170,8 +172,10 @@
     apiconsole.app.notifyInitError = function(message) {
       window.alert('Cannot initialize API console. ' + message);
     };
-    // Components are already loaded and attached at this point.
-    apiconsole.app.init();
+    window.addEventListener('WebComponentsReady', function() {
+      // Components are already loaded and attached at this point.
+      apiconsole.app.init();
+    });
   })();
   </script>
 </body>
