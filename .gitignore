@@ -6,4 +6,4 @@ bower_components
 build
 dist
 npm-debug.log
-test-build
+build-test

@@ -2,8 +2,8 @@ const builder = require('./');
 
 builder({
   src: '../../api-console',
-  dest: 'test-build',
-  raml: 'https://cdn.rawgit.com/advanced-rest-client/drive-raml-api-v2/1f85d308/api.raml',
+  dest: 'build-test',
+  raml: '../raml-example-api/api.raml',
   verbose: true,
   useJson: true,
   inlineJson: true,
