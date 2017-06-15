@@ -5,36 +5,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>[[API-TITLE]]</title>
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
   <script>
-  window.Polymer = {
-    dom: 'shadow'
-  };
-  (function() {
-    'use strict';
-    var onload = function() {
-      if (!window.HTMLImports) {
-        document.dispatchEvent(
-          new CustomEvent('WebComponentsReady', {
-            bubbles: true
-          })
-        );
-      }
+    window.Polymer = {
+      dom: 'shadow'
     };
-    var webComponentsSupported = (
-      'registerElement' in document &&
-      'import' in document.createElement('link') &&
-      'content' in document.createElement('template')
-    );
-    if (!webComponentsSupported) {
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
-      script.onload = onload;
-      document.head.appendChild(script);
-    } else {
-      onload();
+    if (!window.HTMLImports) {
+      document.dispatchEvent(
+        new CustomEvent('WebComponentsReady', {bubbles: true})
+      );
     }
-  })();
   </script>
   <link rel="import" href="api-console.html">
   <link rel="import" href="bower_components/raml-js-parser/raml-js-parser.html">
@@ -109,6 +89,8 @@
         if (apiconsole.app.__initialPath && apiconsole.app.__initialPath !== apiConsole.path) {
           apiconsole.app.pathChanged(apiconsole.app.__initialPath);
           apiconsole.app.__initialPath = undefined;
+        } else {
+          apiconsole.app.pathChanged('summary');
         }
       });
       window.addEventListener('api-parse-ready', function(e) {
@@ -209,8 +191,10 @@
     apiconsole.app.notifyInitError = function(message) {
       window.alert('Cannot initialize API console. ' + message);
     };
-    // Components are already loaded and attached at this point.
-    apiconsole.app.init();
+    window.addEventListener('WebComponentsReady', function() {
+      // Components are already loaded and attached at this point.
+      apiconsole.app.init();
+    });
   })();
   </script>
 </body>

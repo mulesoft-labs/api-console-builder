@@ -1,2 +1,1 @@
-- Add "powered by Mulesoft" for standalone builds
 - Add custom theme include.
