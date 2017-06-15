@@ -25,9 +25,9 @@ describe('api-console-builder', () => {
       });
     });
 
-    // after(function() {
-    //   return fs.remove('build');
-    // });
+    after(function() {
+      return fs.remove('build');
+    });
 
     it('All imports are resolved', function() {
       // in comments there are examples matching regexp so for this test optimisation must be
