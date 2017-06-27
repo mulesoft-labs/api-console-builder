@@ -11,10 +11,10 @@ describe('api-console-builder', () => {
       this.timeout(270000);
       return builder({
         noOptimization: true,
-        src: 'test/api-console-release-4.0.0.zip',
-        sourceIsZip: true,
+        src: 'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip',
         dest: 'build',
         raml: 'test/api.raml',
+        useJson: true,
         embedded: true,
         verbose: false
       });
