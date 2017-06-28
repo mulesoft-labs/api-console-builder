@@ -88,7 +88,7 @@ describe('api-console-builder', () => {
         })
         .then(() => fs.readFile('build/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console data-ac-build.*><\/api-console>/gm)[0];
+          content = data.match(/<api-console data-ac-build[^>]+/gm)[0];
         });
       });
 
