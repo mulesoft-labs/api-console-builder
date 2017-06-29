@@ -5,7 +5,7 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 const path = require('path');
 
-describe('TemplatesProcessor', () => {
+describe('DependencyProcessor', () => {
   const logger = {
     warn: function() {},
     info: function() {},
