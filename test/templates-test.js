@@ -162,7 +162,7 @@ describe('TemplatesProcessor', () => {
       processor = new TemplatesProcessor(options, logger, workingDir);
     });
 
-    after(function() {
+    afterEach(function() {
       return fs.remove(workingDir);
     });
 
@@ -251,7 +251,7 @@ describe('TemplatesProcessor', () => {
       processor = new TemplatesProcessor(options, logger, workingDir);
     });
 
-    after(function() {
+    afterEach(function() {
       return fs.remove(workingDir);
     });
 
