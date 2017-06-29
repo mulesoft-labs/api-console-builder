@@ -16,17 +16,22 @@ describe('api-console-builder', () => {
           dest: 'build',
           raml: 'test/api.raml',
           sourceIsZip: true,
-          verbose: false,
+          verbose: true,
           useJson: true,
-          noTryit: true,
-          narrowView: true,
-          proxy: 'http://proxy.com',
-          proxyEncodeUrl: true,
-          appendHeaders: 'x-header: text'
+          attributes: [
+            {
+              'append-headers': 'x-header: text',
+              proxy: 'http://proxy.com',
+              'json-file': 'file.json'
+            },
+            'narrow',
+            'no-try-it',
+            'proxy-encode-url'
+          ]
         })
         .then(() => fs.readFile('build/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console data-ac-build.*><\/api-console>/gm)[0];
+          content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
@@ -48,7 +53,7 @@ describe('api-console-builder', () => {
       }
 
       it('Should set no-tryit attribute', function() {
-        assert.isTrue(hasAttribute('no-tryit'));
+        assert.isTrue(hasAttribute('no-try-it'));
       });
 
       it('Should set narrow attribute', function() {
@@ -65,6 +70,10 @@ describe('api-console-builder', () => {
 
       it('Should set append-headers attribute', function() {
         assert.equal(readAttribute('append-headers'), 'x-header: text');
+      });
+
+      it('Should set json-file attribute', function() {
+        assert.equal(readAttribute('json-file'), 'file.json');
       });
     });
 
@@ -80,15 +89,20 @@ describe('api-console-builder', () => {
           sourceIsZip: true,
           verbose: false,
           useJson: true,
-          noTryit: true,
-          narrowView: true,
-          proxy: 'http://proxy.com',
-          proxyEncodeUrl: true,
-          appendHeaders: 'x-header: text'
+          attributes: [
+            {
+              'append-headers': 'x-header: text',
+              proxy: 'http://proxy.com',
+              'json-file': 'file.json'
+            },
+            'narrow',
+            'no-try-it',
+            'proxy-encode-url'
+          ]
         })
         .then(() => fs.readFile('build/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console data-ac-build[^>]+/gm)[0];
+          content = data.match(/<api-console by-api-console-builder[^>]+/gm)[0];
         });
       });
 
@@ -127,6 +141,10 @@ describe('api-console-builder', () => {
 
       it('Should set append-headers attribute', function() {
         assert.equal(readAttribute('append-headers'), 'x-header: text');
+      });
+
+      it('Should set json-file attribute', function() {
+        assert.equal(readAttribute('json-file'), 'file.json');
       });
     });
   });
