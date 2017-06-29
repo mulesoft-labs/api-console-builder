@@ -102,7 +102,7 @@ describe('api-console-builder', () => {
         })
         .then(() => fs.readFile('build/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console by-api-console-builder[^>]+/gm)[0];
+          content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
@@ -124,7 +124,7 @@ describe('api-console-builder', () => {
       }
 
       it('Should set no-tryit attribute', function() {
-        assert.isTrue(hasAttribute('no-tryit'));
+        assert.isTrue(hasAttribute('no-try-it'));
       });
 
       it('Should set narrow attribute', function() {
