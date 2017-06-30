@@ -3,8 +3,11 @@
 const builder = require('..');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
+const testHelper = require('./content-test-common');
+const path = require('path');
 
 describe('api-console-builder', () => {
+  const workingDir = 'playground/build-embeded-json';
   describe('embedded-json', () => {
 
     before(function() {
@@ -13,7 +16,7 @@ describe('api-console-builder', () => {
         noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
         sourceIsZip: true,
-        dest: 'build',
+        dest: workingDir,
         raml: 'test/api.raml',
         embedded: true,
         verbose: false,
@@ -22,32 +25,42 @@ describe('api-console-builder', () => {
     });
 
     after(function() {
-      return fs.remove('build');
+      return fs.remove(workingDir);
     });
 
     it('Build exists', function() {
-      return fs.pathExists('build')
-      .then((exists) => {
-        assert.isTrue(exists);
-      });
+      return fs.pathExists(workingDir)
+        .then((exists) => {
+          assert.isTrue(exists);
+        });
     });
+    
     it('import.html exists', function() {
-      return fs.pathExists('build/import.html')
-      .then((exists) => {
-        assert.isTrue(exists);
-      });
+      return fs.pathExists(workingDir + '/import.html')
+        .then((exists) => {
+          assert.isTrue(exists);
+        });
     });
+
     it('example.html exists', function() {
-      return fs.pathExists('build/example.html')
-      .then((exists) => {
-        assert.isTrue(exists);
-      });
+      return fs.pathExists(workingDir + '/example.html')
+        .then((exists) => {
+          assert.isTrue(exists);
+        });
     });
+
     it('api.json do not exists', function() {
-      return fs.pathExists('build/api.json')
-      .then((exists) => {
-        assert.isTrue(exists);
-      });
+      return fs.pathExists(workingDir + '/api.json')
+        .then((exists) => {
+          assert.isTrue(exists);
+        });
+    });
+
+    it('Import links in import.html file are resolved', function() {
+      return testHelper.countImportLinksfromFile(path.join(workingDir, 'import.html'))
+        .then((links) => {
+          assert.lengthOf(links, 0);
+        });
     });
   });
 });

@@ -27,7 +27,7 @@ describe('AttributesProcessor', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'test-build';
+  const workingDir = 'playground/attributes-class-test';
   const attributes = [
     'test',
     'other-test',
@@ -97,7 +97,7 @@ describe('AttributesProcessor', () => {
     it('Sets main file from opts.main file', function() {
       processor.opts.mainFile = 'api-test.test';
       processor.setMainFile();
-      const compare = path.join('test-build', 'api-test.test');
+      const compare = path.join(workingDir, 'api-test.test');
       assert.equal(processor.mainFile, compare);
     });
 
@@ -105,7 +105,7 @@ describe('AttributesProcessor', () => {
       processor.opts.mainFile = 'api-test.test';
       processor.opts.embedded = true;
       processor.setMainFile();
-      const compare = path.join('test-build', 'example.html');
+      const compare = path.join(workingDir, 'example.html');
       assert.equal(processor.mainFile, compare);
     });
   });

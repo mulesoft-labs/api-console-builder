@@ -11,14 +11,55 @@ describe('DependencyProcessor', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'test-build';
-  const opts = {};
+  const workingDir = 'playground/dependency-test';
+  const opts = {
+    verbose: true
+  };
+
+  describe('checkIsRoot()', () => {
+    var processor;
+    beforeEach(function() {
+      const options = Object.assign({}, opts);
+      processor = new DependencyProcessor(options, logger, workingDir);
+    });
+
+    it('Returns a boolean value', function() {
+      return processor.checkIsRoot()
+      .then(result => {
+        assert.isBoolean(result);
+      });
+    });
+  });
+
+  describe('_prepareBowerCommand()', () => {
+    var processor;
+    beforeEach(function() {
+      const options = Object.assign({}, opts);
+      processor = new DependencyProcessor(options, logger, workingDir);
+    });
+
+    it('Should use --allow-root option', function() {
+      processor.commandRoot = 'bower';
+      processor.runningRoot = true;
+      var cmd = processor._prepareBowerCommand('install');
+      assert.equal(cmd, 'bower --allow-root install');
+    });
+
+    it('Should use --quiet option', function() {
+      // processor.runningRoot = true;
+      processor.commandRoot = 'bower';
+      processor.opts.verbose = false;
+      var cmd = processor._prepareBowerCommand('install');
+      assert.equal(cmd, 'bower --quiet install');
+    });
+  });
 
   describe('isBowerInstalled()', () => {
     var processor;
-    before(function() {
+    beforeEach(function() {
       const options = Object.assign({}, opts);
       processor = new DependencyProcessor(options, logger, workingDir);
+      processor.runningRoot = true;
     });
 
     it('Returns a boolean value', function() {
@@ -55,6 +96,7 @@ describe('DependencyProcessor', () => {
     beforeEach(function() {
       const options = Object.assign({}, opts);
       processor = new DependencyProcessor(options, logger, workingDir);
+      processor.runningRoot = true;
       return fs.ensureDir(workingDir);
     });
 
@@ -112,6 +154,7 @@ describe('DependencyProcessor', () => {
     beforeEach(function() {
       const options = Object.assign({}, opts);
       processor = new DependencyProcessor(options, logger, workingDir);
+      processor.runningRoot = true;
       return fs.ensureDir(workingDir);
     });
 

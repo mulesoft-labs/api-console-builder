@@ -11,7 +11,7 @@ describe('TemplatesProcessor', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'test-build';
+  const workingDir = 'playground/templates-processor-test';
 
   describe('setTemplates()', () => {
     var processor;

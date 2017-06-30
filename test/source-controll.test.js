@@ -12,7 +12,7 @@ describe('SourceControl', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'test-build';
+  const workingDir = 'playground/source-control-test';
   const opts = {};
 
   describe('createWorkingDir()', () => {
@@ -70,7 +70,6 @@ describe('SourceControl', () => {
     });
   });
 
-
   describe('copyOutput()', () => {
     var processor;
     var tmpWorkingDir;
@@ -93,7 +92,6 @@ describe('SourceControl', () => {
         }
       });
     }
-
 
     beforeEach(function() {
       var options = Object.assign({}, opts);

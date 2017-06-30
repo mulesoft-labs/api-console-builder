@@ -4,7 +4,9 @@ const builder = require('..');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
 
-describe('api-console-builder', () => {
+describe('Attributes build tests', () => {
+  const workingDir = 'playground/attributes-test-build';
+
   describe('API Console attributes setup', () => {
     describe('Optimisation enabled', () => {
       var content;
@@ -13,7 +15,7 @@ describe('api-console-builder', () => {
         return builder({
           noOptimization: false,
           src: 'test/api-console-release-4.0.0.zip',
-          dest: 'build',
+          dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
           verbose: false,
@@ -29,14 +31,14 @@ describe('api-console-builder', () => {
             'proxy-encode-url'
           ]
         })
-        .then(() => fs.readFile('build/index.html', 'utf8'))
+        .then(() => fs.readFile(workingDir + '/index.html', 'utf8'))
         .then((data) => {
           content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
       after(function() {
-        return fs.remove('build');
+        return fs.remove(workingDir);
       });
 
       function readAttribute(attribute) {
@@ -84,7 +86,7 @@ describe('api-console-builder', () => {
         return builder({
           noOptimization: true,
           src: 'test/api-console-release-4.0.0.zip',
-          dest: 'build',
+          dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
           verbose: false,
@@ -100,14 +102,14 @@ describe('api-console-builder', () => {
             'proxy-encode-url'
           ]
         })
-        .then(() => fs.readFile('build/index.html', 'utf8'))
+        .then(() => fs.readFile(workingDir + '/index.html', 'utf8'))
         .then((data) => {
           content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
       after(function() {
-        return fs.remove('build');
+        return fs.remove(workingDir);
       });
 
       function readAttribute(attribute) {
