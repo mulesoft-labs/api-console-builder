@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha 'test/*.test.js' --reporter spec"
   },
+  "engines": {
+    "node" : ">=6.5.0" 
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/mulesoft-labs/api-console-builder.git"
