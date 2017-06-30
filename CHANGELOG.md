@@ -1,5 +1,5 @@
 <a name="0.4.0"></a>
-# [0.4.0](https://github.com/mulesoft-labs/api-console-builder/compare/0.3.0...v0.4.0) (2017-06-29)
+# [0.4.0](https://github.com/mulesoft-labs/api-console-builder/compare/0.3.0...v0.4.0) (2017-06-30)
 
 
 ### Breaking
@@ -17,8 +17,10 @@
 
 * Added missing argument to function all. ([68f4f55](https://github.com/mulesoft-labs/api-console-builder/commit/68f4f55))
 * Added return statements to the function. ([44797fc](https://github.com/mulesoft-labs/api-console-builder/commit/44797fc))
+* Fixed an issue on Ubuntu bash on windows which by default runs as roo ([c6b3de5](https://github.com/mulesoft-labs/api-console-builder/commit/c6b3de5))
 * Fixed issue when reading redirection headers. ([b506248](https://github.com/mulesoft-labs/api-console-builder/commit/b506248))
 * Fixed issue with used API. The new form of the URL class is too new.  ([9b9d997](https://github.com/mulesoft-labs/api-console-builder/commit/9b9d997))
+* Fixes #1 - changed logic for getting the sources and processing them. ([28e4537](https://github.com/mulesoft-labs/api-console-builder/commit/28e4537)), closes [#1](https://github.com/mulesoft-labs/api-console-builder/issues/1)
 * Reversed order when preparing build so the zip files are handled corr ([6407e89](https://github.com/mulesoft-labs/api-console-builder/commit/6407e89))
 
 ### New
@@ -31,13 +33,16 @@
 * Added tagVersion option to download the console for specific release. ([02baa39](https://github.com/mulesoft-labs/api-console-builder/commit/02baa39))
 * Added tests to the RamlSource class. ([795ab60](https://github.com/mulesoft-labs/api-console-builder/commit/795ab60))
 * Created new project class as a staring point to the module and creati ([4bb7a38](https://github.com/mulesoft-labs/api-console-builder/commit/4bb7a38))
+* More test! We all like tests! It's only 3 days of woking.. ([8783aaa](https://github.com/mulesoft-labs/api-console-builder/commit/8783aaa))
 
 ### Update
 
 * Added `test-*` to ignore list to build various version of the cons ([3f84afb](https://github.com/mulesoft-labs/api-console-builder/commit/3f84afb))
 * Added check for empty or undefined items in the attributes array. ([9a74de2](https://github.com/mulesoft-labs/api-console-builder/commit/9a74de2))
 * Added dependency to attribues parser. ([b56c04c](https://github.com/mulesoft-labs/api-console-builder/commit/b56c04c))
+* Added engine entry to the file to mark supported versions of Node. ([12e5280](https://github.com/mulesoft-labs/api-console-builder/commit/12e5280))
 * Added function to remove log file afters successful build. ([71b942a](https://github.com/mulesoft-labs/api-console-builder/commit/71b942a))
+* Added local test files to ignored list. ([d1dbd91](https://github.com/mulesoft-labs/api-console-builder/commit/d1dbd91))
 * Added series of build in one call to test various builds. ([bf50082](https://github.com/mulesoft-labs/api-console-builder/commit/bf50082))
 * Altered the function that is responsible for constructing the `api ([1d875b1](https://github.com/mulesoft-labs/api-console-builder/commit/1d875b1))
 * Changed how the errors are handled so the main library will get al ([8605b1a](https://github.com/mulesoft-labs/api-console-builder/commit/8605b1a))
@@ -55,6 +60,7 @@
 * Updated class names after refactoring. ([735acc4](https://github.com/mulesoft-labs/api-console-builder/commit/735acc4))
 * Updated main file to reflect recent changes. ([e7ac6df](https://github.com/mulesoft-labs/api-console-builder/commit/e7ac6df))
 * Updated structure of the options class. Added more validations rul ([4a39971](https://github.com/mulesoft-labs/api-console-builder/commit/4a39971))
+* Updated suite name to not make a confusion here ([1013232](https://github.com/mulesoft-labs/api-console-builder/commit/1013232))
 * Updated test cases to match new API. ([de4cc9d](https://github.com/mulesoft-labs/api-console-builder/commit/de4cc9d))
 
 
