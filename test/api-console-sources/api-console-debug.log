@@ -1,4 +1,0 @@
-{"meta":"","level":"error","message":"","timestamp":"2017-06-30T00:21:32.257Z"}
-{"level":"error","message":"\u001b[31mENOENT: no such file or directory, stat 'F:\\workspace\\api-console-builder\\test\\api-console-sources\\test\\api-console-release-4.0.0.zip'\u001b[39m","timestamp":"2017-06-30T00:21:32.260Z"}
-{"level":"error","message":"\u001b[31mError: ENOENT: no such file or directory, stat 'F:\\workspace\\api-console-builder\\test\\api-console-sources\\test\\api-console-release-4.0.0.zip'\n    at Error (native)\u001b[39m","timestamp":"2017-06-30T00:21:32.262Z"}
-{"meta":"","level":"error","message":"","timestamp":"2017-06-30T00:21:32.262Z"}
