@@ -3,15 +3,18 @@
 const builder = require('..');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
+const testHelper = require('./content-test-common');
+const path = require('path');
 
 describe('api-console-builder', () => {
+  const workingDir = 'playground/standalone-raml-test';
   describe('standalone-RAML', () => {
 
     var api = 'https://raw.githubusercontent.com/advanced-rest-client/';
     api += 'raml-example-api/master/api.raml';
 
-    afterEach(function() {
-      return fs.remove('build');
+    after(function() {
+      return fs.remove(workingDir);
     });
 
     it('Build the console', function() {
@@ -19,12 +22,30 @@ describe('api-console-builder', () => {
       return builder({
         noOptimization: true,
         src: 'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip',
-        dest: 'build',
-        raml: api
-      })
-      .then(() => fs.pathExists('build'))
+        dest: workingDir,
+        raml: api,
+        verbose: false
+      });
+    });
+
+    it('Build dir should be created', function() {
+      return fs.pathExists(workingDir)
+      .then((exists) => {
+        assert.isTrue(exists, 'Build exists');
+      });
+    });
+
+    it('Has the main file', function() {
+      return fs.pathExists(path.join(workingDir, 'index.html'))
       .then((exists) => {
         assert.isTrue(exists);
+      });
+    });
+
+    it('Import links in index.html file are resolved', function() {
+      return testHelper.countImportLinksfromFile(path.join(workingDir, 'index.html'))
+      .then((links) => {
+        assert.lengthOf(links, 0);
       });
     });
   });
