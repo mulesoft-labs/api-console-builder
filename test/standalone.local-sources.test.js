@@ -3,11 +3,14 @@
 const builder = require('..');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
+const testHelper = require('./content-test-common');
+const path = require('path');
 
 describe('api-console-builder', () => {
+  const workingDir = 'playground/standalone-local-sources-test';
   describe('standalone-local-sources', () => {
-    afterEach(function() {
-      return fs.remove('build');
+    after(function() {
+      return fs.remove(workingDir);
     });
 
     it('Build the console', function() {
@@ -15,14 +18,24 @@ describe('api-console-builder', () => {
       return builder({
         noOptimization: true,
         src: 'test/api-console-release-4.0.0.zip',
-        dest: 'build',
+        dest: workingDir,
         raml: 'test/api.raml',
         sourceIsZip: true,
         useJson: true
-      })
-      .then(() => fs.pathExists('build'))
+      });
+    });
+
+    it('Build dir should be created', function() {
+      return fs.pathExists(workingDir)
       .then((exists) => {
-        assert.isTrue(exists);
+        assert.isTrue(exists, 'Build exists');
+      });
+    });
+
+    it('Import links in index.html file are resolved', function() {
+      return testHelper.countImportLinksfromFile(path.join(workingDir, 'index.html'))
+      .then((links) => {
+        assert.lengthOf(links, 0);
       });
     });
   });

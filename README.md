@@ -1,16 +1,19 @@
 # api-console-builder
 
-The node module to build the API console from the
-[api-console element](https://github.com/mulesoft/api-console/tree/release/4.0.0).
+A node module to build the API console from the
+[api-console element](https://github.com/mulesoft/api-console/).
 
-This module will bundle required elements (web components and libraries) into the main file where
-the `<link rel="import">` is defined.
+This module bundles required elements (web components and libraries) into single
+bundle. It places API console sources in place where the `<link rel="import">`
+for the web component is defined.
+
+You may be interested in using our **CLI tool** to build the API Console. Install the [api-console-cli](https://www.npmjs.com/package/api-console-cli) ang build the console with single command.
 
 ## Using the module
 
 This module provides you with tools to:
 - build your own version of the API Console
-- generate API documentation from the RAML file using latest version of the console
+- generate API documentation from the RAML file using latest (or any tagged release) version of the console
 - tweak the build process to optimize loading time of the API console
 
 ### Basic usage
@@ -19,22 +22,27 @@ This module provides you with tools to:
 const builder = require('api-console-builder');
 
 builder({
-  src: 'https://github.com/mulesoft/api-console/archive/release/4.0.0.zip',
   dest: 'build',
-  raml: 'path/to/api.raml'
+  raml: 'path/to/api.raml',
+  useJson: true
 })
 .then(() => console.log('Build complete'))
 .catch((cause) => console.log('Build error', cause.message));
 ```
 
+Script above downloads that latest release of the API Console and use it to
+create a standalone web application that displays documentation from the RAML
+file.
+
 ### Options
 
-All available options are defined in the [ApiConsoleBuilderOptions](lib/api-console-source-control.js)
-class. You can initialize options using simple map or options class, that is setting app defaults:
+All available options are defined in the [BuilderOptions](lib/builder-options.js)
+class. You can initialize options using simple map or options class:
 
 ```javascript
-const builder = require('api-console-builder');
-const options = new builder.ApiConsoleBuilderOptions({
+const {BuilderOptions} = require('api-console-builder');
+
+const options = new BuilderOptions({
   dest: 'build',
   raml: 'path/to/api.raml'
 });
@@ -45,7 +53,8 @@ builder(options);
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `src` | String | Source of the API console. If the `src` is an URL then it expects it to be a zip file that will be uncopressed to a working directory. If it points to a local destination and it is a zip file, set `sourceIsZip` option to true. Defaults to current directory ("./") to build plain API console. |
+| `src` | String | Source of the API console. If the `src` is an URL then it expects it to be a zip file that will be uncopressed to a working directory. If it points to a local destination and it is a zip file, set `sourceIsZip` option to true. Defaults to `undefined` and the it downloads the latest release of the console. |
+| `tagVersion` | String | A release tag name to use. With this option the builder uses specific release of the console. If not set and `src` is not set it uses latest release. Note, only versions >= 4.0.0 can be used with this tool. |
 | `mainFile` | String | Source index file, an entry point to the application. Don't set when downloading the `api-console` source code from GitHub. Then it will use one of the build-in templates depending on options. Should point to a file that contains web components imports. |
 | `sourceIsZip` | Boolean | Set to true if the API console source (`src`) points to a zip file that should be uncopressed. If the `src` is an URL then it will be set to `true`. Defaults to `false`. |
 | `dest` | String | Output directory. Defaults to `./build`. |
@@ -53,30 +62,74 @@ builder(options);
 | `inlineJson` | Boolean | Set to true to inline pre-generated JSON data in the main file instead of creating external JSON file. Only valid if `embedded` is not set to `true` and with `useJson` set to true. Embeded version of the API console always require external JSON file. Defaults to `false`. |
 | `embedded` | Boolean | If true it will generate an import file for the web components that can be used in any web application. It will not generate a standalone application. Generated source file will contain an example of using the api-console on any web page. Defaults to `false`. |
 | `raml` | String | The RAML file from which produce the documentation. If not set then it will generate a plain API console application without any documentation attached. Defaults to `undefined`. |
-| `noTryit` | Boolean | Will set `no-tryit` attribute on the `<api-console>` element that will disable request / response panels. Defaults to `false`. |
-| `narrowView` | Boolean | Will set the `narrow` attribute on the `<api-console>` element that will force the console to render the mobile like view. Defaults to `false` |
-| `proxy` | String | Will set the `proxy` attribute on the `<api-console>` element. Sets the proxy URL for the HTTP requests sent from the console. If set then all URLs will be altered before sending the data to a transport library by prefixing the URL with this value. Defaults to `undefined` |
-| `proxyEncodeUrl` | Boolean | Will set the `proxy-encode-url` attribute on the `<api-console>` element that will encode the URL value before appending it to the proxy prefix. Defaults to `false` |
-| `appendHeaders` | String | Will set the `append-headers` attribute on the `<api-console>`  element. Forces the console to send specific list of headers, overriding user input if needed.  Defaults to `undefined`. |
 | `jsCompilationLevel` | String | Level of JavaScript compilation used by [Google Closure Compiler](https://developers.google.com/closure/compiler/). Possible options are `WHITESPACE_ONLY` and `SIMPLE`. Don not use `ADVANCED` level. Option `SIMPLE` will make the build process longer than WHITESPACE_ONLY but it will produce less code. Defaults to `WHITESPACE_ONLY` |
 | `noOptimization` | Boolean | If set it will not perform any code optimization. It will disable: comments removal, JS compilation, HTML minification, and CSS minification. It should be used only for development to reduce build time. Output will contain more data and therefore will be bigger. Defaults to `false`. |
 | `noCssOptimization` | Boolean | Disables CSS minification (CSS files and `<style>` declarations). Defaults to `false`. |
 | `noHtmlOptimization` | Boolean | Disables HTML minification. Also disables comments removal. Defaults to `false`. |
 | `noJsOptimization` | Boolean | Disables JavaScript compilation with Google Closure Compiler. Defaults to `false`. |
+| `attributes` | `Array` | An array of attributes to set on the `<api-console>` element. See description below for more information. |
+| `verbose` | Boolean | Produces debug output to the console. Defaults to `false` |
+
+## Configuring the console - setting attributes
+
+To set configuration option available for the `<api-console>` element set a list
+of attributes to the `attributes` option.
+
+For boolean attributes add the attribute name as a string.
+For attributes with values add a map where the key is an attribute name and value
+is attribute's value.
+
+Note: Do not set `raml` property here. It will be ignored. This option mast be set in general options map.
+
+Note: Do not use camel case notation. It will not work. See the example.
+
+### Example
+
+```javascript
+const attributes = [
+  'proxy-encodeUrl',
+  {'proxy': 'https://proxy.domain.com'},
+  'no-try-it',
+  {'page': 'request'}
+]
+```
+
+Example above is the same as:
+
+```javascript
+const attributes = [
+  'proxy-encodeUrl',
+  'no-try-it',
+  {
+    'proxy': 'https://proxy.domain.com',
+    'page': 'request'
+  }
+]
+```
+
+and produces the following output:
+
+```html
+<api-console proxy-encodeUrl no-try-it page="request" proxy="https://proxy.domain.com"></api-console>
+```
+
+List of all available options can be found here:
+https://github.com/mulesoft/api-console/blob/master/docs/configuring-api-console.md
 
 ## Building embeddable console
 
-The API console can be embedded in your website or blog post. To build the console out of the RAML spec, use the `embedded` option.
+The API console can be embedded in your website or blog post. To build the console
+from the RAML spec, use the `embedded` option.
 
-The output will containt two main files:
+The output will contain two main files:
 - import.html - bundled source code of the console
-- example.html - working example of use
+- example.html - shows an example of use
 
 **To embed the console on your website**
 1. You have to include polyfill in the website's `<head>` section.
 2. You have to import the `import.html` file as regular web component
 3. Place the `<api-console></api-console>` anywhere on your website
-4. Initialize data depening on the build method. Examples of initialization you will find in the `example.html` file.
+4. Initialize data depending on the build method. Examples of initialization are in the `example.html` file.
 
 #### 1. Polyfill
 
@@ -177,13 +230,13 @@ As defined in the [api-console element](https://github.com/mulesoft/api-console/
 </html>
 ```
 
-This example omits the way of passing data to the `api-console`. This has been described in the [Passing the raml data](https://github.com/mulesoft/api-console/tree/release/4.0.0#passing-the-raml-data) section.
+This example omits the way of passing data to the `api-console`. This has been described in the [Passing the raml data](https://github.com/mulesoft/api-console/blob/master/docs/passing-raml-data.md) section.
 
 ```javascript
 const builder = require('api-console-builder');
 
 builder({
-  src: './',
+  src: './', //custom build
   dest: 'build',
   raml: 'https://domain.com/api.raml',
   useJson: true,
@@ -196,7 +249,8 @@ builder({
 .catch((cause) => console.log('Build error', cause.message));
 ```
 
-The module will replace imports section:
+The module replaces imports section:
+
 ```html
 <link rel="import" href="bower_components/api-console/api-console.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -215,7 +269,10 @@ If you are creating custom build then your application should handle JSON file l
 
 If you don't want the console to download the JSON file but rather use a JavaScript object embedded in the source file, then you can set `inlineJson` builder option. Note that this option currently is not working with custom builds.
 
-## Alpha version notice
-This is pre-relase version of the `api-console-builder` and this module **will** change in the future.
+## Beta version notice
+This is pre-relase version of the `api-console-builder` and this module **may**
+change in the future.
 
-File an issue report for issues, feature requests and improvements.
+Current API is rather stable and we are not planning breaking changes.
+
+Help us develop the API Console build tools! File an issue report for issues, feature requests for improvements. We'll be happy to hear from you.

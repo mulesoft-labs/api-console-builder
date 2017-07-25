@@ -1,7 +1,7 @@
 'use strict';
 
-const {ApiConsoleBuilder} = require('../lib/api-console-builder.js');
-const {ApiConsoleBuilderOptions} = require('../lib/api-console-builder-options.js');
+const {ApiConsoleBuilder} = require('../lib/builder.js');
+const {BuilderOptions} = require('../lib/builder-options');
 const assert = require('chai').assert;
 
 describe('api-console-builder', () => {
@@ -9,11 +9,11 @@ describe('api-console-builder', () => {
     describe('Optimization disabled', () => {
       var builder;
       before(function() {
-        const options = new ApiConsoleBuilderOptions({
+        const options = new BuilderOptions({
           noOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
-        builder._setOptymisationConditions();
+        builder.setOptymisationConditions();
       });
 
       it('Should set no comment optimization', function() {
@@ -40,9 +40,9 @@ describe('api-console-builder', () => {
     describe('Optimization enabled', () => {
       var builder;
       before(function() {
-        const options = new ApiConsoleBuilderOptions({});
+        const options = new BuilderOptions({});
         builder = new ApiConsoleBuilder(options);
-        builder._setOptymisationConditions();
+        builder.setOptymisationConditions();
       });
 
       it('Should set no comment optimization', function() {
@@ -69,11 +69,11 @@ describe('api-console-builder', () => {
     describe('CSS optimization disabled only', () => {
       var builder;
       before(function() {
-        const options = new ApiConsoleBuilderOptions({
+        const options = new BuilderOptions({
           noCssOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
-        builder._setOptymisationConditions();
+        builder.setOptymisationConditions();
       });
 
       it('Should set no comment optimization', function() {
@@ -100,11 +100,11 @@ describe('api-console-builder', () => {
     describe('HTML optimization disabled only', () => {
       var builder;
       before(function() {
-        const options = new ApiConsoleBuilderOptions({
+        const options = new BuilderOptions({
           noHtmlOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
-        builder._setOptymisationConditions();
+        builder.setOptymisationConditions();
       });
 
       it('Should set no comment optimization', function() {
@@ -131,11 +131,11 @@ describe('api-console-builder', () => {
     describe('JS optimization disabled only', () => {
       var builder;
       before(function() {
-        const options = new ApiConsoleBuilderOptions({
+        const options = new BuilderOptions({
           noJsOptimization: true
         });
         builder = new ApiConsoleBuilder(options);
-        builder._setOptymisationConditions();
+        builder.setOptymisationConditions();
       });
 
       it('Should set no comment optimization', function() {

@@ -1,7 +1,7 @@
 'use strict';
 
-const {ApiConsoleBuilder} = require('./lib/api-console-builder.js');
-const {ApiConsoleBuilderOptions} = require('./lib/api-console-builder-options.js');
+const {ApiConsoleProject} = require('./lib/api-console-project.js');
+const {BuilderOptions} = require('./lib/builder-options.js');
 
 /**
  * Copyright (C) Mulesoft.
@@ -31,11 +31,12 @@ const {ApiConsoleBuilderOptions} = require('./lib/api-console-builder-options.js
  * See the `lib/lib/api-console-builder-options` for list of available options.
  */
 module.exports = function(options) {
-  if (!(options instanceof ApiConsoleBuilderOptions)) {
-    options = new ApiConsoleBuilderOptions(options);
+  if (!(options instanceof BuilderOptions)) {
+    options = new BuilderOptions(options);
   }
-  const builder = new ApiConsoleBuilder(options);
-  return builder.build();
+  
+  const project = new ApiConsoleProject(options);
+  return project.build();
 };
 
-module.exports.ApiConsoleBuilderOptions = ApiConsoleBuilderOptions;
+module.exports.BuilderOptions = BuilderOptions;

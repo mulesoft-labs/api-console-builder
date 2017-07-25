@@ -1,10 +1,13 @@
 {
   "name": "api-console-builder",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
     "test": "mocha 'test/*.test.js' --reporter spec"
+  },
+  "engines": {
+    "node" : ">=6.5.0" 
   },
   "repository": {
     "type": "git",
@@ -32,12 +35,14 @@
     "gulp-strip-comments": "^2.4.5",
     "https": "^1.0.0",
     "merge-stream": "^1.0.1",
+    "parse5": "^3.0.2",
     "path": "^0.12.7",
+    "polymer-build": "1.5.1",
     "raml-json-enhance-node": "^0.2.0",
     "through2": "^2.0.3",
     "tmp": "0.0.31",
     "unzip": "^0.1.11",
-    "polymer-build": "1.5.1"
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
