@@ -54,6 +54,84 @@ describe('GitHub resolver', () => {
     });
   });
 
+  describe('_filterSupportedTags()', () => {
+    var list = [{
+      tag_name: '2.0.0'
+    }, {
+      tag_name: 'v2.0.0'
+    }, {
+      tag_name: '3.1.0-alpha'
+    }, {
+      tag_name: 'v4.0.0'
+    }, {
+      tag_name: '4.1.0'
+    }, {
+      tag_name: 'v4.0.1-test'
+    }, {
+      tag_name: 'v4.0.2-alpha',
+      prerelease: true
+    }, {
+      tag_name: 'v4.2.0'
+    }];
+
+    var resolver;
+    before(function() {
+      resolver = new GithubResolver();
+    });
+
+    it('Should filter preleases', function() {
+      var result = resolver._filterSupportedTags(list);
+      var item = result.find(item => item.prerelease);
+      assert.notOk(item);
+    });
+
+    it('Should filter out versions lower than major 4', function() {
+      var result = resolver._filterSupportedTags(list);
+      var item = result.find(item => (item.tag_name.indexOf('v2') !== -1 &&
+        item.tag_name.indexOf('v3') !== -1 &&
+        item.tag_name.indexOf('v3') !== -1 && item.tag_name.indexOf('3') !== -1));
+      assert.notOk(item);
+    });
+  });
+
+  describe('_sortTags()', () => {
+    var list = [{
+      tag_name: '2.0.0'
+    }, {
+      tag_name: 'v2.0.1'
+    }, {
+      tag_name: '3.1.0-alpha'
+    }, {
+      tag_name: 'v4.0.0'
+    }, {
+      tag_name: '4.1.0'
+    }, {
+      tag_name: 'v4.0.1-test'
+    }, {
+      tag_name: 'v4.0.2-alpha',
+      prerelease: true
+    }, {
+      tag_name: 'v4.2.0'
+    }];
+
+    var resolver;
+    before(function() {
+      resolver = new GithubResolver();
+    });
+
+    it('Should sort tags', function() {
+      list.sort(resolver._sortTags.bind(resolver));
+      assert.equal(list[0].tag_name, 'v4.2.0');
+      assert.equal(list[1].tag_name, '4.1.0');
+      assert.equal(list[2].tag_name, 'v4.0.2-alpha');
+      assert.equal(list[3].tag_name, 'v4.0.1-test');
+      assert.equal(list[4].tag_name, 'v4.0.0');
+      assert.equal(list[5].tag_name, '3.1.0-alpha');
+      assert.equal(list[6].tag_name, 'v2.0.1');
+      assert.equal(list[7].tag_name, '2.0.0');
+    });
+  });
+
   describe('getLatestInfo()', () => {
     var resolver;
     var response;
