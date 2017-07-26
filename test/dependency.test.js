@@ -162,7 +162,7 @@ describe('DependencyProcessor', () => {
       return fs.remove(workingDir);
     });
 
-    it('Should install basic dependencies dependencies', function() {
+    it('Should install basic dependencies', function() {
       this.timeout(30000);
       processor.opts.embedded = true;
       return fs.writeJson(bowerFile, bowerContent)

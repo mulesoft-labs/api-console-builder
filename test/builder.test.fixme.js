@@ -1,10 +1,11 @@
 'use strict';
 
 const {ApiConsoleBuilder} = require('../lib/builder');
-const assert = require('chai').assert;
 const path = require('path');
 const fs = require('fs-extra');
-
+/**
+ * TODO: This test doesn't work on darwin.
+ */
 describe('ApiConsoleBuilder', () => {
   const logger = {
     warn: function() {},
@@ -33,7 +34,7 @@ describe('ApiConsoleBuilder', () => {
     });
 
     it('Should build the console', function() {
-      this.timeout(50000);
+      this.timeout(300000);
       return builder.buildPolymer();
     });
   });
