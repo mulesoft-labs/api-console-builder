@@ -8,9 +8,15 @@ const path = require('path');
 
 describe('SourceControl', () => {
   const logger = {
-    warn: function() {},
-    info: function() {},
-    log: function() {}
+    warn: function() {
+      console.warn.apply(console, arguments);
+    },
+    info: function() {
+      console.info.apply(console, arguments);
+    },
+    log: function() {
+      console.log.apply(console, arguments);
+    }
   };
   const workingDir = 'playground/source-control-test';
   const opts = {};

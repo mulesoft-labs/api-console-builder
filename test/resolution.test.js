@@ -17,7 +17,7 @@ describe('resolution.test.js', () => {
         sourceIsZip: true,
         dest: workingDir,
         raml: 'test/api.raml',
-        verbose: false,
+        verbose: true,
         useJson: true,
         inlineJson: true
       })
