@@ -18,7 +18,7 @@ describe('Attributes build tests', () => {
           dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
-          verbose: false,
+          verbose: true,
           useJson: true,
           attributes: [
             {
