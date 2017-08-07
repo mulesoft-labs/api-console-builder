@@ -1,10 +1,10 @@
 'use strict';
 
 const builder = require('..');
-const workingDir = 'playground/attributes-test-build';
+const workingDir = 'test/playground/attributes-test-build';
 
 builder({
-  noOptimization: false,
+  noOptimization: true,
   src: 'test/api-console-release-4.0.0.zip',
   dest: workingDir,
   raml: 'test/api.raml',
@@ -13,12 +13,9 @@ builder({
   useJson: true,
   attributes: [
     {
-      'append-headers': 'x-header: text',
-      proxy: 'http://proxy.com',
-      'json-file': 'file.json'
+      'append-headers': 'x-header: text'
     },
     'narrow',
-    'no-try-it',
-    'proxy-encode-url'
+    'no-try-it'
   ]
 });
