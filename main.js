@@ -34,9 +34,10 @@ module.exports = function(options) {
   if (!(options instanceof BuilderOptions)) {
     options = new BuilderOptions(options);
   }
-  
+
   const project = new ApiConsoleProject(options);
   return project.build();
 };
 
+module.exports.ApiConsoleProject = ApiConsoleProject;
 module.exports.BuilderOptions = BuilderOptions;
