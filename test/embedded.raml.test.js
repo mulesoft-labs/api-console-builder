@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/build-embeded-raml';
+  const workingDir = 'test/build-embeded-raml';
   describe('embedded RAML build test', () => {
 
     before(function() {

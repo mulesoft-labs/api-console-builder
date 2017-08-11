@@ -18,7 +18,7 @@ describe('SourceControl', () => {
       console.log.apply(console, arguments);
     }
   };
-  const workingDir = 'playground/source-control-test';
+  const workingDir = 'test/source-control-test';
   const opts = {};
 
   describe('createWorkingDir()', () => {

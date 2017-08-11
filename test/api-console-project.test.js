@@ -5,10 +5,10 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 const path = require('path');
 
-describe('Api console project', () => {
-  const workingDir = 'test/playground/attributes-test-build';
+describe('Api console project', function() {
+  const workingDir = 'test/attributes-test-build';
   const defaultOptions = {
-    noOptimization: false,
+    noOptimization: true,
     src: 'test/api-console-release-4.0.0.zip',
     dest: workingDir,
     raml: 'test/api.raml',
@@ -16,7 +16,8 @@ describe('Api console project', () => {
     verbose: false
   };
 
-  describe('_sourcesToWorkingDirectory()', () => {
+  describe('_sourcesToWorkingDirectory()', function() {
+    this.timeout(10000);
     var project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
@@ -44,10 +45,12 @@ describe('Api console project', () => {
     });
   });
 
-  describe('_manageDependencies()', () => {
+  describe('_manageDependencies()', function() {
+    this.timeout(300000); // bower may need a while.
     var project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
+      // options.verbose = true;
       project = new ApiConsoleProject(options);
       return project._sourcesToWorkingDirectory();
     });
@@ -57,7 +60,6 @@ describe('Api console project', () => {
     });
 
     it('Should install dependencies', function() {
-      this.timeout(45000); // bower may need a while.
       return project._manageDependencies();
     });
 
@@ -69,7 +71,7 @@ describe('Api console project', () => {
       });
     });
 
-    it('Should not copy console\'s sources to  bower components', function() {
+    it('Compies console sources to bower components', function() {
       var consoleFile = path.join(project.workingDir, 'bower_components', 'api-console');
       return fs.pathExists(consoleFile)
       .then(exists => {
@@ -78,10 +80,10 @@ describe('Api console project', () => {
     });
   });
 
-  describe('_prebuildTemplates()', () => {
+  describe('_prebuildTemplates()', function() {
+    this.timeout(300000);
     var project;
     before(function() {
-      this.timeout(45000);
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
       return project._sourcesToWorkingDirectory()
@@ -109,10 +111,10 @@ describe('Api console project', () => {
     });
   });
 
-  describe('_setRaml()', () => {
+  describe('_setRaml()', function() {
+    this.timeout(300000);
     var project;
     before(function() {
-      this.timeout(15000);
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
       return project._sourcesToWorkingDirectory();

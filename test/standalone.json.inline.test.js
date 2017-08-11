@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/standalone-inline-json-test';
+  const workingDir = 'test/standalone-inline-json-test';
   describe('standalone JSON inline test', () => {
 
     var api = 'https://raw.githubusercontent.com/advanced-rest-client/';

@@ -5,7 +5,7 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 describe('Attributes build tests', () => {
-  const workingDir = 'playground/attributes-test-build';
+  const workingDir = 'test/attributes-test-build';
 
   describe('API Console attributes setup', () => {
     describe('Optimisation enabled', () => {

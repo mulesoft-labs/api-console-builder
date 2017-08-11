@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/standalone-local-sources-test';
+  const workingDir = 'test/standalone-local-sources-test';
   describe('standalone-local-sources', () => {
     after(function() {
       return fs.remove(workingDir);
