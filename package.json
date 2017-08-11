@@ -4,7 +4,7 @@
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
-    "test": "mocha 'test/*.test.js'"
+    "test": "mocha test/*.test.js"
   },
   "engines": {
     "node": ">=6.5.0"
@@ -46,7 +46,6 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "bower": "^1.8.0",
     "chai": "^3.5.0",
     "mocha": "^3.2.0"
   }
