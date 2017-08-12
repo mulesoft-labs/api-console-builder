@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const testHelper = require('./content-test-common');
 
 describe('resolution.test.js', () => {
-  const workingDir = 'playground/resolutions-test';
+  const workingDir = 'test/resolutions-test';
   describe('Imports resolutions', () => {
     var content;
     before(function() {

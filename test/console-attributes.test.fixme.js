@@ -5,7 +5,7 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 describe('Attributes build tests', () => {
-  const workingDir = 'playground/attributes-test-build';
+  const workingDir = 'test/attributes-test-build';
 
   describe('API Console attributes setup', () => {
     describe('Optimisation enabled', () => {
@@ -18,7 +18,7 @@ describe('Attributes build tests', () => {
           dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
-          verbose: false,
+          verbose: true,
           useJson: true,
           attributes: [
             {

@@ -12,7 +12,7 @@ describe('RamlSource', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'playground/raml-source';
+  const workingDir = 'test/raml-source';
   const opts = {
     raml: 'test/api.raml',
     useJson: true,

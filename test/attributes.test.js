@@ -27,7 +27,7 @@ describe('AttributesProcessor', () => {
     info: function() {},
     log: function() {}
   };
-  const workingDir = 'playground/attributes-class-test';
+  const workingDir = 'test/attributes-class-test';
   const attributes = [
     'test',
     'other-test',

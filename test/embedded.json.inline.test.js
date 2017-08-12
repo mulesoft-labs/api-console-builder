@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/build-embeded-json-inline';
+  const workingDir = 'test/build-embeded-json-inline';
   describe('embedded-json-inline', () => {
 
     before(function() {

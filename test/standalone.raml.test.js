@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/standalone-raml-test';
+  const workingDir = 'test/standalone-raml-test';
   describe('standalone-RAML', () => {
 
     var api = 'https://raw.githubusercontent.com/advanced-rest-client/';

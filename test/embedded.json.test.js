@@ -7,7 +7,7 @@ const testHelper = require('./content-test-common');
 const path = require('path');
 
 describe('api-console-builder', () => {
-  const workingDir = 'playground/build-embeded-json';
+  const workingDir = 'test/build-embeded-json';
   describe('embedded-json', () => {
 
     before(function() {
@@ -34,7 +34,7 @@ describe('api-console-builder', () => {
           assert.isTrue(exists);
         });
     });
-    
+
     it('import.html exists', function() {
       return fs.pathExists(workingDir + '/import.html')
         .then((exists) => {
