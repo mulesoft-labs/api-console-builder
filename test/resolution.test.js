@@ -10,7 +10,7 @@ describe('resolution.test.js', () => {
   describe('Imports resolutions', () => {
     var content;
     before(function() {
-      this.timeout(270000);
+      this.timeout(350000);
       return builder({
         noJsOptimization: false,
         src: 'test/api-console-release-4.0.0.zip',
