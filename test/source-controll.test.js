@@ -100,6 +100,7 @@ describe('SourceControl', () => {
     }
 
     beforeEach(function() {
+      this.timeout(60000);
       var options = Object.assign({}, opts);
       options.dest = workingDir;
       options.attributes = [{

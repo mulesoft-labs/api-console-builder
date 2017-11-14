@@ -44,6 +44,7 @@ describe('api-console-builder', () => {
     });
 
     it('Import links in index.html file are resolved', function() {
+      this.timeout(270000);
       return testHelper.countImportLinksfromFile(path.join(workingDir, 'index.html'))
       .then((links) => {
         assert.lengthOf(links, 0);
