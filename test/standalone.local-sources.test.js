@@ -17,7 +17,7 @@ describe('api-console-builder', () => {
       this.timeout(270000);
       return builder({
         noOptimization: true,
-        src: 'test/api-console-release-4.0.0.zip',
+        src: 'test/api-console-4.2.1.zip',
         dest: workingDir,
         raml: 'test/api.raml',
         sourceIsZip: true,
@@ -33,6 +33,7 @@ describe('api-console-builder', () => {
     });
 
     it('Import links in index.html file are resolved', function() {
+      this.timeout(10000);
       return testHelper.countImportLinksfromFile(path.join(workingDir, 'index.html'))
       .then((links) => {
         assert.lengthOf(links, 0);

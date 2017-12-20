@@ -9,7 +9,7 @@ describe('Api console project', function() {
   const workingDir = 'test/attributes-test-build';
   const defaultOptions = {
     noOptimization: true,
-    src: 'test/api-console-release-4.0.0.zip',
+    src: 'test/api-console-4.2.1.zip',
     dest: workingDir,
     raml: 'test/api.raml',
     sourceIsZip: true,

@@ -14,7 +14,7 @@ describe('Attributes build tests', () => {
         this.timeout(270000);
         return builder({
           noOptimization: false,
-          src: 'test/api-console-release-4.0.0.zip',
+          src: 'test/api-console-4.2.1.zip',
           dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
@@ -85,7 +85,7 @@ describe('Attributes build tests', () => {
         this.timeout(270000);
         return builder({
           noOptimization: true,
-          src: 'test/api-console-release-4.0.0.zip',
+          src: 'test/api-console-4.2.1.zip',
           dest: workingDir,
           raml: 'test/api.raml',
           sourceIsZip: true,
