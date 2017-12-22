@@ -13,7 +13,7 @@ describe('resolution.test.js', () => {
       this.timeout(350000);
       return builder({
         noJsOptimization: false,
-        src: 'test/api-console-release-4.0.0.zip',
+        src: 'test/api-console-4.2.1.zip',
         sourceIsZip: true,
         dest: workingDir,
         raml: 'test/api.raml',

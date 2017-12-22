@@ -8,4 +8,4 @@ dist
 npm-debug.log
 build-*
 playground
-xyz
+.DS_Store
