@@ -9,13 +9,13 @@ const path = require('path');
 describe('SourceControl', () => {
   const logger = {
     warn: function() {
-      console.warn.apply(console, arguments);
+      // console.warn.apply(console, arguments);
     },
     info: function() {
-      console.info.apply(console, arguments);
+      // console.info.apply(console, arguments);
     },
     log: function() {
-      console.log.apply(console, arguments);
+      // console.log.apply(console, arguments);
     }
   };
   const workingDir = 'test/source-control-test';
