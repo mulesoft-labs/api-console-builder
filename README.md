@@ -276,3 +276,7 @@ change in the future.
 Current API is rather stable and we are not planning breaking changes.
 
 Help us develop the API Console build tools! File an issue report for issues, feature requests for improvements. We'll be happy to hear from you.
+
+## GitHub requests limit exceeded error
+
+GitHub API allows 100 request per hour. Because of this limit you may experience this error. You can expand the limit by setting `GITHUB_TOKEN` system environment variable with a value of the GitHub personal token.
