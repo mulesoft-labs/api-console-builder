@@ -336,6 +336,81 @@ describe('builder-options', () => {
         assert.lengthOf(options.validationWarnings, 0);
       });
     });
+
+    describe('_validateLogger()', () => {
+      beforeEach(function() {
+        options = new BuilderOptions();
+      });
+
+      it('Should set warning for invalid object', function() {
+        options._validateLogger({
+          logger: {}
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 1);
+      });
+
+      it('Should set warning when missing info method', function() {
+        options._validateLogger({
+          logger: {
+            log: function() {},
+            warning: function() {},
+            error: function() {}
+          }
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 1);
+      });
+
+      it('Should set warning when missing log method', function() {
+        options._validateLogger({
+          logger: {
+            info: function() {},
+            warning: function() {},
+            error: function() {}
+          }
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 1);
+      });
+
+      it('Should set warning when missing warning method', function() {
+        options._validateLogger({
+          logger: {
+            info: function() {},
+            log: function() {},
+            error: function() {}
+          }
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 1);
+      });
+
+      it('Should set warning when missing error method', function() {
+        options._validateLogger({
+          logger: {
+            info: function() {},
+            log: function() {},
+            warning: function() {}
+          }
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 1);
+      });
+
+      it('Should not set warning when walid', function() {
+        options._validateLogger({
+          logger: {
+            info: function() {},
+            log: function() {},
+            warning: function() {},
+            error: function() {}
+          }
+        });
+        assert.isTrue(options.isValid);
+        assert.lengthOf(options.validationWarnings, 0);
+      });
+    });
   });
 
   describe('Default options', () => {

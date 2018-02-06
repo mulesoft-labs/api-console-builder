@@ -1,6 +1,6 @@
 {
   "name": "api-console-builder",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "merge-stream": "^1.0.1",
     "parse5": "^3.0.2",
     "polymer-build": "1.5.1",
-    "raml-json-enhance-node": "^0.3.1",
+    "raml-json-enhance-node": "^0.3.2",
     "through2": "^2.0.3",
     "tmp": "0.0.31",
     "winston": "^2.3.1"
