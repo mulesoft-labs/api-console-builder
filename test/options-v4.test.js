@@ -4,11 +4,11 @@ const {BuilderOptions} = require('../lib/builder-options.js');
 const assert = require('chai').assert;
 
 describe('builder-options', () => {
-
   describe('findAttribute()', () => {
-    var options;
+    let options;
 
     const opts = {
+      tagName: '4.0.0',
       attributes: [
         'test',
         'other-test',
@@ -25,93 +25,95 @@ describe('builder-options', () => {
     };
 
     before(function() {
-      options = new BuilderOptions();
+      options = new BuilderOptions({
+        tagName: '4.0.0'
+      });
     });
 
     it('Should find a boolean attribute', function() {
-      const result = options.findAttribute('test', opts);
+      const result = options.supportClass.findAttribute('test', opts);
       assert.ok(result);
     });
 
     it('Boolean attribute is a string', function() {
-      const result = options.findAttribute('test', opts);
+      const result = options.supportClass.findAttribute('test', opts);
       assert.typeOf(result, 'string');
     });
 
     it('Should find other boolean attribute', function() {
-      const result = options.findAttribute('third-test', opts);
+      const result = options.supportClass.findAttribute('third-test', opts);
       assert.ok(result);
     });
 
     it('Should find third boolean attribute', function() {
-      const result = options.findAttribute('other-test', opts);
+      const result = options.supportClass.findAttribute('other-test', opts);
       assert.ok(result);
     });
 
     it('Should find attribute with value', function() {
-      const result = options.findAttribute('attr-with-value', opts);
+      const result = options.supportClass
+        .findAttribute('attr-with-value', opts);
       assert.ok(result);
     });
 
     it('Attribute with value is an object', function() {
-      const result = options.findAttribute('attr-with-value', opts);
+      const result = options.supportClass
+        .findAttribute('attr-with-value', opts);
       assert.typeOf(result, 'object');
     });
 
     it('Attribute with value contains a name property', function() {
-      const result = options.findAttribute('attr-with-value', opts);
+      const result = options.supportClass
+        .findAttribute('attr-with-value', opts);
       assert.equal(result.name, 'attr-with-value');
     });
 
     it('Attribute with value contains a value property', function() {
-      const result = options.findAttribute('attr-with-value', opts);
+      const result = options.supportClass
+        .findAttribute('attr-with-value', opts);
       assert.equal(result.value, 'value');
     });
 
     it('Should find attribute with value in map', function() {
-      const result = options.findAttribute('second-value', opts);
+      const result = options.supportClass.findAttribute('second-value', opts);
       assert.ok(result);
     });
 
     it('Should find only firs matching attribute', function() {
-      const result = options.findAttribute('second-value', opts);
+      const result = options.supportClass.findAttribute('second-value', opts);
       assert.equal(result.value, 'test-value');
     });
 
     it('Should return undefined for unknown attribute', function() {
-      const result = options.findAttribute('unknown', opts);
+      const result = options.supportClass.findAttribute('unknown', opts);
       assert.isUndefined(result);
     });
 
-    it('Should return undefined if unknown without passing options', function() {
-      const result = options.findAttribute('unknown');
+    it('Should return undefined if unknown', function() {
+      const result = options.supportClass.findAttribute('unknown');
       assert.isUndefined(result);
-    });
-
-    it('Should find attribute from self instance', function() {
-      options = new BuilderOptions(opts);
-      const result = options.findAttribute('test');
-      assert.ok(result);
     });
   });
 
   describe('validateOptions()', () => {
-    var options;
+    let options;
 
     describe('_validateOptionsList()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should pass a known option', function() {
-        options._validateOptionsList({
+        options.supportClass._validateOptionsList({
           tagVersion: 'test'
         });
         assert.isTrue(options.isValid);
       });
 
       it('Should not pass a unknown option', function() {
-        options._validateOptionsList({
+        options.supportClass._validateOptionsList({
           test: 'test'
         });
         assert.isFalse(options.isValid);
@@ -120,11 +122,13 @@ describe('builder-options', () => {
 
     describe('_validateCompilerLevel()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should pass valid option', function() {
-        options._validateCompilerLevel({
+        options.supportClass._validateCompilerLevel({
           jsCompilationLevel: 'SIMPLE'
         });
         assert.isTrue(options.isValid);
@@ -132,21 +136,21 @@ describe('builder-options', () => {
       });
 
       it('Should warn for ADVANCED option', function() {
-        options._validateCompilerLevel({
+        options.supportClass._validateCompilerLevel({
           jsCompilationLevel: 'ADVANCED'
         });
         assert.lengthOf(options.validationWarnings, 1);
       });
 
       it('Should not pass invalid option', function() {
-        options._validateCompilerLevel({
+        options.supportClass._validateCompilerLevel({
           jsCompilationLevel: 'test'
         });
         assert.isFalse(options.isValid);
       });
 
       it('Should warn with noJsOptimization', function() {
-        options._validateCompilerLevel({
+        options.supportClass._validateCompilerLevel({
           jsCompilationLevel: 'SIMPLE',
           noJsOptimization: true
         });
@@ -155,7 +159,7 @@ describe('builder-options', () => {
       });
 
       it('Should warn with noOptimization', function() {
-        options._validateCompilerLevel({
+        options.supportClass._validateCompilerLevel({
           jsCompilationLevel: 'SIMPLE',
           noOptimization: true
         });
@@ -166,11 +170,13 @@ describe('builder-options', () => {
 
     describe('_validateSourceOptions()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should fail for src and tagVersion', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           src: 'test',
           tagVersion: 'v1'
         });
@@ -179,7 +185,7 @@ describe('builder-options', () => {
       });
 
       it('Should want for sourceIsZip and src not set', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           sourceIsZip: true
         });
         assert.isTrue(options.isValid);
@@ -187,7 +193,7 @@ describe('builder-options', () => {
       });
 
       it('Should want for sourceIsZip and tagVersion set', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           sourceIsZip: true,
           tagVersion: 'v1'
         });
@@ -196,7 +202,7 @@ describe('builder-options', () => {
       });
 
       it('Passes valid src', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           src: 'test'
         });
         assert.isTrue(options.isValid);
@@ -204,7 +210,7 @@ describe('builder-options', () => {
       });
 
       it('Passes valid tagVersion', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           tagVersion: 'test'
         });
         assert.isTrue(options.isValid);
@@ -212,7 +218,7 @@ describe('builder-options', () => {
       });
 
       it('Passes valid src and sourceIsZip', function() {
-        options._validateSourceOptions({
+        options.supportClass._validateSourceOptions({
           src: 'test',
           sourceIsZip: true
         });
@@ -223,11 +229,13 @@ describe('builder-options', () => {
 
     describe('_validateNoCompilationOptions()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should pass valid option', function() {
-        options._validateNoCompilationOptions({
+        options.supportClass._validateNoCompilationOptions({
           noOptimization: true
         });
         assert.isTrue(options.isValid);
@@ -235,7 +243,7 @@ describe('builder-options', () => {
       });
 
       it('Should warn about noJsOptimization', function() {
-        options._validateNoCompilationOptions({
+        options.supportClass._validateNoCompilationOptions({
           noOptimization: true,
           noJsOptimization: true
         });
@@ -244,7 +252,7 @@ describe('builder-options', () => {
       });
 
       it('Should warn about noHtmlOptimization', function() {
-        options._validateNoCompilationOptions({
+        options.supportClass._validateNoCompilationOptions({
           noOptimization: true,
           noHtmlOptimization: true
         });
@@ -253,7 +261,7 @@ describe('builder-options', () => {
       });
 
       it('Should warn about noCssOptimization', function() {
-        options._validateNoCompilationOptions({
+        options.supportClass._validateNoCompilationOptions({
           noOptimization: true,
           noCssOptimization: true
         });
@@ -262,47 +270,21 @@ describe('builder-options', () => {
       });
     });
 
-    describe('_validateAttributes()', () => {
-      beforeEach(function() {
-        options = new BuilderOptions();
-      });
-
-      it('Should pass when no attributes set', function() {
-        options._validateAttributes({});
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 0);
-      });
-
-      it('Should pass when empty array', function() {
-        options._validateAttributes({
-          attributes: []
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 0);
-      });
-
-      it('Should not pas when not an array', function() {
-        options._validateAttributes({
-          attributes: 'test'
-        });
-        assert.isFalse(options.isValid);
-        assert.lengthOf(options.validationWarnings, 0);
-      });
-    });
-
     describe('_validateApiFileOptions()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should pass when no attributes set', function() {
-        options._validateApiFileOptions({});
+        options.supportClass._validateApiFileOptions({});
         assert.isTrue(options.isValid);
         assert.lengthOf(options.validationWarnings, 0);
       });
 
       it('Should pass when json-file is not in the list', function() {
-        options._validateApiFileOptions({
+        options.supportClass._validateApiFileOptions({
           attributes: [{'test': 'test'}]
         });
         assert.isTrue(options.isValid);
@@ -310,7 +292,7 @@ describe('builder-options', () => {
       });
 
       it('Should fail if value is not a string', function() {
-        options._validateApiFileOptions({
+        options.supportClass._validateApiFileOptions({
           attributes: [{'json-file': true}]
         });
         assert.isFalse(options.isValid);
@@ -318,7 +300,7 @@ describe('builder-options', () => {
       });
 
       it('Should warn when missing useJson property', function() {
-        options._validateApiFileOptions({
+        options.supportClass._validateApiFileOptions({
           attributes: [{'json-file': 'test'}],
           raml: 'test'
         });
@@ -327,7 +309,7 @@ describe('builder-options', () => {
       });
 
       it('Should pass when using useJson property', function() {
-        options._validateApiFileOptions({
+        options.supportClass._validateApiFileOptions({
           attributes: [{'json-file': 'test'}],
           raml: 'test',
           useJson: true
@@ -339,11 +321,13 @@ describe('builder-options', () => {
 
     describe('_validateLogger()', () => {
       beforeEach(function() {
-        options = new BuilderOptions();
+        options = new BuilderOptions({
+          tagName: '4.0.0'
+        });
       });
 
       it('Should set warning for invalid object', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {}
         });
         assert.isTrue(options.isValid);
@@ -351,7 +335,7 @@ describe('builder-options', () => {
       });
 
       it('Should set warning when missing info method', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {
             log: function() {},
             warning: function() {},
@@ -363,7 +347,7 @@ describe('builder-options', () => {
       });
 
       it('Should set warning when missing log method', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {
             info: function() {},
             warning: function() {},
@@ -375,7 +359,7 @@ describe('builder-options', () => {
       });
 
       it('Should set warning when missing warning method', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {
             info: function() {},
             log: function() {},
@@ -387,7 +371,7 @@ describe('builder-options', () => {
       });
 
       it('Should set warning when missing error method', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {
             info: function() {},
             log: function() {},
@@ -399,7 +383,7 @@ describe('builder-options', () => {
       });
 
       it('Should not set warning when walid', function() {
-        options._validateLogger({
+        options.supportClass._validateLogger({
           logger: {
             info: function() {},
             log: function() {},
@@ -414,10 +398,12 @@ describe('builder-options', () => {
   });
 
   describe('Default options', () => {
-    var options;
+    let options;
 
     before(function() {
-      options = new BuilderOptions();
+      options = new BuilderOptions({
+        tagName: '4.0.0'
+      });
     });
 
     it('Should not set src default option', function() {
@@ -482,6 +468,7 @@ describe('builder-options', () => {
 
     it('Should set attributes for raml and useJson', function() {
       options = new BuilderOptions({
+        tagName: '4.0.0',
         raml: 'true',
         useJson: true
       });
@@ -490,10 +477,11 @@ describe('builder-options', () => {
 
     it('Added attribute is for json-file', function() {
       options = new BuilderOptions({
+        tagName: '4.0.0',
         raml: 'true',
         useJson: true
       });
-      var attr = options.findAttribute('json-file');
+      let attr = options.supportClass.findAttribute('json-file');
       assert.equal(attr.value, 'api.json');
     });
   });
