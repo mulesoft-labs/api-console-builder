@@ -12,13 +12,12 @@ describe('Api console project', function() {
     src: 'test/api-console-4.2.1.zip',
     dest: workingDir,
     raml: 'test/api.raml',
-    sourceIsZip: true,
     verbose: false
   };
 
   describe('_sourcesToWorkingDirectory()', function() {
     this.timeout(10000);
-    var project;
+    let project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);

@@ -8,13 +8,12 @@ const testHelper = require('./content-test-common');
 describe('resolution.test.js', () => {
   const workingDir = 'test/resolutions-test';
   describe('Imports resolutions', () => {
-    var content;
+    let content;
     before(function() {
       this.timeout(350000);
       return builder({
         noJsOptimization: false,
         src: 'test/api-console-4.2.1.zip',
-        sourceIsZip: true,
         dest: workingDir,
         raml: 'test/api.raml',
         verbose: false,

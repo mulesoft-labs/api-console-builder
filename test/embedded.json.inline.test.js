@@ -9,13 +9,11 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/build-embeded-json-inline';
   describe('embedded-json-inline', () => {
-
     before(function() {
       this.timeout(120000);
       return builder({
         noOptimization: true,
         src: 'test/api-console-4.2.1.zip',
-        sourceIsZip: true,
         dest: workingDir,
         raml: 'test/api.raml',
         embedded: true,

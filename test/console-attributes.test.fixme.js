@@ -17,13 +17,12 @@ describe('Attributes build tests', () => {
           src: 'test/api-console-4.2.1.zip',
           dest: workingDir,
           raml: 'test/api.raml',
-          sourceIsZip: true,
           verbose: true,
           useJson: true,
           attributes: [
             {
               'append-headers': 'x-header: text',
-              proxy: 'http://proxy.com',
+              'proxy': 'http://proxy.com',
               'json-file': 'file.json'
             },
             'narrow',
@@ -88,13 +87,12 @@ describe('Attributes build tests', () => {
           src: 'test/api-console-4.2.1.zip',
           dest: workingDir,
           raml: 'test/api.raml',
-          sourceIsZip: true,
           verbose: false,
           useJson: true,
           attributes: [
             {
               'append-headers': 'x-header: text',
-              proxy: 'http://proxy.com',
+              'proxy': 'http://proxy.com',
               'json-file': 'file.json'
             },
             'narrow',

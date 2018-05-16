@@ -184,23 +184,6 @@ describe('builder-options', () => {
         assert.lengthOf(options.validationWarnings, 0);
       });
 
-      it('Should want for sourceIsZip and src not set', function() {
-        options.supportClass._validateSourceOptions({
-          sourceIsZip: true
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 1);
-      });
-
-      it('Should want for sourceIsZip and tagVersion set', function() {
-        options.supportClass._validateSourceOptions({
-          sourceIsZip: true,
-          tagVersion: 'v1'
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 2);
-      });
-
       it('Passes valid src', function() {
         options.supportClass._validateSourceOptions({
           src: 'test'
@@ -212,15 +195,6 @@ describe('builder-options', () => {
       it('Passes valid tagVersion', function() {
         options.supportClass._validateSourceOptions({
           tagVersion: 'test'
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 0);
-      });
-
-      it('Passes valid src and sourceIsZip', function() {
-        options.supportClass._validateSourceOptions({
-          src: 'test',
-          sourceIsZip: true
         });
         assert.isTrue(options.isValid);
         assert.lengthOf(options.validationWarnings, 0);
@@ -428,10 +402,6 @@ describe('builder-options', () => {
 
     it('Should set inlineJson default option', function() {
       assert.isFalse(options.inlineJson);
-    });
-
-    it('Should set sourceIsZip default option', function() {
-      assert.isFalse(options.sourceIsZip);
     });
 
     it('Should set embedded default option', function() {

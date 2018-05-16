@@ -9,13 +9,11 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/build-plain-raml';
   describe('embedded plain build test', () => {
-
     before(function() {
       this.timeout(120000);
       return builder({
         noOptimization: true,
         src: 'test/api-console-4.2.1.zip',
-        sourceIsZip: true,
         dest: workingDir,
         embedded: true,
         verbose: false
