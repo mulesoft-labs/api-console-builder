@@ -1,6 +1,6 @@
 {
   "name": "api-console-builder",
-  "version": "0.4.7",
+  "version": "1.0.0",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
@@ -26,9 +26,9 @@
   "homepage": "https://github.com/mulesoft-labs/api-console-builder#readme",
   "dependencies": {
     "api-console-builder-templates": "^0.1.0",
-    "api-console-dependency-manager": "^0.1.0",
-    "api-console-github-resolver": "^0.1.0",
-    "api-console-sources-resolver": "^0.1.0",
+    "api-console-dependency-manager": "mulesoft-labs/api-console-dependency-manager#stable-release",
+    "api-console-github-resolver": "mulesoft-labs/api-console-github-resolver#stable-release",
+    "api-console-sources-resolver": "mulesoft-labs/api-console-sources-resolver#stable-release",
     "colors": "^1.1.2",
     "css-slam": "^1.2.1",
     "fs-extra": "^3.0.0",
