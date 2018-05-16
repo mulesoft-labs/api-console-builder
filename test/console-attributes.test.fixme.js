@@ -9,7 +9,7 @@ describe('Attributes build tests', () => {
 
   describe('API Console attributes setup', () => {
     describe('Optimisation enabled', () => {
-      var content;
+      let content;
       before(function() {
         this.timeout(270000);
         return builder({
@@ -32,23 +32,30 @@ describe('Attributes build tests', () => {
         })
         .then(() => fs.readFile(workingDir + '/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
+          content = data.match(
+            /<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
       after(function() {
         return fs.remove(workingDir);
       });
-
+      /**
+       * @param {String} attribute
+       * @return {Strring}
+       */
       function readAttribute(attribute) {
-        var reg = new RegExp(`${attribute}="([^"]*)"`);
-        var match = content.match(reg);
+        const reg = new RegExp(`${attribute}="([^"]*)"`);
+        const match = content.match(reg);
         if (!match) {
           return;
         }
         return match[1];
       }
-
+      /**
+       * @param {String} attribute
+       * @return {Boolean}
+       */
       function hasAttribute(attribute) {
         return content.indexOf(attribute) !== -1;
       }
@@ -79,7 +86,7 @@ describe('Attributes build tests', () => {
     });
 
     describe('Optimisation disabled', () => {
-      var content;
+      let content;
       before(function() {
         this.timeout(270000);
         return builder({
@@ -102,23 +109,30 @@ describe('Attributes build tests', () => {
         })
         .then(() => fs.readFile(workingDir + '/index.html', 'utf8'))
         .then((data) => {
-          content = data.match(/<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
+          content = data.match(
+            /<api-console ([^>]*)by-api-console-builder[^>]*/gm)[0];
         });
       });
 
       after(function() {
         return fs.remove(workingDir);
       });
-
+      /**
+       * @param {String} attribute
+       * @return {Strring}
+       */
       function readAttribute(attribute) {
-        var reg = new RegExp(`${attribute}="([^"]*)"`);
-        var match = content.match(reg);
+        const reg = new RegExp(`${attribute}="([^"]*)"`);
+        const match = content.match(reg);
         if (!match) {
           return;
         }
         return match[1];
       }
-
+      /**
+       * @param {String} attribute
+       * @return {Boolean}
+       */
       function hasAttribute(attribute) {
         return content.indexOf(attribute) !== -1;
       }

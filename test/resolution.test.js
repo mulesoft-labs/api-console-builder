@@ -31,7 +31,7 @@ describe('resolution.test.js', () => {
     });
 
     it('All imports are resolved', function() {
-      var links = testHelper.countImportLinks(content);
+      const links = testHelper.countImportLinks(content);
       assert.lengthOf(links, 0);
     });
   });

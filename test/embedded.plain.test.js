@@ -46,7 +46,8 @@ describe('api-console-builder', () => {
     });
 
     it('Import links in import.html file are resolved', function() {
-      return testHelper.countImportLinksfromFile(path.join(workingDir, 'import.html'))
+      return testHelper.countImportLinksfromFile(
+        path.join(workingDir, 'import.html'))
       .then((links) => {
         assert.lengthOf(links, 0);
       });

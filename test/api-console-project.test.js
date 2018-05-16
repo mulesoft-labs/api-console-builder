@@ -36,9 +36,9 @@ describe('Api console project', function() {
     });
 
     it('Should copy sources to the temp location', function() {
-      var consoleFile = path.join(project.workingDir, 'api-console.html');
+      const consoleFile = path.join(project.workingDir, 'api-console.html');
       return fs.pathExists(consoleFile)
-      .then(exists => {
+      .then((exists) => {
         assert.isTrue(exists);
       });
     });
@@ -46,7 +46,7 @@ describe('Api console project', function() {
 
   describe('_manageDependencies()', function() {
     this.timeout(300000); // bower may need a while.
-    var project;
+    let project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
       // options.verbose = true;
@@ -63,17 +63,20 @@ describe('Api console project', function() {
     });
 
     it('Should install bower components', function() {
-      var consoleFile = path.join(project.workingDir, 'bower_components');
+      const consoleFile = path.join(project.workingDir, 'bower_components');
       return fs.pathExists(consoleFile)
-      .then(exists => {
+      .then((exists) => {
         assert.isTrue(exists);
       });
     });
 
     it('Compies console sources to bower components', function() {
-      var consoleFile = path.join(project.workingDir, 'bower_components', 'api-console');
+      const consoleFile = path.join(
+        project.workingDir,
+        'bower_components',
+        'api-console');
       return fs.pathExists(consoleFile)
-      .then(exists => {
+      .then((exists) => {
         assert.isTrue(exists);
       });
     });
@@ -81,7 +84,7 @@ describe('Api console project', function() {
 
   describe('_prebuildTemplates()', function() {
     this.timeout(300000);
-    var project;
+    let project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
@@ -102,9 +105,9 @@ describe('Api console project', function() {
     });
 
     it('Template is copied', function() {
-      var consoleFile = path.join(project.workingDir, project.opts.mainFile);
+      const consoleFile = path.join(project.workingDir, project.opts.mainFile);
       return fs.pathExists(consoleFile)
-      .then(exists => {
+      .then((exists) => {
         assert.isTrue(exists);
       });
     });
@@ -112,7 +115,7 @@ describe('Api console project', function() {
 
   describe('_setRaml()', function() {
     this.timeout(300000);
-    var project;
+    let project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
