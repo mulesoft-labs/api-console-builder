@@ -8,6 +8,8 @@ builder({
   destination: workingDir,
   api: 'test/api.raml',
   verbose: true,
+  noCryptoJs: true,
+  noJsPolyfills: true,
   attributes: [
     {
       'append-headers': 'x-header: text'

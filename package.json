@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-builder#readme",
   "dependencies": {
-    "amf-client-js": "^1.4.0-28",
-    "api-console-builder-templates": "^0.1.0",
+    "amf-client-js": "^1.4.0-30",
+    "api-console-builder-templates": "mulesoft-labs/api-console-builder-templates#stable-release",
     "api-console-dependency-manager": "mulesoft-labs/api-console-dependency-manager#stable-release",
     "api-console-github-resolver": "mulesoft-labs/api-console-github-resolver#stable-release",
     "api-console-sources-resolver": "mulesoft-labs/api-console-sources-resolver#stable-release",
     "colors": "^1.1.2",
-    "css-slam": "^1.2.1",
+    "css-slam": "^2.1.2",
     "fs-extra": "^3.0.0",
     "google-closure-compiler-js": "^20170423.0.0",
     "gulp": "gulpjs/gulp#4.0",
@@ -40,7 +40,7 @@
     "gulp-strip-comments": "^2.4.5",
     "merge-stream": "^1.0.1",
     "parse5": "^3.0.2",
-    "polymer-build": "1.5.1",
+    "polymer-build": "^3.0.1",
     "raml-json-enhance-node": "^0.3.2",
     "through2": "^2.0.3",
     "tmp": "0.0.31",
@@ -50,7 +50,7 @@
     "chai": "^3.5.0",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "mocha": "^3.2.0"
+    "mocha": "^5.2.0"
   },
   "files": [
     "lib",
