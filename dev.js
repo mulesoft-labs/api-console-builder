@@ -7,7 +7,7 @@ builder({
   local: 'test/api-console-5.0.0-preview.zip',
   destination: workingDir,
   api: 'test/api.raml',
-  // embedded: true,
+  embedded: true,
   verbose: true,
   // noCryptoJs: true,
   // noJsPolyfills: true,
