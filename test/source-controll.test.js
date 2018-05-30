@@ -19,33 +19,35 @@ describe('SourceControl', () => {
     }
   };
   const workingDir = 'test/source-control-test';
-  const opts = {};
+  const opts = {
+    tagName: '4.2.1'
+  };
 
   describe('createWorkingDir()', () => {
-    var processor;
+    let processor;
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      const options = Object.assign({}, opts);
       processor = new SourceControl(options, logger);
     });
 
     it('Creates a temporary location', function() {
       return processor.createWorkingDir()
-      .then(path => {
+      .then((path) => {
         assert.isString(path);
         return path;
       })
-      .then(path => processor.cleanup(path));
+      .then((path) => processor.cleanup(path));
     });
 
     // This is important for Polymer Builder.
     it('Temporary location is not a symbolic link', function() {
-      var _path;
+      let _path;
       return processor.createWorkingDir()
-      .then(p => {
+      .then((p) => {
         _path = p;
         return fs.stat(_path);
       })
-      .then(stats => {
+      .then((stats) => {
         assert.isFalse(stats.isSymbolicLink());
       })
       .then(() => processor.cleanup(_path));
@@ -53,16 +55,16 @@ describe('SourceControl', () => {
   });
 
   describe('cleanup()', () => {
-    var processor;
+    let processor;
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       processor = new SourceControl(options, logger);
     });
 
     it('Clears temportary location with files', function() {
-      var _path;
+      let _path;
       return processor.createWorkingDir()
-      .then(_p => {
+      .then((_p) => {
         _path = _p;
         return fs.writeFile(path.join(_p, 'test.log'), 'test', 'utf8');
       })
@@ -77,11 +79,14 @@ describe('SourceControl', () => {
   });
 
   describe('copyOutput()', () => {
-    var processor;
-    var tmpWorkingDir;
-
+    let processor;
+    let tmpWorkingDir;
+    /**
+     * @param {Arrat} files
+     * @return {Promise}
+     */
     function finishTest(files) {
-      var promise = [];
+      let promise = [];
       if (files instanceof Array) {
         let list = files.map((file) => fs.pathExists(file));
         promise = Promise.all(list);
@@ -101,7 +106,7 @@ describe('SourceControl', () => {
 
     beforeEach(function() {
       this.timeout(60000);
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       options.dest = workingDir;
       options.attributes = [{
         'json-file': 'api-data.json'
@@ -117,16 +122,22 @@ describe('SourceControl', () => {
         return fs.ensureDir(path.join(tmpWorkingDir, 'build', 'other'));
       })
       .then(() => {
-        return fs.writeFile(path.join(tmpWorkingDir, 'build', 'test.log'), 'test', 'utf8');
+        return fs.writeFile(
+          path.join(tmpWorkingDir, 'build', 'test.log'), 'test', 'utf8');
       })
       .then(() => {
-        return fs.writeFile(path.join(tmpWorkingDir, 'build', 'other', 'test.log'), 'test', 'utf8');
+        return fs.writeFile(
+          path.join(
+            tmpWorkingDir, 'build', 'other', 'test.log'), 'test', 'utf8');
       })
       .then(() => {
-        return fs.writeFile(path.join(tmpWorkingDir, 'api-data.json'), 'test', 'utf8');
+        return fs.writeFile(
+          path.join(
+            tmpWorkingDir, 'api-data.json'), 'test', 'utf8');
       })
       .then(() => {
-        return fs.writeFile(path.join(tmpWorkingDir, 'example.html'), 'test', 'utf8');
+        return fs.writeFile(
+          path.join(tmpWorkingDir, 'example.html'), 'test', 'utf8');
       });
     });
 

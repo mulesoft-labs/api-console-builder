@@ -9,10 +9,11 @@ describe('Api console project', function() {
   const workingDir = 'test/attributes-test-build';
   const defaultOptions = {
     noOptimization: true,
-    src: 'test/api-console-4.2.1.zip',
+    // src: 'test/api-console-4.2.1.zip',
     dest: workingDir,
     raml: 'test/api.raml',
-    verbose: false
+    verbose: false,
+    tagName: 'v4.2.1'
   };
 
   describe('_sourcesToWorkingDirectory()', function() {
@@ -28,15 +29,16 @@ describe('Api console project', function() {
     });
 
     it('Should copy sorces to temp location', function() {
-      return project._sourcesToWorkingDirectory();
+      return project.proxy._sourcesToWorkingDirectory();
     });
 
     it('Should set workingDir property', function() {
-      assert.typeOf(project.workingDir, 'string');
+      assert.typeOf(project.proxy.workingDir, 'string');
     });
 
     it('Should copy sources to the temp location', function() {
-      const consoleFile = path.join(project.workingDir, 'api-console.html');
+      const consoleFile = path.join(
+        project.proxy.workingDir, 'api-console.html');
       return fs.pathExists(consoleFile)
       .then((exists) => {
         assert.isTrue(exists);
@@ -51,7 +53,7 @@ describe('Api console project', function() {
       const options = Object.assign({}, defaultOptions);
       // options.verbose = true;
       project = new ApiConsoleProject(options);
-      return project._sourcesToWorkingDirectory();
+      return project.proxy._sourcesToWorkingDirectory();
     });
 
     after(function() {
@@ -59,11 +61,12 @@ describe('Api console project', function() {
     });
 
     it('Should install dependencies', function() {
-      return project._manageDependencies();
+      return project.proxy._manageDependencies();
     });
 
     it('Should install bower components', function() {
-      const consoleFile = path.join(project.workingDir, 'bower_components');
+      const consoleFile = path.join(
+        project.proxy.workingDir, 'bower_components');
       return fs.pathExists(consoleFile)
       .then((exists) => {
         assert.isTrue(exists);
@@ -72,7 +75,7 @@ describe('Api console project', function() {
 
     it('Compies console sources to bower components', function() {
       const consoleFile = path.join(
-        project.workingDir,
+        project.proxy.workingDir,
         'bower_components',
         'api-console');
       return fs.pathExists(consoleFile)
@@ -88,8 +91,8 @@ describe('Api console project', function() {
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
-      return project._sourcesToWorkingDirectory()
-      .then(() => project._manageDependencies());
+      return project.proxy._sourcesToWorkingDirectory()
+      .then(() => project.proxy._manageDependencies());
     });
 
     after(function() {
@@ -97,15 +100,16 @@ describe('Api console project', function() {
     });
 
     it('Should copy templates', function() {
-      return project._prebuildTemplates();
+      return project.proxy._prebuildTemplates();
     });
 
     it('Should set mainFile in options', function() {
-      assert.typeOf(project.opts.mainFile, 'string');
+      assert.typeOf(project.proxy.opts.mainFile, 'string');
     });
 
     it('Template is copied', function() {
-      const consoleFile = path.join(project.workingDir, project.opts.mainFile);
+      const consoleFile = path.join(
+        project.proxy.workingDir, project.proxy.opts.mainFile);
       return fs.pathExists(consoleFile)
       .then((exists) => {
         assert.isTrue(exists);
@@ -119,15 +123,15 @@ describe('Api console project', function() {
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
-      return project._sourcesToWorkingDirectory();
+      return project.proxy._sourcesToWorkingDirectory();
     });
 
     it('Should parse raml', function() {
-      return project._setRaml();
+      return project.proxy._setRaml();
     });
 
     it('Should set raml property', function() {
-      assert.typeOf(project.raml, 'object');
+      assert.typeOf(project.proxy.raml, 'object');
     });
   });
 });

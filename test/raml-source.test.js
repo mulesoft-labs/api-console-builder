@@ -1,6 +1,6 @@
 'use strict';
 
-const {RamlSource} = require('../lib/raml-source');
+const {RamlSource} = require('../lib/project-support-4/raml-source');
 const {BuilderOptions} = require('../lib/builder-options');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
@@ -15,6 +15,7 @@ describe('RamlSource', () => {
   const workingDir = 'test/raml-source';
   const opts = {
     raml: 'test/api.raml',
+    tagName: '4.2.1',
     useJson: true,
     attributes: [
       {'json-file': 'api-data.json'}
@@ -22,11 +23,11 @@ describe('RamlSource', () => {
   };
 
   describe('apiOutputPath()', () => {
-    var processor;
-    var outputFile = path.join(workingDir, 'api-data.json');
+    let processor;
+    let outputFile = path.join(workingDir, 'api-data.json');
 
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       options.dest = workingDir;
       options.attributes = [{
         'json-file': 'api-data.json'
@@ -36,34 +37,34 @@ describe('RamlSource', () => {
     });
 
     it('Computes JSON file name', function() {
-      var location = processor.apiOutputPath(workingDir);
+      const location = processor.apiOutputPath(workingDir);
       assert.equal(location, outputFile);
     });
 
-    it('Location is undefined if not usinf JSON', function() {
-      delete processor.opts.useJson;
-      var location = processor.apiOutputPath(workingDir);
+    it('Location is undefined if not using JSON', function() {
+      delete processor.opts.supportClass.useJson;
+      const location = processor.apiOutputPath(workingDir);
       assert.isUndefined(location);
     });
 
     it('Prints error when api-json attribute is not set', function() {
-      delete processor.opts.attributes[0];
-      var called = false;
+      delete processor.opts.supportClass.attributes[0];
+      let called = false;
       processor.logger.warn = function() {
         called = true;
       };
-      var location = processor.apiOutputPath(workingDir);
+      const location = processor.apiOutputPath(workingDir);
       assert.isUndefined(location);
       assert.isTrue(called);
     });
   });
 
   describe('getRamlJson()', () => {
-    var processor;
-    var outputFile = path.join(workingDir, 'api-data.json');
+    let processor;
+    const outputFile = path.join(workingDir, 'api-data.json');
 
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       options.dest = workingDir;
       options.attributes = [{
         'json-file': 'api-data.json'

@@ -9,8 +9,7 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/standalone-json-test';
   describe('standalone JSON', () => {
-
-    var api = 'https://raw.githubusercontent.com/advanced-rest-client/';
+    let api = 'https://raw.githubusercontent.com/advanced-rest-client/';
     api += 'raml-example-api/master/api.raml';
 
     after(function() {
@@ -21,11 +20,11 @@ describe('api-console-builder', () => {
       this.timeout(270000);
       return builder({
         noOptimization: true,
-        src: 'https://github.com/mulesoft/api-console/archive/v4.2.1.zip',
         dest: workingDir,
         raml: api,
         verbose: false,
-        useJson: true
+        useJson: true,
+        tagName: 'v4.2.1'
       });
     });
 
@@ -45,7 +44,8 @@ describe('api-console-builder', () => {
 
     it('Import links in index.html file are resolved', function() {
       this.timeout(270000);
-      return testHelper.countImportLinksfromFile(path.join(workingDir, 'index.html'))
+      return testHelper.countImportLinksfromFile(
+        path.join(workingDir, 'index.html'))
       .then((links) => {
         assert.lengthOf(links, 0);
       });
