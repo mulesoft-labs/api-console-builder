@@ -35,7 +35,7 @@
     "fs-extra": "^3.0.0",
     "google-closure-compiler-js": "^20170423.0.0",
     "gulp": "gulpjs/gulp#4.0",
-    "gulp-html-minifier": "^0.1.8",
+    "gulp-htmlmin": "^4.0.0",
     "gulp-if": "^2.0.2",
     "gulp-strip-comments": "^2.4.5",
     "gulp-uglify": "^3.0.0",
