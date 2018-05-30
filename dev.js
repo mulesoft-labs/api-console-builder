@@ -16,7 +16,6 @@ builder({
     {
       'append-headers': 'x-header: text'
     },
-    'narrow',
-    'no-try-it'
+    'narrow'
   ]
 });
