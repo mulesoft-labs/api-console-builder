@@ -6,16 +6,126 @@ const fs = require('fs-extra');
 const path = require('path');
 
 describe('Api console project', function() {
-  const workingDir = 'test/attributes-test-build';
+  const workingDir = 'test/test-build';
   const defaultOptions = {
-    noOptimization: true,
-    // src: 'test/api-console-4.2.1.zip',
-    dest: workingDir,
-    raml: 'test/api.raml',
+    destination: workingDir,
+    api: 'test/api.raml',
+    apiType: 'RAML 1.0',
     verbose: false,
-    tagVersion: 'v4.2.1',
-    majorRelease: 4
+    tagName: '5.0.0-preview'
   };
+  const defaultOptionsEmbedded = {
+    destination: workingDir,
+    api: 'test/api.raml',
+    apiType: 'RAML 1.0',
+    verbose: false,
+    tagName: '5.0.0-preview',
+    embedded: true
+  };
+
+  const customLogger = {
+    info: function() {},
+    log: function() {},
+    warn: function() {},
+    error: function() {}
+  };
+
+  describe('constructor', () => {
+    it('Sets opts property', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.typeOf(project.opts, 'object', 'Is an object');
+      assert.equal(project.opts.constructor.name,
+        'BuilderOptions', 'Is instance of BuilderOptions');
+    });
+
+    it('Sets default logger', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.typeOf(project.logger, 'object', 'Is an object');
+    });
+
+    it('Uses passed logger', () => {
+      const opts = Object.assign({}, defaultOptions);
+      opts.logger = customLogger;
+      const project = new ApiConsoleProject(opts);
+      assert.isTrue(project.logger === customLogger);
+    });
+
+    it('Sets startDir', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.typeOf(project.startDir, 'string');
+    });
+
+    it('Sets workingBuildOutput', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.typeOf(project.workingBuildOutput, 'string');
+    });
+
+    it('sourceControl returns class instance', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.equal(project.sourceControl.constructor.name,
+        'SourceControl', 'Is instance of SourceControl');
+    });
+
+    it('consoleSources returns class instance', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      assert.equal(project.consoleSources.constructor.name,
+        'ApiConsoleSources', 'Is instance of ApiConsoleSources');
+    });
+  });
+
+  describe('_setup()', () => {
+    it('Sets buildType property to "model"', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      project._setup();
+      assert.equal(project.buildType, 'model');
+    });
+
+    it('Sets buildType property to "api"', () => {
+      const opts = Object.assign({}, defaultOptions);
+      opts.withAmf = true;
+      const project = new ApiConsoleProject(opts);
+      project._setup();
+      assert.equal(project.buildType, 'api');
+    });
+
+    it('Sets buildType property to "plain"', () => {
+      const opts = Object.assign({}, defaultOptions);
+      delete opts.api;
+      const project = new ApiConsoleProject(opts);
+      project._setup();
+      assert.equal(project.buildType, 'plain');
+    });
+
+    it('Sets apiDataFile property to default file', () => {
+      const opts = Object.assign({}, defaultOptions);
+      delete opts.api;
+      const project = new ApiConsoleProject(opts);
+      project._setup();
+      assert.equal(project.apiDataFile, 'api-model.json');
+    });
+
+    it('Sets apiDataFile property to api file', () => {
+      const opts = Object.assign({}, defaultOptions);
+      opts.withAmf = true;
+      const project = new ApiConsoleProject(opts);
+      project._setup();
+      assert.equal(project.apiDataFile, opts.api);
+    });
+
+    it('Sets appMainFile property to api-console.html', () => {
+      const opts = Object.assign({}, defaultOptions);
+      opts.embedded = true;
+      const project = new ApiConsoleProject(opts);
+      project._setup();
+      assert.equal(project.appMainFile, 'api-console.html');
+    });
+
+    it('Sets appMainFile property to index.html', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      project._setup();
+      assert.equal(project.appMainFile, 'index.html');
+    });
+  });
 
   describe('_sourcesToWorkingDirectory()', function() {
     this.timeout(10000);
@@ -30,16 +140,16 @@ describe('Api console project', function() {
     });
 
     it('Should copy sources to temp location', function() {
-      return project.proxy._sourcesToWorkingDirectory();
+      return project._sourcesToWorkingDirectory();
     });
 
     it('Should set workingDir property', function() {
-      assert.typeOf(project.proxy.workingDir, 'string');
+      assert.typeOf(project.workingDir, 'string');
     });
 
     it('Should copy sources to the temp location', function() {
       const consoleFile = path.join(
-        project.proxy.workingDir, 'api-console.html');
+        project.workingDir, 'index.html');
       return fs.pathExists(consoleFile)
       .then((exists) => {
         assert.isTrue(exists);
@@ -47,41 +157,157 @@ describe('Api console project', function() {
     });
   });
 
+  describe('_prepareDependenciesList()', () => {
+    it('Adds all dependencies', () => {
+      const project = new ApiConsoleProject(defaultOptionsEmbedded);
+      const result = project._prepareDependenciesList(false);
+      assert.typeOf(result, 'array', 'Returns array');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/oauth-authorization#^2.0.0'), -1,
+        'oauth-authorization is set');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/cryptojs-lib'), -1, 'cryptojs-lib is set');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/arc-polyfills'), -1,
+        'arc-polyfills is set');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/xhr-simple-request#^2.0.0'), -1,
+        'xhr-simple-request is set');
+      assert.isAbove(result.indexOf(
+        'web-animations/web-animations-js#^2.3'), -1,
+        'web-animations-js is set');
+    });
+
+    it('Skips cryptojs-lib', () => {
+      const opts = Object.assign({}, defaultOptionsEmbedded);
+      opts.noCryptoJs = true;
+      const project = new ApiConsoleProject(opts);
+      const result = project._prepareDependenciesList(false);
+      assert.equal(result.indexOf('advanced-rest-client/cryptojs-lib'), -1);
+    });
+
+    it('Skips arc-polyfills', () => {
+      const opts = Object.assign({}, defaultOptionsEmbedded);
+      opts.noJsPolyfills = true;
+      const project = new ApiConsoleProject(opts);
+      const result = project._prepareDependenciesList(false);
+      assert.equal(result.indexOf('advanced-rest-client/arc-polyfills'), -1);
+    });
+
+    it('Skips xhr-simple-request', () => {
+      const opts = Object.assign({}, defaultOptionsEmbedded);
+      opts.noXhr = true;
+      const project = new ApiConsoleProject(opts);
+      const result = project._prepareDependenciesList(false);
+      assert.equal(result.indexOf(
+        'advanced-rest-client/xhr-simple-request#^2.0.0'), -1);
+    });
+
+    it('Skips web-animations-js', () => {
+      const opts = Object.assign({}, defaultOptionsEmbedded);
+      opts.noWebAnimations = true;
+      const project = new ApiConsoleProject(opts);
+      const result = project._prepareDependenciesList(false);
+      assert.equal(result.indexOf(
+        'web-animations/web-animations-js#^2.3'), -1);
+    });
+
+    it('Ignores skips when standalone build', () => {
+      const opts = Object.assign({}, defaultOptions);
+      opts.noWebAnimations = true;
+      opts.noXhr = true;
+      opts.noJsPolyfills = true;
+      opts.noCryptoJs = true;
+      const project = new ApiConsoleProject(opts);
+      const result = project._prepareDependenciesList(true);
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/cryptojs-lib'), -1, 'cryptojs-lib is set');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/arc-polyfills'), -1,
+        'arc-polyfills is set');
+      assert.isAbove(result.indexOf(
+        'advanced-rest-client/xhr-simple-request#^2.0.0'), -1,
+        'xhr-simple-request is set');
+      assert.isAbove(result.indexOf(
+        'web-animations/web-animations-js#^2.3'), -1,
+        'web-animations-js is set');
+    });
+  });
+
   describe('_manageDependencies()', function() {
     this.timeout(300000); // bower may need a while.
+
     let project;
-    before(function() {
-      const options = Object.assign({}, defaultOptions);
-      // options.verbose = true;
-      project = new ApiConsoleProject(options);
-      return project.proxy._sourcesToWorkingDirectory();
+    before(() => {
+      const opts = Object.assign({}, defaultOptions);
+      project = new ApiConsoleProject(opts);
+      return project._sourcesToWorkingDirectory();
     });
 
     after(function() {
       return fs.remove(workingDir);
     });
 
-    it('Should install dependencies', function() {
-      return project.proxy._manageDependencies();
+    it('Installs dependencies', function() {
+      return project._manageDependencies();
     });
 
-    it('Should install bower components', function() {
+    it('Installs bower_components', function() {
       const consoleFile = path.join(
-        project.proxy.workingDir, 'bower_components');
+        project.workingDir, 'bower_components');
       return fs.pathExists(consoleFile)
-      .then((exists) => {
-        assert.isTrue(exists);
+      .then((exists) => assert.isTrue(exists));
+    });
+
+    [
+      'oauth-authorization',
+      'cryptojs-lib',
+      'arc-polyfills',
+      'xhr-simple-request',
+      'web-animations-js'
+    ].forEach((lib) => {
+      it(`Installs optional ${lib}`, () => {
+        const loc = path.join(project.workingDir, 'bower_components', lib);
+        return fs.pathExists(loc)
+        .then((exists) => assert.isTrue(exists));
       });
     });
+  });
 
-    it('Compies console sources to bower components', function() {
-      const consoleFile = path.join(
-        project.proxy.workingDir,
-        'bower_components',
-        'api-console');
-      return fs.pathExists(consoleFile)
-      .then((exists) => {
-        assert.isTrue(exists);
+  describe('_setApi()', function() {
+    this.timeout(300000);
+    before(function() {
+      return fs.ensureDir(workingDir);
+    });
+
+    after(function() {
+      return fs.remove(workingDir);
+    });
+
+    it('Sets apiModel property', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      project._setup();
+      project.workingDir = workingDir;
+      return project._setApi()
+      .then(() => assert.typeOf(project.apiModel, 'object'));
+    });
+
+    it('Saves model as a file', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      project._setup();
+      project.workingDir = workingDir;
+      return project._setApi()
+      .then(() => fs.pathExists(path.join(workingDir, 'api-model.json')));
+    });
+
+    it('_getApiTitle() returns the title', () => {
+      const project = new ApiConsoleProject(defaultOptions);
+      project._setup();
+      project.workingDir = workingDir;
+      return project._setApi()
+      .then(() => {
+        const result = project._getApiTitle();
+        assert.equal(result, 'TestApi');
       });
     });
   });
@@ -92,8 +318,10 @@ describe('Api console project', function() {
     before(function() {
       const options = Object.assign({}, defaultOptions);
       project = new ApiConsoleProject(options);
-      return project.proxy._sourcesToWorkingDirectory()
-      .then(() => project.proxy._manageDependencies());
+      project._setup();
+      return project._sourcesToWorkingDirectory()
+      .then(() => project._manageDependencies())
+      .then(() => project._setApi());
     });
 
     after(function() {
@@ -101,38 +329,13 @@ describe('Api console project', function() {
     });
 
     it('Should copy templates', function() {
-      return project.proxy._prebuildTemplates();
-    });
-
-    it('Should set mainFile in options', function() {
-      assert.typeOf(project.proxy.opts.mainFile, 'string');
+      return project._prebuildTemplates();
     });
 
     it('Template is copied', function() {
-      const consoleFile = path.join(
-        project.proxy.workingDir, project.proxy.opts.mainFile);
+      const consoleFile = path.join(project.workingDir, 'index.html');
       return fs.pathExists(consoleFile)
-      .then((exists) => {
-        assert.isTrue(exists);
-      });
-    });
-  });
-
-  describe('_setRaml()', function() {
-    this.timeout(300000);
-    let project;
-    before(function() {
-      const options = Object.assign({}, defaultOptions);
-      project = new ApiConsoleProject(options);
-      return project.proxy._sourcesToWorkingDirectory();
-    });
-
-    it('Should parse raml', function() {
-      return project.proxy._setRaml();
-    });
-
-    it('Should set raml property', function() {
-      assert.typeOf(project.proxy.raml, 'object');
+      .then((exists) => assert.isTrue(exists));
     });
   });
 });
