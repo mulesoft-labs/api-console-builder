@@ -36,7 +36,8 @@ describe('v5 - standalone builder', () => {
       return fs.pathExists(path.join(es6path, 'api-model.json'))
       .then((exists) => assert.isTrue(exists, 'Model file exists'))
       .then(() => fs.pathExists(path.join(es6path, 'index.html')))
-      .then((exists) => assert.isTrue(exists, 'Console entry point file exists'))
+      .then((exists) => assert.isTrue(
+        exists, 'Console entry point file exists'))
       .then(() => fs.pathExists(path.join(es6path, 'bower_components')))
       .then((exists) => assert.isTrue(exists, 'bower_components exists'));
     });
@@ -46,7 +47,8 @@ describe('v5 - standalone builder', () => {
       return fs.pathExists(path.join(es6path, 'api-model.json'))
       .then((exists) => assert.isTrue(exists, 'Model file exists'))
       .then(() => fs.pathExists(path.join(es6path, 'index.html')))
-      .then((exists) => assert.isTrue(exists, 'Console entry point file exists'))
+      .then((exists) => assert.isTrue(
+        exists, 'Console entry point file exists'))
       .then(() => fs.pathExists(path.join(es6path, 'bower_components')))
       .then((exists) => assert.isTrue(exists, 'bower_components exists'));
     });

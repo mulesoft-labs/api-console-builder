@@ -13,7 +13,8 @@ describe('Api console project', function() {
     dest: workingDir,
     raml: 'test/api.raml',
     verbose: false,
-    tagName: 'v4.2.1'
+    tagVersion: 'v4.2.1',
+    majorRelease: 4
   };
 
   describe('_sourcesToWorkingDirectory()', function() {
@@ -28,7 +29,7 @@ describe('Api console project', function() {
       return fs.remove(workingDir);
     });
 
-    it('Should copy sorces to temp location', function() {
+    it('Should copy sources to temp location', function() {
       return project.proxy._sourcesToWorkingDirectory();
     });
 
