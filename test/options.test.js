@@ -140,6 +140,94 @@ describe('builder-options', () => {
     });
   });
 
+  describe('API options', () => {
+    it('Validates when no API options', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Validates when all API options', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'RAML 1.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Error when "api" is missing', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        apiType: 'RAML 1.0'
+      });
+      assert.lengthOf(options.validationErrors, 1);
+    });
+
+    it('Error when "apiType" is missing', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml'
+      });
+      assert.lengthOf(options.validationErrors, 1);
+    });
+
+    it('Error when unsupported "apiType"', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'unsuported'
+      });
+      assert.lengthOf(options.validationErrors, 1);
+    });
+
+    it('Validates OAS 1.0 type', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'OAS 1.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Validates OAS 2.0 type', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'OAS 2.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Validates OAS 3.0 type', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'OAS 3.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Validates RAML 0.8 type', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'RAML 0.8'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+
+    it('Validates RAML 1.0 type', function() {
+      const options = new BuilderOptions({
+        tagName: '5.0.0',
+        api: 'api.raml',
+        apiType: 'RAML 1.0'
+      });
+      assert.lengthOf(options.validationErrors, 0);
+    });
+  });
+
   describe('Default options', () => {
     let options;
 

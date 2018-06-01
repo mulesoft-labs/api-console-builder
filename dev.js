@@ -6,7 +6,7 @@ const workingDir = 'test/playground';
 builder({
   local: 'test/api-console-5.0.0-preview.zip',
   destination: workingDir,
-  api: 'test/api.raml',
+  api: 'test/test-apis/api-raml-10.raml',
   embedded: true,
   verbose: true,
   // noCryptoJs: true,

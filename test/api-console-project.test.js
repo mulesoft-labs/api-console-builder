@@ -9,14 +9,14 @@ describe('Api console project', function() {
   const workingDir = 'test/test-build';
   const defaultOptions = {
     destination: workingDir,
-    api: 'test/api.raml',
+    api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
     verbose: false,
     tagName: '5.0.0-preview'
   };
   const defaultOptionsEmbedded = {
     destination: workingDir,
-    api: 'test/api.raml',
+    api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
     verbose: false,
     tagName: '5.0.0-preview',
@@ -91,6 +91,7 @@ describe('Api console project', function() {
     it('Sets buildType property to "plain"', () => {
       const opts = Object.assign({}, defaultOptions);
       delete opts.api;
+      delete opts.apiType;
       const project = new ApiConsoleProject(opts);
       project._setup();
       assert.equal(project.buildType, 'plain');
@@ -99,6 +100,7 @@ describe('Api console project', function() {
     it('Sets apiDataFile property to default file', () => {
       const opts = Object.assign({}, defaultOptions);
       delete opts.api;
+      delete opts.apiType;
       const project = new ApiConsoleProject(opts);
       project._setup();
       assert.equal(project.apiDataFile, 'api-model.json');
@@ -270,44 +272,6 @@ describe('Api console project', function() {
         const loc = path.join(project.workingDir, 'bower_components', lib);
         return fs.pathExists(loc)
         .then((exists) => assert.isTrue(exists));
-      });
-    });
-  });
-
-  describe('_setApi()', function() {
-    this.timeout(300000);
-    before(function() {
-      return fs.ensureDir(workingDir);
-    });
-
-    after(function() {
-      return fs.remove(workingDir);
-    });
-
-    it('Sets apiModel property', () => {
-      const project = new ApiConsoleProject(defaultOptions);
-      project._setup();
-      project.workingDir = workingDir;
-      return project._setApi()
-      .then(() => assert.typeOf(project.apiModel, 'object'));
-    });
-
-    it('Saves model as a file', () => {
-      const project = new ApiConsoleProject(defaultOptions);
-      project._setup();
-      project.workingDir = workingDir;
-      return project._setApi()
-      .then(() => fs.pathExists(path.join(workingDir, 'api-model.json')));
-    });
-
-    it('_getApiTitle() returns the title', () => {
-      const project = new ApiConsoleProject(defaultOptions);
-      project._setup();
-      project.workingDir = workingDir;
-      return project._setApi()
-      .then(() => {
-        const result = project._getApiTitle();
-        assert.equal(result, 'TestApi');
       });
     });
   });
