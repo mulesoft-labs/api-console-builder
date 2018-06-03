@@ -8,3 +8,7 @@ node_js:
   - "10"
 script:
 - npm test
+cache:
+  directories:
+    - $HOME/.cache/bower
+    - node_modules
