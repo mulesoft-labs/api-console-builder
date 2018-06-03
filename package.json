@@ -29,6 +29,7 @@
     "api-console-dependency-manager": "^1.0.0",
     "api-console-github-resolver": "^1.0.0",
     "api-console-sources-resolver": "^1.0.1",
+    "archiver": "^2.1.1",
     "colors": "^1.1.2",
     "fs-extra": "^3.0.0",
     "merge-stream": "^1.0.1",
@@ -36,7 +37,8 @@
     "polymer-build": "^3.0.1",
     "tmp": "0.0.31",
     "vinyl-fs": "^3.0.3",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "yauzl": "^2.9.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
