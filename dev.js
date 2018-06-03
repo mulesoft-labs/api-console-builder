@@ -1,13 +1,15 @@
 'use strict';
 
 const builder = require('.');
-const workingDir = 'test/playground';
+const workingDir = 'build/dev';
 
 builder({
-  local: 'test/api-console-5.0.0-preview.zip',
+  // local: 'test/api-console-5.0.0-preview.zip',
+  tagName: '5.0.0-preview',
   destination: workingDir,
   api: 'test/test-apis/api-raml-10.raml',
-  embedded: true,
+  apiType: 'RAML 1.0',
+  embedded: false,
   verbose: true,
   // noCryptoJs: true,
   // noJsPolyfills: true,
