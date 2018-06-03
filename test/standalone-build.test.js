@@ -42,9 +42,13 @@ describe('Standalone with API - remote sources', () => {
 
   it('Created required files in es6-bundle', () => {
     const es6path = path.join(workingDir, 'es6-bundle');
-    return fs.pathExists(path.join(es6path, 'api-model.json'))
+    return fs.pathExists(path.join(workingDir, 'api-model.json'))
     .then((exists) => assert.isTrue(exists, 'Model file exists'))
-    .then(() => fs.pathExists(path.join(es6path, 'index.html')))
+    .then(() => fs.pathExists(path.join(workingDir, 'index.html')))
+    .then((exists) => assert.isTrue(exists, 'index.html exists'))
+    .then(() => fs.pathExists(path.join(workingDir, 'apic-import.js')))
+    .then((exists) => assert.isTrue(exists, 'apic-import.js exists'))
+    .then(() => fs.pathExists(path.join(es6path, 'api-console.html')))
     .then((exists) => assert.isTrue(
       exists, 'Console entry point file exists'))
     .then(() => fs.pathExists(path.join(es6path, 'bower_components')))
@@ -53,9 +57,13 @@ describe('Standalone with API - remote sources', () => {
 
   it('Created required files in es5-bundle', () => {
     const es6path = path.join(workingDir, 'es5-bundle');
-    return fs.pathExists(path.join(es6path, 'api-model.json'))
+    return fs.pathExists(path.join(workingDir, 'api-model.json'))
     .then((exists) => assert.isTrue(exists, 'Model file exists'))
-    .then(() => fs.pathExists(path.join(es6path, 'index.html')))
+    .then(() => fs.pathExists(path.join(workingDir, 'index.html')))
+    .then((exists) => assert.isTrue(exists, 'index.html exists'))
+    .then(() => fs.pathExists(path.join(workingDir, 'apic-import.js')))
+    .then((exists) => assert.isTrue(exists, 'apic-import.js exists'))
+    .then(() => fs.pathExists(path.join(es6path, 'api-console.html')))
     .then((exists) => assert.isTrue(
       exists, 'Console entry point file exists'))
     .then(() => fs.pathExists(path.join(es6path, 'bower_components')))
@@ -72,7 +80,9 @@ describe('Standalone withouth API - local sources', () => {
     this.timeout(270000);
     return builder({
       local: 'test/api-console-5.0.0-preview.zip',
-      destination: workingDir
+      destination: workingDir,
+      api: 'test/test-apis/api-raml-10.raml',
+      apiType: 'RAML 1.0'
     });
   });
 
@@ -87,9 +97,13 @@ describe('Standalone withouth API - local sources', () => {
 
   it('Created required files in es6-bundle', () => {
     const es6path = path.join(workingDir, 'es6-bundle');
-    return fs.pathExists(path.join(es6path, 'api-model.json'))
-    .then((exists) => assert.isFalse(exists, 'Model file does not exist'))
-    .then(() => fs.pathExists(path.join(es6path, 'index.html')))
+    return fs.pathExists(path.join(workingDir, 'api-model.json'))
+    .then((exists) => assert.isTrue(exists, 'Model file exist'))
+    .then(() => fs.pathExists(path.join(workingDir, 'index.html')))
+    .then((exists) => assert.isTrue(exists, 'index.html exists'))
+    .then(() => fs.pathExists(path.join(workingDir, 'apic-import.js')))
+    .then((exists) => assert.isTrue(exists, 'apic-import.js exists'))
+    .then(() => fs.pathExists(path.join(es6path, 'api-console.html')))
     .then((exists) => assert.isTrue(
       exists, 'Console entry point file exists'))
     .then(() => fs.pathExists(path.join(es6path, 'bower_components')))
@@ -98,9 +112,13 @@ describe('Standalone withouth API - local sources', () => {
 
   it('Creates required files in es5-bundle', () => {
     const es6path = path.join(workingDir, 'es5-bundle');
-    return fs.pathExists(path.join(es6path, 'api-model.json'))
-    .then((exists) => assert.isFalse(exists, 'Model file does not exist'))
-    .then(() => fs.pathExists(path.join(es6path, 'index.html')))
+    return fs.pathExists(path.join(workingDir, 'api-model.json'))
+    .then((exists) => assert.isTrue(exists, 'Model file exist'))
+    .then(() => fs.pathExists(path.join(workingDir, 'index.html')))
+    .then((exists) => assert.isTrue(exists, 'index.html exists'))
+    .then(() => fs.pathExists(path.join(workingDir, 'apic-import.js')))
+    .then((exists) => assert.isTrue(exists, 'apic-import.js exists'))
+    .then(() => fs.pathExists(path.join(es6path, 'api-console.html')))
     .then((exists) => assert.isTrue(
       exists, 'Console entry point file exists'))
     .then(() => fs.pathExists(path.join(es6path, 'bower_components')))

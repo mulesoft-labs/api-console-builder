@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 describe('Api console project', function() {
-  const workingDir = 'test/test-build';
+  const workingDir = 'test/test-build-project';
   const defaultOptions = {
     destination: workingDir,
     api: 'test/test-apis/api-raml-10.raml',
@@ -112,20 +112,6 @@ describe('Api console project', function() {
       const project = new ApiConsoleProject(opts);
       project._setup();
       assert.equal(project.apiDataFile, opts.api);
-    });
-
-    it('Sets appMainFile property to api-console.html', () => {
-      const opts = Object.assign({}, defaultOptions);
-      opts.embedded = true;
-      const project = new ApiConsoleProject(opts);
-      project._setup();
-      assert.equal(project.appMainFile, 'api-console.html');
-    });
-
-    it('Sets appMainFile property to index.html', () => {
-      const project = new ApiConsoleProject(defaultOptions);
-      project._setup();
-      assert.equal(project.appMainFile, 'index.html');
     });
   });
 
@@ -281,11 +267,12 @@ describe('Api console project', function() {
     let project;
     before(function() {
       const options = Object.assign({}, defaultOptions);
+      // options.verbose = true;
       project = new ApiConsoleProject(options);
       project._setup();
       return project._sourcesToWorkingDirectory()
       .then(() => project._manageDependencies())
-      .then(() => project._setApi());
+      .then(() => project._setApi(workingDir));
     });
 
     after(function() {

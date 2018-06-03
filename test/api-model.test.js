@@ -38,7 +38,7 @@ describe('Model generation', function() {
         const project = new ApiConsoleProject(options);
         project._setup();
         project.workingDir = workingDir;
-        return project._setApi()
+        return project._setApi(workingDir)
         .then(() => assert.typeOf(project.apiModel, 'object'));
       });
 
@@ -46,7 +46,7 @@ describe('Model generation', function() {
         const project = new ApiConsoleProject(options);
         project._setup();
         project.workingDir = workingDir;
-        return project._setApi()
+        return project._setApi(workingDir)
         .then(() => fs.pathExists(path.join(workingDir, 'api-model.json')));
       });
 
@@ -54,7 +54,7 @@ describe('Model generation', function() {
         const project = new ApiConsoleProject(options);
         project._setup();
         project.workingDir = workingDir;
-        return project._setApi()
+        return project._setApi(workingDir)
         .then(() => {
           const result = project._getApiTitle();
           assert.typeOf(result, 'string');
