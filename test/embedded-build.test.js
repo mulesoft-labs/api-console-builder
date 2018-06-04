@@ -13,6 +13,7 @@ describe('Embedded with API - remote sources', () => {
   });
 
   it('Builds the console', function() {
+    console.log('CWD', process.cwd());
     this.timeout(270000);
     return builder({
       tagName: '5.0.0-preview',
