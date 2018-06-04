@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const workingDir = path.join('test', 'standalone-test');
-
+const origPath = process.cwd();
 /*
  * API types and file creation is tested in different suite.
  * This only checks if standalone version is being build.
@@ -17,6 +17,11 @@ const workingDir = path.join('test', 'standalone-test');
  */
 
 describe('Standalone with API - remote sources', () => {
+  before(function() {
+    if (process.cwd() !== origPath) {
+      process.chdir(origPath);
+    }
+  });
   after(function() {
     return fs.remove(workingDir);
   });
@@ -73,6 +78,11 @@ describe('Standalone with API - remote sources', () => {
 });
 
 describe('Standalone withouth API - local sources', () => {
+  before(function() {
+    if (process.cwd() !== origPath) {
+      process.chdir(origPath);
+    }
+  });
   after(function() {
     return fs.remove(workingDir);
   });
