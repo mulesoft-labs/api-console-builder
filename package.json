@@ -1,6 +1,6 @@
 {
   "name": "api-console-builder",
-  "version": "1.0.0",
+  "version": "1.0.0-preview",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {
@@ -48,6 +48,7 @@
   },
   "files": [
     "lib",
-    "main.js"
+    "main.js",
+    "templates"
   ]
 }
