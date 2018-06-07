@@ -27,7 +27,7 @@ describe('Standalone with API - remote sources', () => {
   });
 
   it('Builds the console', function() {
-    this.timeout(300000);
+    this.timeout(500000);
     console.log('CWD', process.cwd());
     return builder({
       tagName: '5.0.0-preview',
@@ -90,7 +90,7 @@ describe('Standalone withouth API - local sources', () => {
 
   it('Builds the console', function() {
     console.log('CWD', process.cwd());
-    this.timeout(300000);
+    this.timeout(500000);
     return builder({
       local: 'test/api-console-5.0.0-preview.zip',
       destination: workingDir,
