@@ -9,10 +9,10 @@ builder({
   destination: workingDir,
   api: 'test/test-apis/api-raml-10.raml',
   apiType: 'RAML 1.0',
-  embedded: false,
+  embedded: true,
   verbose: true,
-  // noCryptoJs: true,
-  // noJsPolyfills: true,
+  noCryptoJs: true,
+  noJsPolyfills: true,
   // themeFile: 'test/theme.html',
   attributes: [
     {
