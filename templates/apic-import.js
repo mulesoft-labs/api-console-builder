@@ -12,6 +12,9 @@
   if (!window.apic.basePath) {
     window.apic.basePath = '';
   }
+  if (!window.apic.importId) {
+    window.apic.importId = 1;
+  }
   /**
    * Detects ES6 support by testing arrow functions.
    * It has to be executed in eval or otherwise the script would
@@ -38,32 +41,53 @@
   } else {
     moduleRoot += 'es5-bundle';
   }
+  /**
+   * See https://github.com/Polymer/polymer/issues/5196#issuecomment-397723878
+   */
+  function bundleLoaded() {
+    window.setTimeout(function() {
+      ['api-console', 'api-documentation',
+      'api-navigation', 'api-request-panel']
+      .forEach(function(cmp) {
+        var element = document.body.querySelector(cmp);
+        if (!element || !element.updateStyles) {
+          return;
+        }
+        element.updateStyles({});
+      });
+    }, 1);
+  }
   // First import loader that imports polyufills if nescesary
   var script = document.createElement('script');
   var src = moduleRoot + '/bower_components/webcomponentsjs/webcomponents-loader.js';
   script.src = src;
   document.head.appendChild(script);
+
   var importFile = moduleRoot + '/api-console.html';
   var link = document.createElement('link');
   link.setAttribute('rel', 'import');
   link.setAttribute('href', importFile);
+  link.setAttribute('id', 'apic' + (window.apic.importId++));
   if (document.readyState === 'loading') {
     document.write(link.outerHTML);
+    var domLink = document.querySelector('#' + link.id);
+    domLink.onload = bundleLoaded;
   } else {
     document.head.appendChild(link);
+    link.onload = bundleLoaded;
   }
   var imports = [
     '/api-console-styles.html'
   ];
   for (var i = 0, len = imports.length; i < len; i++) {
-    var polyfillSrc = moduleRoot + imports[i];
-    var pscript = document.createElement('link');
-    pscript.setAttribute('rel', 'import');
-    pscript.setAttribute('href', polyfillSrc);
+    var dependencySrc = moduleRoot + imports[i];
+    var depScript = document.createElement('link');
+    depScript.setAttribute('rel', 'import');
+    depScript.setAttribute('href', dependencySrc);
     if (document.readyState === 'loading') {
-      document.write(pscript.outerHTML);
+      document.write(depScript.outerHTML);
     } else {
-      document.head.appendChild(pscript);
+      document.head.appendChild(depScript);
     }
   }
 })();
