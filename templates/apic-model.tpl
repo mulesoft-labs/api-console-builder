@@ -201,7 +201,7 @@
       if (ac.page !== page) {
         ac.page = page;
       }
-      if (ac.selectedShapeType !== type()) {
+      if (ac.selectedShapeType !== type) {
         ac.selectedShapeType = type;
       }
       if (ac.selectedShape !== selected) {
