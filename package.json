@@ -37,7 +37,7 @@
     "polymer-build": "^3.0.4",
     "tmp": "0.0.31",
     "vinyl-fs": "^3.0.3",
-    "winston": "^2.3.1",
+    "winston": "3.1.0",
     "yauzl": "^2.9.1"
   },
   "devDependencies": {
