@@ -23,7 +23,6 @@
     </style>
   </custom-style>
 </head>
-
 <body unresolved>
   <app-location use-hash-as-path></app-location>
   <api-console></api-console>
