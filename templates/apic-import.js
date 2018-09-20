@@ -76,18 +76,4 @@
     document.head.appendChild(link);
     link.onload = bundleLoaded;
   }
-  var imports = [
-    '/api-console-styles.html'
-  ];
-  for (var i = 0, len = imports.length; i < len; i++) {
-    var dependencySrc = moduleRoot + imports[i];
-    var depScript = document.createElement('link');
-    depScript.setAttribute('rel', 'import');
-    depScript.setAttribute('href', dependencySrc);
-    if (document.readyState === 'loading') {
-      document.write(depScript.outerHTML);
-    } else {
-      document.head.appendChild(depScript);
-    }
-  }
 })();

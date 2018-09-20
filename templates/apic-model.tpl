@@ -23,7 +23,6 @@
     </style>
   </custom-style>
 </head>
-
 <body unresolved>
   <app-location use-hash-as-path></app-location>
   <api-console></api-console>
@@ -201,7 +200,7 @@
       if (ac.page !== page) {
         ac.page = page;
       }
-      if (ac.selectedShapeType !== type()) {
+      if (ac.selectedShapeType !== type) {
         ac.selectedShapeType = type;
       }
       if (ac.selectedShape !== selected) {

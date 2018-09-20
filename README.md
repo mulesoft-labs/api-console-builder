@@ -16,7 +16,7 @@ Polymer 2.0 library to sugar the spec.
 
 Most common use case. Allows you to build documentation portal for your API.
 It supports navigation and if `api` option is provided - automatically loads
-the data.
+api data model.
 
 ## Embedded web component
 
@@ -67,7 +67,7 @@ const builder = require('api-console-builder');
 builder({
   api: 'path/to/api.raml',
   apiType: 'RAML 1.0',
-  tagName: '5.0.0'
+  tagName: '5.0.0-preview'
 })
 .then(() => console.log('Build complete <3'))
 .catch((cause) => console.log('Build error <\\3', cause.message));
@@ -95,9 +95,8 @@ API console accepts AMF `json/ld` model as a data source. AMF by default support
 following API specs:
 -   RAML 0.8
 -   RAML 1.0
--   OAS 1.0
 -   OAS 2.0
--   OAS 3.0
+-   ~~OAS 3.0~~ Support is not yet available.
 
 When specifying `api` option that points to your API spec file you must also
 define `apiType` property to one of the values above.

@@ -9,3 +9,5 @@ npm-debug.log
 build-*
 playground
 .DS_Store
+dev.js
+api-console-builder-debug.log
