@@ -1,31 +1,19 @@
-<!doctype html>
-<html>
-<head>
+<!DOCTYPE html><html><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-  <title>[[API-TITLE]]</title>
-  <script src="apic-import.js"></script>
-  <custom-style>
+  <title>TestApi</title>
+  </head><body unresolved=""><custom-style>
     <style>
-    html,
-    body {
-      height: 100%;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-    }
-
-    api-console {
-      background-color: #fff;
-    }
+    api-console,body,html{background-color:#fff}body,html{height:100%;margin:0;padding:0;min-height:100vh}.loader-container{position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(255,255,255,.54);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-align:center;-webkit-align-items:center;align-items:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-ms-flex-direction:column;-webkit-flex-direction:column;flex-direction:column;z-index:1}.loader-container p{color:#777}.loader{font-size:10px;margin:30px auto;text-indent:-9999em;width:9em;height:9em;border-radius:50%;background:#7288ff;background:-moz-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-webkit-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-o-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-ms-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:linear-gradient(to right,#7288ff 10%,rgba(114,136,255,0) 42%);position:relative;-webkit-animation:load3 1.4s infinite linear;animation:load3 1.4s infinite linear;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.loader:after,.loader:before{content:'';position:absolute;top:0;left:0}.loader:before{width:50%;height:50%;background:#7288ff;border-radius:100% 0 0}.loader:after{background:#fff;width:75%;height:75%;border-radius:50%;margin:auto;bottom:0;right:0}@-webkit-keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
     </style>
   </custom-style>
-</head>
-<body unresolved>
-  <app-location use-hash-as-path></app-location>
-  <api-console></api-console>
+  <div id="loader" class="loader-container">
+    <p>Loading your API experience</p>
+    <div class="loader">Loading...</div>
+  </div>
+  <app-location id="loc" use-hash-as-path=""></app-location>
+  <api-console id="apic" app="" by-api-console-builder=""></api-console>
   <script>
   /**
    * The following script will handle API console routing when using the c
@@ -49,6 +37,13 @@
       apic.app.setInitialRouteData();
       apic.app.observeRouteEvents();
       apic.app.loadApi('api-model.json');
+    };
+    /**
+     * Removes loader when API console is ready.
+     */
+    apic.app.removeLoader = function() {
+      const node = document.getElementById('loader');
+      node.parentNode.removeChild(node);
     };
     /**
      * Reads inital route data from the `app-location` component.
@@ -98,6 +93,9 @@
       xhr.addEventListener('loadend', function() {
         apic.app._apiLoadEndHandler(xhr);
       });
+      xhr.addEventListener('error', function() {
+        apic.app.notifyInitError('Unable to load API data');
+      });
       xhr.open('GET', url, true);
       try {
         xhr.send();
@@ -119,9 +117,8 @@
         apic.app.notifyInitError(e.message);
         return;
       }
-      var ac = document.querySelector('api-console');
+      var ac = document.getElementById('apic');
       ac.amfModel = data;
-      ac.resetLayout();
       if (apic.app.__initialType && apic.app.__initialSelected) {
         apic.app.selectionChanged(
           apic.app.__initialSelected,
@@ -132,6 +129,17 @@
       apic.app.__initialPage = undefined;
       apic.app.__initialSelected = undefined;
       apic.app.__initialType = undefined;
+    };
+    /**
+     * Resets the layout when the console is fully loaded to ensure drawer
+     * layout proper computations.
+     */
+    apic.app.resetLayout = function() {
+      requestAnimationFrame(function() {
+        var ac = document.getElementById('apic');
+        ac.resetLayout();
+        apic.app.removeLoader();
+      });
     };
     /**
      * Adds event listeres to elements that are related to the routing:
@@ -231,13 +239,9 @@
     apic.app.notifyInitError = function(message) {
       window.alert('Cannot initialize API console. ' + message);
     };
-    if (window.WebComponents && window.WebComponents.ready) {
-      apic.app.init();
-    } else {
-      window.addEventListener('WebComponentsReady', apic.app.init);
-    }
+    window.addEventListener('WebComponentsReady', apic.app.init);
+    window.addEventListener('api-console-ready', apic.app.resetLayout);
   })();
   </script>
-</body>
-
-</html>
+  <script src="apic-import.js"></script>
+</body></html>
