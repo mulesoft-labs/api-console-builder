@@ -15,7 +15,7 @@ describe('Embedded with API - remote sources', () => {
   it('Builds the console', function() {
     this.timeout(500000);
     return builder({
-      tagName: '5.0.0-preview',
+      tagName: '5.0.0-preview-1',
       destination: workingDir,
       api: 'test/test-apis/api-raml-10.raml',
       apiType: 'RAML 1.0',

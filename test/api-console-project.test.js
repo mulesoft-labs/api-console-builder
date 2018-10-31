@@ -12,14 +12,14 @@ describe('Api console project', function() {
     api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
     verbose: false,
-    tagName: '5.0.0-preview'
+    tagName: '5.0.0-preview-1'
   };
   const defaultOptionsEmbedded = {
     destination: workingDir,
     api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
     verbose: false,
-    tagName: '5.0.0-preview',
+    tagName: '5.0.0-preview-1',
     embedded: true
   };
 
@@ -27,7 +27,8 @@ describe('Api console project', function() {
     info: function() {},
     log: function() {},
     warn: function() {},
-    error: function() {}
+    error: function() {},
+    debug: function() {}
   };
 
   describe('constructor', () => {

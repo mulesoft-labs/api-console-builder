@@ -9,7 +9,7 @@ const workingDir = path.join('test', 'api-model-test');
 const defaultOptions = {
   destination: workingDir,
   verbose: false,
-  tagName: '5.0.0-preview'
+  tagName: '5.0.0-preview-1'
 };
 
 describe('Model generation', function() {
