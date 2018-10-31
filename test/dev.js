@@ -1,20 +1,14 @@
 'use strict';
 
 const builder = require('..');
-const workingDir = 'test/playground/attributes-test-build';
+const workingDir = 'build/dev';
 
 builder({
-  noOptimization: true,
-  src: 'test/api-console-4.2.1.zip',
-  dest: workingDir,
-  raml: 'test/test-apis/api-raml-10.raml',
+  destination: workingDir,
+  tagName: '5.0.0-preview-1',
+  api: 'test/test-apis/api-raml-10.raml',
+  apiType: 'RAML 1.0',
   verbose: true,
-  useJson: true,
-  attributes: [
-    {
-      'append-headers': 'x-header: text'
-    },
-    'narrow',
-    'no-try-it'
-  ]
+  noCache: true,
+  attributes: []
 });
