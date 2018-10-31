@@ -4,6 +4,11 @@ __This version of the module works with API console version 5 only.__
 If you use API console version 4, please, install version __0.4.x__.
 Documentation for builder options that works with API console version 4 can be found [here](docs/version-0.4.0.md).
 
+__PACKAGE MOVED__
+
+Moved to: https://www.npmjs.com/package/@api-components/api-console-builder
+Do not use this version in new projects.
+
 __api-console-builder__ allows you to generate production ready build of
 Salesforce (former MuleSoft) API Console.
 
