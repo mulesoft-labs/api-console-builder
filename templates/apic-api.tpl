@@ -101,6 +101,32 @@
           apic.app.__initialType,
           apic.app.__initialPage
         );
+      } else {
+        var hash = location.hash;
+        var type, page, selected;
+        if (hash && hash.length > 1) {
+          hash = hash.substr(1);
+          var parts = hash.split('/');
+          if (parts[0]) {
+            page = parts[0];
+          }
+          if (parts[1]) {
+            type = parts[1];
+          }
+          if (parts[2]) {
+            selected = decodeURIComponent(parts[2]);
+          }
+        }
+        if (!page) {
+          page = 'docs';
+        }
+        if (!type) {
+          type = 'summary';
+        }
+        if (!selected) {
+          selected = 'summary';
+        }
+        apic.app.selectionChanged(selected, type, page);
       }
       apic.app.__initialPage = undefined;
       apic.app.__initialSelected = undefined;
@@ -131,7 +157,14 @@
       }
       page = page || 'docs';
       var location = document.querySelector('app-location');
-      var newPath = [page, type, encodeURIComponent(selected)].join('/');
+      if (!location || location.set) {
+        var apic = document.querySelector('api-console');
+        apic.page = page;
+        apic.selectedShape = selected;
+        apic.selectedShapeType = type;
+        return;
+      }
+      var newPath = [page, type, selected].join('/');
       if (newPath !== location.path) {
         location.set('path', newPath);
       }
