@@ -27,7 +27,7 @@
   "dependencies": {
     "api-console-builder-templates": "^0.1.0",
     "api-console-dependency-manager": "^0.1.2",
-    "api-console-github-resolver": "^0.1.0",
+    "@api-components/api-console-github-resolver": "1.0.2",
     "api-console-sources-resolver": "^0.1.0",
     "colors": "^1.1.2",
     "css-slam": "^2.1.2",
