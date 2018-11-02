@@ -9,8 +9,7 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/standalone-raml-test';
   describe('standalone-RAML', () => {
-
-    var api = 'https://raw.githubusercontent.com/advanced-rest-client/';
+    let api = 'https://raw.githubusercontent.com/advanced-rest-client/';
     api += 'raml-example-api/master/api.raml';
 
     after(function() {

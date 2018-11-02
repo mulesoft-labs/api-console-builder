@@ -22,8 +22,8 @@ function findImportLink(node, container) {
 }
 
 function countLinks(content) {
-  var doc = parse5.parse(content);
-  var links = findImportLink(doc, []);
+  const doc = parse5.parse(content);
+  const links = findImportLink(doc, []);
   return links;
 }
 

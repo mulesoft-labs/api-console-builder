@@ -9,7 +9,6 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/build-plain-raml';
   describe('embedded plain build test', () => {
-
     before(function() {
       this.timeout(120000);
       return builder({

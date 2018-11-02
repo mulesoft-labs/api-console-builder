@@ -8,7 +8,7 @@ const testHelper = require('./content-test-common');
 describe('resolution.test.js', () => {
   const workingDir = 'test/resolutions-test';
   describe('Imports resolutions', () => {
-    var content;
+    let content;
     before(function() {
       this.timeout(350000);
       return builder({
@@ -32,7 +32,7 @@ describe('resolution.test.js', () => {
     });
 
     it('All imports are resolved', function() {
-      var links = testHelper.countImportLinks(content);
+      const links = testHelper.countImportLinks(content);
       assert.lengthOf(links, 0);
     });
   });

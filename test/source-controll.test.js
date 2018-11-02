@@ -22,30 +22,30 @@ describe('SourceControl', () => {
   const opts = {};
 
   describe('createWorkingDir()', () => {
-    var processor;
+    let processor;
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       processor = new SourceControl(options, logger);
     });
 
     it('Creates a temporary location', function() {
       return processor.createWorkingDir()
-      .then(path => {
+      .then((path) => {
         assert.isString(path);
         return path;
       })
-      .then(path => processor.cleanup(path));
+      .then((path) => processor.cleanup(path));
     });
 
     // This is important for Polymer Builder.
     it('Temporary location is not a symbolic link', function() {
-      var _path;
+      let _path;
       return processor.createWorkingDir()
-      .then(p => {
+      .then((p) => {
         _path = p;
         return fs.stat(_path);
       })
-      .then(stats => {
+      .then((stats) => {
         assert.isFalse(stats.isSymbolicLink());
       })
       .then(() => processor.cleanup(_path));
@@ -53,16 +53,16 @@ describe('SourceControl', () => {
   });
 
   describe('cleanup()', () => {
-    var processor;
+    let processor;
     beforeEach(function() {
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       processor = new SourceControl(options, logger);
     });
 
     it('Clears temportary location with files', function() {
-      var _path;
+      let _path;
       return processor.createWorkingDir()
-      .then(_p => {
+      .then((_p) => {
         _path = _p;
         return fs.writeFile(path.join(_p, 'test.log'), 'test', 'utf8');
       })
@@ -77,11 +77,11 @@ describe('SourceControl', () => {
   });
 
   describe('copyOutput()', () => {
-    var processor;
-    var tmpWorkingDir;
+    let processor;
+    let tmpWorkingDir;
 
     function finishTest(files) {
-      var promise = [];
+      let promise = [];
       if (files instanceof Array) {
         let list = files.map((file) => fs.pathExists(file));
         promise = Promise.all(list);
@@ -101,7 +101,7 @@ describe('SourceControl', () => {
 
     beforeEach(function() {
       this.timeout(60000);
-      var options = Object.assign({}, opts);
+      let options = Object.assign({}, opts);
       options.dest = workingDir;
       options.attributes = [{
         'json-file': 'api-data.json'

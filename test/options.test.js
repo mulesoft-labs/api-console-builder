@@ -4,9 +4,8 @@ const {BuilderOptions} = require('../lib/builder-options.js');
 const assert = require('chai').assert;
 
 describe('builder-options', () => {
-
   describe('findAttribute()', () => {
-    var options;
+    let options;
 
     const opts = {
       attributes: [
@@ -96,7 +95,7 @@ describe('builder-options', () => {
   });
 
   describe('validateOptions()', () => {
-    var options;
+    let options;
 
     describe('_validateOptionsList()', () => {
       beforeEach(function() {
@@ -414,7 +413,7 @@ describe('builder-options', () => {
   });
 
   describe('Default options', () => {
-    var options;
+    let options;
 
     before(function() {
       options = new BuilderOptions();
@@ -493,7 +492,7 @@ describe('builder-options', () => {
         raml: 'true',
         useJson: true
       });
-      var attr = options.findAttribute('json-file');
+      let attr = options.findAttribute('json-file');
       assert.equal(attr.value, 'api.json');
     });
   });

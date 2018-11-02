@@ -8,7 +8,7 @@ const fs = require('fs-extra');
 describe('AttributesProcessor', () => {
   // Writtes a dummy HTML file to parse.
   function writeMainFile(file) {
-    var content = `<html>
+    let content = `<html>
     <head></head>
     <body>
       <header>API Console test</header>
@@ -36,7 +36,7 @@ describe('AttributesProcessor', () => {
   const mainFile = 'main-file.html';
 
   describe('listAttributes()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes
     };
@@ -85,7 +85,7 @@ describe('AttributesProcessor', () => {
   });
 
   describe('setMainFile()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes
     };
@@ -111,7 +111,7 @@ describe('AttributesProcessor', () => {
   });
 
   describe('readMainFile()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes,
       mainFile: mainFile
@@ -146,12 +146,12 @@ describe('AttributesProcessor', () => {
   });
 
   describe('findConsole()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes,
       mainFile: mainFile
     };
-    var doc;
+    let doc;
 
     before(function() {
       return fs.ensureDir(workingDir)
@@ -165,7 +165,7 @@ describe('AttributesProcessor', () => {
     beforeEach(function() {
       processor = new AttributesProcessor(opts, logger, workingDir);
       return processor.readMainFile()
-      .then(content => processor.createAst(content))
+      .then((content) => processor.createAst(content))
       .then((ast) => {
         doc = ast;
       });
@@ -176,20 +176,20 @@ describe('AttributesProcessor', () => {
     });
 
     it('Finds a console node', function() {
-      var node = processor.findConsole(doc);
+      let node = processor.findConsole(doc);
       assert.ok(node);
       assert.equal(node.nodeName, 'api-console');
     });
   });
 
   describe('updateAttributes()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes,
       mainFile: mainFile
     };
-    var node;
-    var list;
+    let node;
+    let list;
 
     before(function() {
       return fs.ensureDir(workingDir)
@@ -204,7 +204,7 @@ describe('AttributesProcessor', () => {
       processor = new AttributesProcessor(opts, logger, workingDir);
       list = processor.listAttributes();
       return processor.readMainFile()
-      .then(content => processor.createAst(content))
+      .then((content) => processor.createAst(content))
       .then((ast) => {
         return processor.findConsole(ast);
       })
@@ -243,7 +243,7 @@ describe('AttributesProcessor', () => {
   });
 
   describe('setAttributes()', () => {
-    var processor;
+    let processor;
     const opts = {
       attributes: attributes,
       mainFile: mainFile

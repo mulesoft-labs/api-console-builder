@@ -7,7 +7,7 @@ const assert = require('chai').assert;
 describe('api-console-builder', () => {
   describe('Optimization options', () => {
     describe('Optimization disabled', () => {
-      var builder;
+      let builder;
       before(function() {
         const options = new BuilderOptions({
           noOptimization: true
@@ -38,7 +38,7 @@ describe('api-console-builder', () => {
     });
 
     describe('Optimization enabled', () => {
-      var builder;
+      let builder;
       before(function() {
         const options = new BuilderOptions({});
         builder = new ApiConsoleBuilder(options);
@@ -67,7 +67,7 @@ describe('api-console-builder', () => {
     });
 
     describe('CSS optimization disabled only', () => {
-      var builder;
+      let builder;
       before(function() {
         const options = new BuilderOptions({
           noCssOptimization: true
@@ -98,7 +98,7 @@ describe('api-console-builder', () => {
     });
 
     describe('HTML optimization disabled only', () => {
-      var builder;
+      let builder;
       before(function() {
         const options = new BuilderOptions({
           noHtmlOptimization: true
@@ -129,7 +129,7 @@ describe('api-console-builder', () => {
     });
 
     describe('JS optimization disabled only', () => {
-      var builder;
+      let builder;
       before(function() {
         const options = new BuilderOptions({
           noJsOptimization: true

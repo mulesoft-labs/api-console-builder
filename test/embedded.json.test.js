@@ -9,7 +9,6 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/build-embeded-json';
   describe('embedded-json', () => {
-
     before(function() {
       this.timeout(120000);
       return builder({
