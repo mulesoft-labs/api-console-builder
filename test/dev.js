@@ -4,7 +4,7 @@ const builder = require('..');
 const workingDir = 'test/playground/attributes-test-build';
 
 builder({
-  noOptimization: true,
+  noOptimization: false,
   src: 'test/api-console-4.2.1.zip',
   dest: workingDir,
   raml: 'test/api.raml',
