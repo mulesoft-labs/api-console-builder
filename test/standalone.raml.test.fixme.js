@@ -9,8 +9,7 @@ const path = require('path');
 describe('api-console-builder', () => {
   const workingDir = 'test/standalone-raml-test';
   describe('standalone-RAML', () => {
-    let api = 'https://raw.githubusercontent.com/advanced-rest-client/';
-    api += 'raml-example-api/master/api.raml';
+    let api = 'test/api.raml';
 
     after(function() {
       return fs.remove(workingDir);
@@ -19,11 +18,11 @@ describe('api-console-builder', () => {
     it('Build the console', function() {
       this.timeout(270000);
       return builder({
-        noOptimization: true,
-        src: 'https://github.com/mulesoft/api-console/archive/v4.2.1.zip',
+        noOptimization: false,
+        src: 'https://github.com/mulesoft/api-console/archive/v4.2.3.zip',
         dest: workingDir,
         raml: api,
-        verbose: false
+        verbose: true
       });
     });
 
