@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-builder#readme",
   "dependencies": {
-    "amf-client-js": "^2.0.0",
+    "amf-client-js": "^3.0.2",
     "@api-components/api-console-dependency-manager": "^1.0.3",
     "@api-components/api-console-github-resolver": "^1.0.2",
     "@api-components/api-console-sources-resolver": "^1.0.2",
