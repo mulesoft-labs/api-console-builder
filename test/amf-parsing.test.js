@@ -3,6 +3,7 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 const path = require('path');
 const winston = require('winston');
+const http = require('http');
 
 const workingDir = path.join('test', 'parsing-test');
 
@@ -56,6 +57,61 @@ describe('AMF parser', function() {
         const api = model[0];
         assert.typeOf(api['@context'], 'object', 'Model is compact');
       });
+    });
+  });
+});
+
+describe('AMF parser from remote location', function() {
+  const hostname = '127.0.0.1';
+  const port = 3123;
+  let server;
+  const sockets = {};
+  let nextSocketId = 0;
+
+  function createServer() {
+    return new Promise((resolve, reject) => {
+      server = http.createServer((req, res) => {
+        fs.readFile('test/test-apis/api-raml-10.raml', 'utf8')
+        .then((content) => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/raml');
+          res.end(content);
+        });
+      });
+      server.on('connection', function(socket) {
+        const socketId = nextSocketId++;
+        sockets[socketId] = socket;
+        socket.on('close', function() {
+          delete sockets[socketId];
+        });
+        socket.setTimeout(1000);
+      });
+      server.on('error', () => reject());
+      server.listen(port, hostname, () => resolve());
+    });
+  }
+
+  function destroyServer() {
+    return new Promise((resolve) => {
+      server.close(() => {
+        resolve();
+      });
+      Object.keys(sockets).forEach((socketId) => {
+        sockets[socketId].destroy();
+      });
+    });
+  }
+
+  before(() => createServer());
+  after(() => destroyServer());
+
+  it('Parses remote API', function() {
+    const instance = new AmfSource(getLogger());
+    return instance.getModel(`http://${hostname}:${port}/`, 'RAML 1.0')
+    .then((doc) => {
+      assert.typeOf(doc, 'object');
+      assert.typeOf(doc.encodes, 'object');
+      assert.typeOf(doc.encodes.servers, 'array');
     });
   });
 });

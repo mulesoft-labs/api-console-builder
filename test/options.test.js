@@ -27,6 +27,64 @@ describe('builder-options', () => {
         });
         assert.isFalse(options.isValid);
       });
+
+      it('Returns plural version for unknown options', function() {
+        options._validateOptionsList({
+          test: 'test',
+          other: 'value'
+        });
+        assert.equal(options.validationErrors[0], 'Unknown options: test, other');
+      });
+
+      it('Adds error messages for type missmatch', function() {
+        options._validateOptionsList({
+          tagName: 5
+        });
+        assert.equal(options.validationErrors[0], 'Property tagName expected to be string but found number.');
+      });
+
+      it('Passes no user options', () => {
+        options.validateOptions();
+        assert.isTrue(options.isValid);
+      });
+    });
+
+    describe('_validateEmbeddableOptions()', () => {
+      let opts;
+      beforeEach(function() {
+        options = new BuilderOptions();
+        opts = {
+          embedded: false
+        };
+      });
+
+      it('Adds warning when embedded and attributes combined', () => {
+        opts.embedded = true;
+        opts.attributes = [{}];
+        options._validateEmbeddableOptions(opts);
+        assert.equal(options.validationWarnings[0], 'Illigal attributes option when embedded is set.');
+      });
+
+      it('Sets "attributes" undefined', () => {
+        opts.embedded = true;
+        opts.attributes = [{}];
+        options._validateEmbeddableOptions(opts);
+        assert.isUndefined(opts.attributes);
+      });
+
+      ['noOauth', 'noCryptoJs', 'noJsPolyfills', 'noXhr'].forEach((prop) => {
+        it(`Sets warning when standalone and ${prop}`, () => {
+          opts[prop] = true;
+          options._validateEmbeddableOptions(opts);
+          assert.typeOf(options.validationWarnings[0], 'string');
+        });
+
+        it('Sets noOauth to false', () => {
+          opts[prop] = true;
+          options._validateEmbeddableOptions(opts);
+          assert.isFalse(opts[prop]);
+        });
+      });
     });
 
     describe('_validateConsoleSource()', () => {
@@ -232,9 +290,7 @@ describe('builder-options', () => {
     let options;
 
     before(function() {
-      options = new BuilderOptions({
-        tagName: '5.0.0'
-      });
+      options = new BuilderOptions();
     });
 
     it('Should not set local default option', function() {

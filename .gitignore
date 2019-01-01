@@ -10,3 +10,6 @@ build-*
 playground
 .DS_Store
 api-console-builder-debug.log
+coverage
+.nyc_output
+undefined

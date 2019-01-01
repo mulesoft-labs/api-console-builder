@@ -28,8 +28,8 @@
   <api-console></api-console>
   <script>
   /**
-   * The following script will handle API console routing when using the c
-   * onsole as a standalone application.
+   * The following script will handle API console routing when using the
+   * console as a standalone application.
    *
    * It uses native JavaScript APIs so it can be used outside Polymer scope.
    *
