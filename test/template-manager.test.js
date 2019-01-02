@@ -22,10 +22,12 @@ function getLogger() {
 
 describe('TemplateManager', function() {
   const workingDir = path.join('test', 'playground');
+  const buildDir = path.join(workingDir, 'build');
+
   describe('constructor()', () => {
-    it('Sets workingDir', () => {
-      const instance = new TemplateManager(workingDir);
-      assert.equal(instance.workingDir, workingDir);
+    it('Sets outputDir', () => {
+      const instance = new TemplateManager(buildDir);
+      assert.equal(instance.outputDir, buildDir);
     });
 
     it('Sets options', () => {
@@ -44,7 +46,7 @@ describe('TemplateManager', function() {
   describe('_copyTemplateFile()', () => {
     let instance;
     before(() => {
-      instance = new TemplateManager(workingDir, {
+      instance = new TemplateManager(buildDir, {
         buildType: 'plain'
       }, getLogger());
     });
@@ -53,7 +55,7 @@ describe('TemplateManager', function() {
 
     it('Copies the file into working directory', () => {
       return instance._copyTemplateFile()
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'index.html')))
+      .then(() => fs.pathExists(path.join(buildDir, 'index.html')))
       .then((exists) => assert.isTrue(exists));
     });
   });
@@ -61,7 +63,7 @@ describe('TemplateManager', function() {
   describe('_copyImport()', () => {
     let instance;
     beforeEach(() => {
-      instance = new TemplateManager(workingDir, {
+      instance = new TemplateManager(buildDir, {
         buildType: 'plain'
       }, getLogger());
     });
@@ -70,7 +72,7 @@ describe('TemplateManager', function() {
 
     it('Copies the file into working directory', () => {
       return instance._copyImport()
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'apic-import.js')))
+      .then(() => fs.pathExists(path.join(buildDir, 'apic-import.js')))
       .then((exists) => assert.isTrue(exists));
     });
   });
@@ -78,7 +80,7 @@ describe('TemplateManager', function() {
   describe('copyTemplate()', () => {
     let instance;
     beforeEach(() => {
-      instance = new TemplateManager(workingDir, {
+      instance = new TemplateManager(buildDir, {
         buildType: 'plain'
       }, getLogger());
     });
@@ -87,22 +89,22 @@ describe('TemplateManager', function() {
 
     it('Copies import file', () => {
       return instance.copyTemplate()
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'apic-import.js')))
+      .then(() => fs.pathExists(path.join(buildDir, 'apic-import.js')))
       .then((exists) => assert.isTrue(exists));
     });
 
     it('Copies import and template files when not embedded', () => {
       return instance.copyTemplate()
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'apic-import.js')))
+      .then(() => fs.pathExists(path.join(buildDir, 'apic-import.js')))
       .then((exists) => assert.isTrue(exists))
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'index.html')))
+      .then(() => fs.pathExists(path.join(buildDir, 'index.html')))
       .then((exists) => assert.isTrue(exists));
     });
 
     it('Will not copy template file when embedded', () => {
       instance.opts.embedded = true;
       return instance.copyTemplate()
-      .then(() => fs.pathExists(path.join(workingDir, 'build', 'index.html')))
+      .then(() => fs.pathExists(path.join(buildDir, 'index.html')))
       .then((exists) => assert.isFalse(exists));
     });
   });
@@ -114,11 +116,12 @@ describe('TemplateManager', function() {
     beforeEach(() => {
       vars = {
         apiTitle: 'TEST TITLE',
-        apiFile: 'TEST FILE'
+        apiFile: 'TEST FILE',
+        apiMediaType: 'TEST TYPE'
       };
-      tplPath = path.join(workingDir, 'build', 'index.html');
-      instance = new TemplateManager(workingDir, {
-        buildType: 'model'
+      tplPath = path.join(buildDir, 'index.html');
+      instance = new TemplateManager(buildDir, {
+        buildType: 'api'
       }, getLogger());
       return instance._copyTemplateFile();
     });
@@ -150,6 +153,14 @@ describe('TemplateManager', function() {
       });
     });
 
+    it('Sets API content type', () => {
+      return instance.processTemplate(vars)
+      .then(() => fs.readFile(tplPath, 'utf8'))
+      .then((contents) => {
+        assert.isAbove(contents.indexOf(vars.apiMediaType), 0);
+      });
+    });
+
     it('Does nothing when embedded mode', () => {
       instance.opts.embedded = true;
       return instance.processTemplate(vars)
@@ -160,12 +171,21 @@ describe('TemplateManager', function() {
     });
 
 
-    it('Ignores API file when not set', () => {
+    it('Clears "AMF-API-FILE" when no api file', () => {
       delete vars.apiFile;
       return instance.processTemplate(vars)
       .then(() => fs.readFile(tplPath, 'utf8'))
       .then((contents) => {
-        assert.notEqual(contents.indexOf('[[AMF-API-FILE]]'), -1);
+        assert.equal(contents.indexOf('[[AMF-API-FILE]]'), -1);
+      });
+    });
+
+    it('Clears "AMF-API-CONTENT-TYPE" when no api file', () => {
+      delete vars.apiMediaType;
+      return instance.processTemplate(vars)
+      .then(() => fs.readFile(tplPath, 'utf8'))
+      .then((contents) => {
+        assert.equal(contents.indexOf('[[AMF-API-CONTENT-TYPE]]'), -1);
       });
     });
   });

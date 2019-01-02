@@ -11,8 +11,7 @@ $ npm i api-console-builder@0.4.8
 
 [![Build Status](https://travis-ci.org/mulesoft-labs/api-console-builder.svg?branch=master)](https://travis-ci.org/mulesoft-labs/api-console-builder)
 
-__api-console-builder__ allows you to generate production ready build of
-Salesforce (former MuleSoft) API Console.
+__api-console-builder__ allows you to generate production ready build of MuleSoft API Console.
 
 On a high level, you can build the API console as a standalone application
 or as a web component. Web component version is based on version 1 of web components
@@ -74,7 +73,7 @@ const builder = require('api-console-builder');
 builder({
   api: 'path/to/api.raml',
   apiType: 'RAML 1.0',
-  tagName: '5.0.0-preview'
+  tagName: 'v5.0.0-preview.3'
 })
 .then(() => console.log('Build complete <3'))
 .catch((cause) => console.log('Build error <\\3', cause.message));

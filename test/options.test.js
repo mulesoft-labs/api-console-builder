@@ -240,15 +240,6 @@ describe('builder-options', () => {
       assert.lengthOf(options.validationErrors, 1);
     });
 
-    it('Validates OAS 1.0 type', function() {
-      const options = new BuilderOptions({
-        tagName: '5.0.0',
-        api: 'api.raml',
-        apiType: 'OAS 1.0'
-      });
-      assert.lengthOf(options.validationErrors, 0);
-    });
-
     it('Validates OAS 2.0 type', function() {
       const options = new BuilderOptions({
         tagName: '5.0.0',

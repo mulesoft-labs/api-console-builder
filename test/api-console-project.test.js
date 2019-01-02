@@ -281,11 +281,12 @@ describe('Api console project', function() {
     });
 
     it('Should copy templates', function() {
-      return project._prebuildTemplates();
+      const buildLocation = path.join(project.workingDir, 'build');
+      return project._prebuildTemplates(buildLocation);
     });
 
     it('Template is copied', function() {
-      const consoleFile = path.join(project.workingDir, 'index.html');
+      const consoleFile = path.join(project.workingDir, 'build', 'index.html');
       return fs.pathExists(consoleFile)
       .then((exists) => assert.isTrue(exists));
     });

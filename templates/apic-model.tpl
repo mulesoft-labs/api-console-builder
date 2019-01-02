@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <title>[[API-TITLE]]</title>
   <script src="apic-import.js"></script>
-  <style>api-console,body,html{background-color:#fff}body,html{height:100%;margin:0;padding:0;min-height:100vh}.loader-container{position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(255,255,255,.54);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-align:center;-webkit-align-items:center;align-items:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-ms-flex-direction:column;-webkit-flex-direction:column;flex-direction:column;z-index:1}.loader-container p{color:#777}.loader{font-size:10px;margin:30px auto;text-indent:-9999em;width:9em;height:9em;border-radius:50%;background:#7288ff;background:-moz-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-webkit-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-o-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-ms-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:linear-gradient(to right,#7288ff 10%,rgba(114,136,255,0) 42%);position:relative;-webkit-animation:load3 1.4s infinite linear;animation:load3 1.4s infinite linear;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.loader:after,.loader:before{content:'';position:absolute;top:0;left:0}.loader:before{width:50%;height:50%;background:#7288ff;border-radius:100% 0 0}.loader:after{background:#fff;width:75%;height:75%;border-radius:50%;margin:auto;bottom:0;right:0}@-webkit-keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+  <style>body,html{height:100%;margin:0;padding:0;min-height:100vh}.loader-container{position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(255,255,255,.54);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-align:center;-webkit-align-items:center;align-items:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-ms-flex-direction:column;-webkit-flex-direction:column;flex-direction:column;z-index:1}.loader-container p{color:#777}.loader{font-size:10px;margin:30px auto;text-indent:-9999em;width:9em;height:9em;border-radius:50%;background:#7288ff;background:-moz-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-webkit-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-o-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:-ms-linear-gradient(left,#7288ff 10%,rgba(114,136,255,0) 42%);background:linear-gradient(to right,#7288ff 10%,rgba(114,136,255,0) 42%);position:relative;-webkit-animation:load3 1.4s infinite linear;animation:load3 1.4s infinite linear;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.loader:after,.loader:before{content:'';position:absolute;top:0;left:0}.loader:before{width:50%;height:50%;background:#7288ff;border-radius:100% 0 0}.loader:after{background:#fff;width:75%;height:75%;border-radius:50%;margin:auto;bottom:0;right:0}@-webkit-keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
   </style></head>
   <body unresolved="">
   <div id="loader" class="loader-container">
@@ -42,6 +42,9 @@
      */
     apic.app.removeLoader = function() {
       const node = document.getElementById('loader');
+      if (!node) {
+        return;
+      }
       node.parentNode.removeChild(node);
     };
     /**
@@ -118,6 +121,7 @@
       }
       var ac = document.getElementById('apic');
       ac.amfModel = data;
+      apic.app.removeLoader();
       if (apic.app.__initialType && apic.app.__initialSelected) {
         apic.app.selectionChanged(
           apic.app.__initialSelected,
@@ -163,7 +167,6 @@
       requestAnimationFrame(function() {
         var ac = document.getElementById('apic');
         ac.resetLayout();
-        apic.app.removeLoader();
       });
     };
     /**
