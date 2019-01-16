@@ -8,8 +8,7 @@ const path = require('path');
 const workingDir = path.join('test', 'api-model-test');
 const defaultOptions = {
   destination: workingDir,
-  verbose: false,
-  tagName: '5.0.0-preview-1'
+  verbose: false
 };
 
 describe('Model generation', function() {

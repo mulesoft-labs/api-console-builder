@@ -13,7 +13,7 @@ const apiFile = 'api-raml-10.raml';
  */
 builder({
   destination: workingDir,
-  tagName: '5.0.0-preview-1',
+  tagName: '5.0.0',
   api: apiFile,
   apiType: 'RAML 1.0',
   withAmf: true,

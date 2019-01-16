@@ -14,7 +14,7 @@ const apiFile = path.join(__dirname, '..', 'test', 'test-apis', 'api-raml-10.ram
  */
 builder({
   destination: workingDir,
-  tagName: '5.0.0-preview-1',
+  tagName: '5.0.0-rc.1',
   api: apiFile,
   apiType: 'RAML 1.0',
   verbose: true,

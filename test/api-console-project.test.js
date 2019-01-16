@@ -11,15 +11,13 @@ describe('Api console project', function() {
     destination: workingDir,
     api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
-    verbose: false,
-    tagName: '5.0.0-preview-1'
+    verbose: false
   };
   const defaultOptionsEmbedded = {
     destination: workingDir,
     api: 'test/test-apis/api-raml-10.raml',
     apiType: 'RAML 1.0',
     verbose: false,
-    tagName: '5.0.0-preview-1',
     embedded: true
   };
 

@@ -13,7 +13,7 @@ const apiFile = 'api-oas-20.json';
  */
 builder({
   destination: workingDir,
-  tagName: '5.0.0-preview-1',
+  tagName: '5.0.0-rc.2',
   api: apiFile,
   apiType: 'OAS 2.0',
   apiMediaType: 'application/json',

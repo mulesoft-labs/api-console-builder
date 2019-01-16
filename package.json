@@ -1,6 +1,6 @@
 {
   "name": "@api-components/api-console-builder",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "main.js",
   "scripts": {

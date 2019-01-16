@@ -12,7 +12,6 @@ const apiFile = path.join(__dirname, '..', 'test', 'test-apis', 'api-oas-20.json
  */
 builder({
   destination: workingDir,
-  tagName: '5.0.0-preview-1',
   api: apiFile,
   apiType: 'OAS 2.0',
   apiMediaType: 'application/json',

@@ -73,7 +73,7 @@ const builder = require('api-console-builder');
 builder({
   api: 'path/to/api.raml',
   apiType: 'RAML 1.0',
-  tagName: 'v5.0.0-preview.3'
+  tagName: 'v5.0.0'
 })
 .then(() => console.log('Build complete <3'))
 .catch((cause) => console.log('Build error <\\3', cause.message));
