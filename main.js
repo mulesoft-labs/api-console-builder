@@ -3,6 +3,8 @@
 const {ApiConsoleProject} = require('./lib/api-console-project.js');
 const {BuilderOptions} = require('./lib/builder-options.js');
 
+console.log('\x1b[43m\x1b[37m', 'WARN', '\x1b[0m', '⚠ This module is deprecated and replaced by @api-components/api-console-builder.');
+
 /**
  * Copyright (C) Mulesoft.
  * Shared under Apache 2.0 license
