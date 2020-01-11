@@ -14,5 +14,5 @@ the License.
 import '@advanced-rest-client/oauth-authorization/oauth1-authorization.js';
 import '@advanced-rest-client/oauth-authorization/oauth2-authorization.js';
 import '@advanced-rest-client/xhr-simple-request/xhr-simple-request.js';
-import '@anypoint-web-components/api-console-app.js';
+import '@anypoint-web-components/api-console/api-console-app.js';
 import './styles.css';

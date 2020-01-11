@@ -10,15 +10,17 @@ Because the complexity of the build process in v5 the version 2 of this module w
 
 ## The flow:
 
--   create tmp folder
--   run AMF parser
--   copy api model to working dir
--   copy templates from `templates/`
--   copy theme file if set by the user
--   copy `index.html` file if set by the user
--   update version of APIC in the `package.json` (working dir)
--   update `index.html` title from AMF model
--   install dependencies
--   update attributes
--   run rollup build
--   copy working dir to final destination
+-   [x] create tmp folder
+-   [x] run AMF parser
+-   [ ] copy api model to working dir
+-   [x] copy templates from `templates/`
+-   [x] install dependencies
+-   [x] copy theme file if set by the user
+-   [x] copy `index.html` file if set by the user
+-   [x] update `index.html` title from AMF model
+-   [x] update attributes
+-   [ ] create vendor package
+-   [x] run rollup build
+-   [x] copy working dir to final destination
+-   [ ] cache result
+-   [x] cleanup
