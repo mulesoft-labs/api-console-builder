@@ -35,6 +35,7 @@ export default [
       cpy({
         files: [
           path.join('vendor.js'),
+          path.join('api-model.json'),
         ],
         dest: 'dist',
         options: {

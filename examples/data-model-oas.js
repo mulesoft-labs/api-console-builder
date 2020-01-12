@@ -1,21 +1,15 @@
-'use strict';
+import { ApiConsoleProject } from '@api-components/api-console-builder';
+import path from 'path';
 
-const builder = require('..');
-const path = require('path');
-
-const workingDir = path.join('build', 'model-oas');
+const workingDir = path.join('build', 'oas');
 const apiFile = path.join(__dirname, '..', 'test', 'test-apis', 'api-oas-20.json');
 
-/**
- * Builds the console with generated AMF ld+json data model.
- */
-builder({
+const project = new ApiConsoleProject({
   destination: workingDir,
   api: apiFile,
   apiType: 'OAS 2.0',
   apiMediaType: 'application/json',
-  verbose: true
-})
-.catch((cause) => {
-  console.error(cause);
 });
+(async () => {
+  await project.bundle();
+})();
