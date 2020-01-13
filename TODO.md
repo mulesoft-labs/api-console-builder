@@ -12,15 +12,16 @@ Because the complexity of the build process in v5 the version 2 of this module w
 
 -   [x] create tmp folder
 -   [x] run AMF parser
--   [ ] copy api model to working dir
+-   [x] copy api model to working dir
 -   [x] copy templates from `templates/`
 -   [x] install dependencies
 -   [x] copy theme file if set by the user
 -   [x] copy `index.html` file if set by the user
 -   [x] update `index.html` title from AMF model
 -   [x] update attributes
--   [ ] create vendor package
+-   [x] create vendor package
 -   [x] run rollup build
 -   [x] copy working dir to final destination
--   [ ] cache result
+-   [x] cache result
 -   [x] cleanup
+-   [ ] tests
