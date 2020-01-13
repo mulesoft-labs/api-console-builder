@@ -1,3 +1,29 @@
+<a name="1.0.11"></a>
+## 1.0.11 (2020-01-13)
+
+
+* Bumping version ([e01d4cf](https://github.com/mulesoft-labs/api-console-builder/commit/e01d4cf))
+
+### chore
+
+* chore: adding main bundle process flow ([b23b89c](https://github.com/mulesoft-labs/api-console-builder/commit/b23b89c))
+* chore: finalizing builder development ([5e5981a](https://github.com/mulesoft-labs/api-console-builder/commit/5e5981a))
+* chore: moving vendor generation to the tmp folder ([dac93fa](https://github.com/mulesoft-labs/api-console-builder/commit/dac93fa))
+* chore: starting rewriting the component for APIC v6 ([3e02f50](https://github.com/mulesoft-labs/api-console-builder/commit/3e02f50))
+
+### Fix
+
+* Fix: Fixing test command to increase memory limit ([4dabb93](https://github.com/mulesoft-labs/api-console-builder/commit/4dabb93))
+* Fix: Upgrading dependencies for security vulnerability ([40efb2f](https://github.com/mulesoft-labs/api-console-builder/commit/40efb2f))
+
+### Update
+
+* Update: Adding additional debug output ([7606de3](https://github.com/mulesoft-labs/api-console-builder/commit/7606de3))
+* Update: Removing theme installation as it is installed with APIC ([e08ad02](https://github.com/mulesoft-labs/api-console-builder/commit/e08ad02))
+* Update: Restoring theme installation ([890308e](https://github.com/mulesoft-labs/api-console-builder/commit/890308e))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/mulesoft-labs/api-console-builder/compare/0.3.0...v0.4.0) (2017-06-30)
 
