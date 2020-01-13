@@ -1,13 +1,11 @@
 os:
   - linux
+  - osx
 language: node_js
 node_js:
-  - "7"
-  - "8"
   - "10"
+  - "12"
+  - "13"
 script:
 - npm test
-cache:
-  directories:
-    - $HOME/.cache/bower
-    - node_modules
+cache: npm
