@@ -270,7 +270,7 @@ describe('CacheBuild', () => {
       for (let i = 0, len = files.length; i < len; i++) {
         const file = files[i];
         const exists = await fs.exists(file);
-        assert.isTrue(exists, `${file} esists`);
+        assert.isTrue(exists, `${file} exists`);
       }
     });
   });

@@ -288,12 +288,6 @@ describe('BuilderOptions', () => {
       assert.isTrue(spy.called);
     });
 
-    it('calls _validateLogger()', () => {
-      const spy = sinon.spy(instance, '_validateLogger');
-      instance.validate();
-      assert.isTrue(spy.called);
-    });
-
     it('calls _validateApiOptions()', () => {
       const spy = sinon.spy(instance, '_validateApiOptions');
       instance.validate();

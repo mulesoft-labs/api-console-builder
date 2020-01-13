@@ -5,9 +5,9 @@
   "main": "index.js",
   "module": "main.js",
   "scripts": {
-    "test": "NODE_OPTIONS=--max_old_space_size=2048 mocha --require esm --timeout 50000 test/*.test.js",
+    "test": "mocha --require esm --timeout 480000 test/*.test.js",
     "test:watch": "mocha --require esm --watch test/*.test.js",
-    "cover": "NODE_OPTIONS=--max_old_space_size=2048 nyc --reporter=html --reporter=text mocha --require esm test/*.test.js"
+    "test:coverage": "nyc --reporter=html --reporter=text mocha --require esm --timeout 480000 test/*.test.js"
   },
   "engines": {
     "node": ">=10.0.0"
