@@ -4,5 +4,8 @@ test/
 husky.*
 commitlint.*
 .*
-*.config.*
+/*.config.*
 prettier.config.js
+appveyor.yml
+docs/
+examples/
