@@ -10,7 +10,6 @@ const project = new ApiConsoleProject({
   noCache: true,
   attributes: []
 });
-project.opts.tagName = '6.0.0-preview.36';
 project.bundle()
 .then(() => console.log('ready'))
 .catch((cause) => console.error(cause));

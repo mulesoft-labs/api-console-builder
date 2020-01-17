@@ -10,7 +10,7 @@ const logger = { info: f, log: f, warn: f, error: f, debug: f};
 
 async function createPackage() {
   const pkg = {
-    name: "api-console",
+    name: "api-console-bundle",
     description: "a template to install API dependencies",
     repository: {
       type: "git",

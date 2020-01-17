@@ -358,7 +358,7 @@ describe('ApiConsoleProject', () => {
         };
         const project = new ApiConsoleProject(opts);
         // this tag is not supported by the bundler oficially...
-        project.opts.tagName = '6.0.0-preview.36';
+        project.opts.tagName = '6.0.0';
         await project.bundle();
       });
 
@@ -440,8 +440,6 @@ describe('ApiConsoleProject', () => {
           }]
         };
         const project = new ApiConsoleProject(opts);
-        // this tag is not supported by the bundler oficially...
-        project.opts.tagName = '6.0.0-preview.36';
         const base = path.join(cacheLocation, 'api-console', 'cache', 'builds');
         const file = path.join(base, `${hash}.zip`);
         await fs.ensureDir(base);
@@ -506,7 +504,6 @@ describe('ApiConsoleProject', () => {
           indexFile: path.join('test', 'apic-index-file.html'),
         };
         const project = new ApiConsoleProject(opts);
-        project.opts.tagName = '6.0.0-preview.36';
         await project.bundle();
       });
 

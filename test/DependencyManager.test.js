@@ -6,11 +6,11 @@ import { DependencyManager } from '../lib/DependencyManager.js';
 const workingDir = path.join('test', 'dependency-test');
 const f = () => {};
 const logger = { info: f, log: f, warn: f, error: f, debug: f};
-const tagName = '6.0.0-preview.36';
+const tagName = '6.0.0';
 
 async function createPackage() {
   const pkg = {
-    name: "api-console",
+    name: "api-console-bundle",
     description: "a template to install API dependencies",
     repository: {
       type: "git",
@@ -30,7 +30,7 @@ describe('DependencyManager', () => {
 
   describe('constructor()', function() {
     it('sets workingDir property', () => {
-      const instance = new DependencyManager(workingDir, logger,tagName);
+      const instance = new DependencyManager(workingDir, logger, tagName);
       assert.equal(instance.workingDir, workingDir);
     });
 
@@ -49,7 +49,7 @@ describe('DependencyManager', () => {
     let instance;
     beforeEach(async () => {
       await createPackage();
-      instance = new DependencyManager(workingDir, logger,tagName);
+      instance = new DependencyManager(workingDir, logger, tagName);
     });
 
     afterEach(async () => await fs.remove(workingDir));
@@ -62,17 +62,23 @@ describe('DependencyManager', () => {
   });
 
   describe('installConsole()', () => {
-    let instance;
     beforeEach(async () => {
       await createPackage();
-      instance = new DependencyManager(workingDir, logger,tagName);
     });
 
     afterEach(async () => await fs.remove(workingDir));
 
-    it('installs console in a working directory', async () => {
+    it('installs latest console in a working directory', async () => {
+      const instance = new DependencyManager(workingDir, logger);
       await instance.installConsole();
-      const exists = await fs.pathExists(path.join(workingDir, 'node_modules', '@anypoint-web-components', 'api-console'));
+      const exists = await fs.pathExists(path.join(workingDir, 'node_modules', 'api-console'));
+      assert.isTrue(exists);
+    });
+
+    it('installs console with a version in a working directory', async () => {
+      const instance = new DependencyManager(workingDir, logger, tagName);
+      await instance.installConsole();
+      const exists = await fs.pathExists(path.join(workingDir, 'node_modules', 'api-console'));
       assert.isTrue(exists);
     });
   });
@@ -81,14 +87,14 @@ describe('DependencyManager', () => {
     let instance;
     beforeEach(async () => {
       await createPackage();
-      instance = new DependencyManager(workingDir, logger,tagName);
+      instance = new DependencyManager(workingDir, logger, tagName);
     });
 
     afterEach(async () => await fs.remove(workingDir));
 
     it('installs dependencies and the console', async () => {
       await instance.install();
-      const exists = await fs.pathExists(path.join(workingDir, 'node_modules', '@anypoint-web-components', 'api-console'));
+      const exists = await fs.pathExists(path.join(workingDir, 'node_modules', 'api-console'));
       assert.isTrue(exists);
       const exists2 = await fs.pathExists(path.join(workingDir, 'node_modules', 'is-sorted'));
       assert.isTrue(exists2);
