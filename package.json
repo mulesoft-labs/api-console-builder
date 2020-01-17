@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-builder#readme",
   "dependencies": {
-    "amf-client-js": "^4.0.3",
+    "amf-client-js": "^4.0.4",
     "archiver": "^3.1.1",
     "colors": "^1.4.0",
     "esm": "^3.2.25",
@@ -43,14 +43,14 @@
   "devDependencies": {
     "@advanced-rest-client/eslint-config": "^1.1.4",
     "@advanced-rest-client/prettier-config": "^0.1.0",
-    "@commitlint/cli": "^8.3.4",
+    "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "chai": "^4.2.0",
-    "husky": "^4.0.7",
+    "husky": "^4.0.10",
     "lint-staged": "^9.5.0",
     "mocha": "^7.0.0",
     "nyc": "^15.0.0",
-    "sinon": "^8.0.4"
+    "sinon": "^8.1.0"
   },
   "lint-staged": {
     "*.js": [
