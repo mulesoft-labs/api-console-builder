@@ -322,26 +322,24 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('building process', () => {
-    const cacheLocation = path.join(workingDir, 'cache');
+    async function clearInstanceCache(project) {
+      const cacheLocation = path.join(project.cache.cacheFolder, `${project.cache.hash}.zip`);
+      await fs.remove(cacheLocation);
+    }
+
+    // const cacheLocation = path.join(workingDir, 'cache');
     const buildLocation = path.join(workingDir, 'bundle');
     const apiLocation = path.join('test', 'test-apis', 'api-raml-10.raml')
 
     describe('basic build', () => {
       const hash = '925c20e5a61114a95a2c88cd60767ee06e327aff28b462b6d827c27a5c9624ed';
-      let origHome;
-      let origAppData;
+      let instance;
       before(async () => {
         await fs.ensureDir(workingDir);
-        origHome = process.env.HOME;
-        origAppData = process.env.APPDATA;
-        process.env.HOME = workingDir;
-        process.env.APPDATA = cacheLocation;
       });
 
       after(async () => {
         await fs.remove(workingDir);
-        process.env.HOME = origHome;
-        process.env.APPDATA = origAppData;
       });
 
       // The build process costs a lot so it happens only once.
@@ -356,10 +354,9 @@ describe('ApiConsoleProject', () => {
             test: 'true',
           }]
         };
-        const project = new ApiConsoleProject(opts);
-        // this tag is not supported by the bundler oficially...
-        project.opts.tagName = '6.0.0';
-        await project.bundle();
+        instance = new ApiConsoleProject(opts);
+        await clearInstanceCache(instance);
+        await instance.bundle();
       });
 
       it('creates the bundle', async () => {
@@ -397,38 +394,18 @@ describe('ApiConsoleProject', () => {
       });
 
       it('creates a cache file', async () => {
-        const base = path.join(cacheLocation, 'api-console', 'cache', 'builds');
+        const cb = new CacheBuild(instance.opts, instance.logger);
+        const base = cb.locateAppDir();
         const file = path.join(base, `${hash}.zip`);
         const exists = await fs.pathExists(file);
         assert.isTrue(exists, `${file} exists`);
       });
-
-      it('has no debug file', async () => {
-        const file = 'api-console-builder-debug.log';
-        const exists = await fs.pathExists(file);
-        assert.isFalse(exists, `${file} exists`);
-      });
     });
 
-    describe('build from the cache', () => {
+    describe('build from the cache file', () => {
       const hash = '925c20e5a61114a95a2c88cd60767ee06e327aff28b462b6d827c27a5c9624ed';
-      let origHome;
-      let origAppData;
       before(async () => {
         await fs.ensureDir(workingDir);
-        origHome = process.env.HOME;
-        origAppData = process.env.APPDATA;
-        process.env.HOME = workingDir;
-        process.env.APPDATA = cacheLocation;
-      });
-
-      after(async () => {
-        await fs.remove(workingDir);
-        process.env.HOME = origHome;
-        process.env.APPDATA = origAppData;
-      });
-
-      before(async () => {
         const opts = {
           destination: buildLocation,
           api: apiLocation,
@@ -439,15 +416,26 @@ describe('ApiConsoleProject', () => {
             test: 'true',
           }]
         };
-        const project = new ApiConsoleProject(opts);
-        const base = path.join(cacheLocation, 'api-console', 'cache', 'builds');
-        const file = path.join(base, `${hash}.zip`);
-        await fs.ensureDir(base);
-        await fs.copy(
-          path.join('test', 'cached.zip'),
-          path.join(file),
-        );
-        await project.bundle();
+        try {
+          const project = new ApiConsoleProject(opts);
+          await clearInstanceCache(project);
+          const cb = new CacheBuild(project.opts, project.logger);
+          const file = path.join(cb.cacheFolder, `${hash}.zip`);
+          await fs.ensureDir(cb.cacheFolder);
+          await fs.copy(
+            path.join(__dirname, 'cached.zip'),
+            path.join(file),
+          );
+          await project.bundle();
+        } catch (e) {
+          console.log('NO I CHUJ!!!!');
+          console.log(e);
+          throw e;
+        }
+      });
+
+      after(async () => {
+        await fs.remove(workingDir);
       });
 
       it('extracts bundle files', async () => {
@@ -479,20 +467,12 @@ describe('ApiConsoleProject', () => {
     });
 
     describe('custom css and custom html', () => {
-      let origHome;
-      let origAppData;
       before(async () => {
         await fs.ensureDir(workingDir);
-        origHome = process.env.HOME;
-        origAppData = process.env.APPDATA;
-        process.env.HOME = workingDir;
-        process.env.APPDATA = cacheLocation;
       });
 
       after(async () => {
         await fs.remove(workingDir);
-        process.env.HOME = origHome;
-        process.env.APPDATA = origAppData;
       });
 
       before(async () => {
@@ -504,6 +484,7 @@ describe('ApiConsoleProject', () => {
           indexFile: path.join('test', 'apic-index-file.html'),
         };
         const project = new ApiConsoleProject(opts);
+        await clearInstanceCache(project);
         await project.bundle();
       });
 
