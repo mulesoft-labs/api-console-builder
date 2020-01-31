@@ -1,3 +1,24 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.0.5](https://github.com/mulesoft-labs/api-console-builder/compare/v0.4.4...v2.0.5) (2020-01-31)
+
+
+### Bug Fixes
+
+* Adding fix for styles to the import file. ([25a4f50](https://github.com/mulesoft-labs/api-console-builder/commit/25a4f50ac91151abdc958d6a9d5e0f1cbfda50c5))
+* Adding missing support for noOauth and OAuth element ([26dc181](https://github.com/mulesoft-labs/api-console-builder/commit/26dc181a1e7c6bbb4c488c2031ea91aba35c6b32))
+* fixes bundling command for Windows platform ([63b7ae8](https://github.com/mulesoft-labs/api-console-builder/commit/63b7ae8e53003396e1cc166af5fef1f03b6ec80f))
+* Fixes https://github.com/mulesoft-labs/api-console-cli/issues/29 ([deb3cc6](https://github.com/mulesoft-labs/api-console-builder/commit/deb3cc60c6c8c87651438b230e3c9ad4fbc3e866))
+* fixing logger call to undefined function ([71d7cbe](https://github.com/mulesoft-labs/api-console-builder/commit/71d7cbebe58a78e4f5e0226c620f995027434f1f))
+* Fixing npm audit and dependency version ([ac03277](https://github.com/mulesoft-labs/api-console-builder/commit/ac0327714126eb46336fd23688faaaac9e7513b2))
+* Fixing script error ([d569f04](https://github.com/mulesoft-labs/api-console-builder/commit/d569f04d98209d93a3902e1989cdb85f07c39c68))
+* Fixing stable build ([ed81de6](https://github.com/mulesoft-labs/api-console-builder/commit/ed81de6c8dd062ab43d620ef3ec05b2c36954ebf))
+* Fixing test command to increase memory limit ([4dabb93](https://github.com/mulesoft-labs/api-console-builder/commit/4dabb93700ad1aa3558c267ea6d89618905095ab))
+* Refactoring misspelling ([da13f77](https://github.com/mulesoft-labs/api-console-builder/commit/da13f777719b1a76e972fb69739b86b85b2a16e2))
+* Upgrading dependencies for security vulnerability ([40efb2f](https://github.com/mulesoft-labs/api-console-builder/commit/40efb2f5e2d5ea136ac537d7575e6d37f505aa3a))
+
 <a name="1.0.11"></a>
 ## 1.0.11 (2020-01-13)
 
