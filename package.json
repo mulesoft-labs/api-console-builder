@@ -1,6 +1,6 @@
 {
   "name": "@api-components/api-console-builder",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A module to build a minified and concatenated file for the API console",
   "main": "index.js",
   "module": "main.js",
@@ -34,9 +34,9 @@
     "esm": "^3.2.25",
     "fs-extra": "8.1.0",
     "parse5": "^5.1.1",
-    "semver": "^7.1.1",
+    "semver": "^7.1.2",
     "tmp": "0.1.0",
-    "uglify-js": "^3.7.6",
+    "uglify-js": "^3.7.7",
     "winston": "^3.2.1",
     "yauzl": "^2.9.1"
   },
@@ -47,7 +47,7 @@
     "@commitlint/config-conventional": "^8.3.4",
     "chai": "^4.2.0",
     "husky": "^4.2.1",
-    "lint-staged": "^10.0.6",
+    "lint-staged": "^10.0.7",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "sinon": "^8.1.1"
