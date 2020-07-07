@@ -2,16 +2,19 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { AttributesProcessor } from '../lib/AttributesProcessor.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'attributes-test');
 const mainFile = path.join(workingDir, 'index.html');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
 describe('AttributesProcessor', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
+  /**
+   * @return {Promise<void>}
+   */
   async function createFile() {
     const src = path.join(__dirname, '..', 'templates', 'index.html');
     const contents = await fs.readFile(src);
@@ -20,7 +23,7 @@ describe('AttributesProcessor', () => {
 
   describe('constructor()', () => {
     let instance;
-    const attributes = { test: true };
+    const attributes = [{ test: true }];
     beforeEach(() => {
       instance = new AttributesProcessor(attributes, logger, mainFile);
     });
@@ -56,7 +59,7 @@ describe('AttributesProcessor', () => {
       const result = instance.listAttributes();
       assert.deepEqual(result, [{
         name: 'test',
-        value: ''
+        value: '',
       }]);
     });
 
@@ -65,7 +68,7 @@ describe('AttributesProcessor', () => {
       const result = instance.listAttributes();
       assert.deepEqual(result, [{
         name: 'test',
-        value: 'value'
+        value: 'value',
       }]);
     });
 
@@ -74,10 +77,10 @@ describe('AttributesProcessor', () => {
       const result = instance.listAttributes();
       assert.deepEqual(result, [{
         name: 'test',
-        value: 'value'
+        value: 'value',
       }, {
         name: 'other',
-        value: 'x-value'
+        value: 'x-value',
       }]);
     });
 
@@ -85,41 +88,41 @@ describe('AttributesProcessor', () => {
       const attr = [
         'single',
         { multiple: '1', values: true },
-        { other: 1 }
+        { other: 1 },
       ];
       const instance = new AttributesProcessor(attr, logger, mainFile);
       const result = instance.listAttributes();
       assert.deepEqual(result, [
         {
           name: 'single',
-          value: ''
+          value: '',
         },
         {
           name: 'multiple',
-          value: '1'
+          value: '1',
         },
         {
           name: 'values',
-          value: true
+          value: true,
         },
         {
           name: 'other',
-          value: 1
-        }
+          value: 1,
+        },
       ]);
     });
   });
 
   describe('writting attributes', () => {
-    before(async () => await createFile());
-    after(async () => await fs.emptyDir(workingDir));
+    before(async () => createFile());
+    after(async () => fs.emptyDir(workingDir));
 
     let instance;
     beforeEach(() => {
       const attr = [
         'single',
         { multiple: '1', values: 'true' },
-        { other: '1' }
+        { other: '1' },
       ];
       instance = new AttributesProcessor(attr, logger, mainFile);
     });

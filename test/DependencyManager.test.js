@@ -2,33 +2,36 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { DependencyManager } from '../lib/DependencyManager.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'dependency-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 const tagName = '6.0.0';
 
+/**
+ * @return {Promise<void>}
+ */
 async function createPackage() {
   const pkg = {
-    name: "api-console-bundle",
-    description: "a template to install API dependencies",
+    name: 'api-console-bundle',
+    description: 'a template to install API dependencies',
     repository: {
-      type: "git",
-      url: "git+ssh://git@github.com/mulesoft-labs/api-console-builder.git"
+      type: 'git',
+      url: 'git+ssh://git@github.com/mulesoft-labs/api-console-builder.git',
     },
-    license: "Apache-2.0",
+    license: 'Apache-2.0',
     dependencies: {
-      'is-sorted': '1.0.5'
-    }
+      'is-sorted': '1.0.5',
+    },
   };
   await fs.outputJson(path.join(workingDir, 'package.json'), pkg);
 }
 
 describe('DependencyManager', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets workingDir property', () => {
       const instance = new DependencyManager(workingDir, logger, tagName);
       assert.equal(instance.workingDir, workingDir);
@@ -52,7 +55,7 @@ describe('DependencyManager', () => {
       instance = new DependencyManager(workingDir, logger, tagName);
     });
 
-    afterEach(async () => await fs.remove(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('installs dependencies in a working directory', async () => {
       await instance.installNpm();
@@ -66,7 +69,7 @@ describe('DependencyManager', () => {
       await createPackage();
     });
 
-    afterEach(async () => await fs.remove(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('installs latest console in a working directory', async () => {
       const instance = new DependencyManager(workingDir, logger);
@@ -90,7 +93,7 @@ describe('DependencyManager', () => {
       instance = new DependencyManager(workingDir, logger, tagName);
     });
 
-    afterEach(async () => await fs.remove(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('installs dependencies and the console', async () => {
       await instance.install();

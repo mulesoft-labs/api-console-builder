@@ -2,14 +2,15 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import sinon from 'sinon';
+import { parse } from 'node-html-parser';
 import { ApiConsoleProject } from '../lib/ApiConsoleProject.js';
 import { BuilderOptions } from '../lib/BuilderOptions.js';
 import { CacheBuild } from '../lib/CacheBuild.js';
 import { SourceControl } from '../lib/SourceControl.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'project-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f };
+const logger = dummyLogger();
 const defaultOpts = {
   api: path.join('test', 'test-apis', 'api-raml-10.raml'),
   apiType: 'RAML 1.0',
@@ -33,13 +34,15 @@ describe('ApiConsoleProject', () => {
     });
 
     it('sets passed logger property', () => {
-      const logger = { info: f, log: f, warn: f, error: f, debug: f, test: true };
+      const obj = dummyLogger();
+      // @ts-ignore
+      obj.test = true;
       const opts = {
         ...defaultOpts,
       };
-      opts.logger = logger;
+      opts.logger = obj;
       const instance = new ApiConsoleProject(opts);
-      assert.deepEqual(instance.logger, logger);
+      assert.deepEqual(instance.logger, obj);
     });
 
     it('sets cache property', () => {
@@ -57,7 +60,8 @@ describe('ApiConsoleProject', () => {
       assert.throws(() => {
         const opts = { ...defaultOpts };
         delete opts.api;
-        new ApiConsoleProject(opts);
+        const instance = new ApiConsoleProject(opts);
+        assert.typeOf(instance.opts.api, 'string');
       });
     });
   });
@@ -123,12 +127,13 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('processTemplates()', () => {
-    beforeEach(async () => await fs.ensureDir(workingDir));
-    afterEach(async () => await fs.remove(workingDir));
+    beforeEach(async () => fs.ensureDir(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('copies template files to the working directory', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       await instance.processTemplates(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'apic-import.js'));
       // testing for any file as the test for copying files are in TemplateManager tests.
       assert.isTrue(exists, `Files are copied`);
@@ -136,12 +141,13 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('processApi()', () => {
-    beforeEach(async () => await fs.ensureDir(workingDir));
-    afterEach(async () => await fs.remove(workingDir));
+    beforeEach(async () => fs.ensureDir(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('creates model file in the working directory', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       await instance.processApi(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'api-model.json'));
       // testing for any file as the test for copying files are in TemplateManager tests.
       assert.isTrue(exists, `Model is created are copied`);
@@ -155,13 +161,14 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('ensureTheme()', () => {
-    beforeEach(async () => await fs.ensureDir(workingDir));
-    afterEach(async () => await fs.remove(workingDir));
+    beforeEach(async () => fs.ensureDir(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('copies set theme file to the working directory', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       instance.opts.themeFile = path.join('test', 'apic-theme-file.css');
       await instance.ensureTheme(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'styles.css'));
       assert.isTrue(exists, `style file is created`);
     });
@@ -171,6 +178,7 @@ describe('ApiConsoleProject', () => {
       instance.opts.themeFile = path.join('test', 'non-existing.css');
       const spy = sinon.spy(instance.logger, 'warn');
       await instance.ensureTheme(workingDir);
+      // @ts-ignore
       instance.logger.warn.restore();
       assert.isTrue(spy.called);
     });
@@ -179,6 +187,7 @@ describe('ApiConsoleProject', () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       instance.opts.themeFile = path.join('test', 'non-existing.css');
       await instance.ensureTheme(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'styles.css'));
       assert.isFalse(exists, `style file is not created`);
     });
@@ -198,8 +207,8 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('ensureApplicationIndexFile()', () => {
-    beforeEach(async () => await fs.ensureDir(workingDir));
-    afterEach(async () => await fs.remove(workingDir));
+    beforeEach(async () => fs.ensureDir(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     const indexFile = 'apic-index-file.html';
     const distFile = 'index.html';
@@ -209,6 +218,7 @@ describe('ApiConsoleProject', () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       instance.opts.indexFile = path.join('test', indexFile);
       await instance.ensureApplicationIndexFile(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, distFile));
       assert.isTrue(exists, `index file is created`);
     });
@@ -218,6 +228,7 @@ describe('ApiConsoleProject', () => {
       instance.opts.indexFile = path.join('test', fakeFile);
       const spy = sinon.spy(instance.logger, 'warn');
       await instance.ensureApplicationIndexFile(workingDir);
+      // @ts-ignore
       instance.logger.warn.restore();
       assert.isTrue(spy.called);
     });
@@ -226,6 +237,7 @@ describe('ApiConsoleProject', () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       instance.opts.indexFile = path.join('test', fakeFile);
       await instance.ensureApplicationIndexFile(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, distFile));
       assert.isFalse(exists, `index file is not created`);
     });
@@ -245,8 +257,8 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('getApiTitle()', () => {
-    beforeEach(async () => await fs.ensureDir(workingDir));
-    afterEach(async () => await fs.remove(workingDir));
+    beforeEach(async () => fs.ensureDir(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('reads api title', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
@@ -263,6 +275,7 @@ describe('ApiConsoleProject', () => {
 
     it('returns undefined when no encodes', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
+      // @ts-ignore
       instance.apiModel = {};
       const result = instance.getApiTitle();
       assert.isUndefined(result);
@@ -271,6 +284,7 @@ describe('ApiConsoleProject', () => {
     it('returns undefined when no name', async () => {
       const instance = new ApiConsoleProject({ ...defaultOpts });
       instance.apiModel = {
+        // @ts-ignore
         encodes: {},
       };
       const result = instance.getApiTitle();
@@ -280,6 +294,9 @@ describe('ApiConsoleProject', () => {
 
   describe('updateTemplateVariables()', () => {
     const mainFile = path.join(workingDir, 'index.html');
+    /**
+     * @return {Promise<void>}
+     */
     async function createFile() {
       const contents = `>>[[API-TITLE]]<<`;
       await fs.writeFile(mainFile, contents);
@@ -292,7 +309,7 @@ describe('ApiConsoleProject', () => {
       instance = await new ApiConsoleProject({ ...defaultOpts });
     });
 
-    afterEach(async () => await fs.remove(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('writes title defined in user options', async () => {
       instance.opts.appTitle = 'Test title';
@@ -305,8 +322,8 @@ describe('ApiConsoleProject', () => {
       instance.apiModel = {
         encodes: {
           name: {
-            value: () => 'Test api title'
-          }
+            value: () => 'Test api title',
+          },
         },
       };
       await instance.updateTemplateVariables(workingDir);
@@ -322,6 +339,10 @@ describe('ApiConsoleProject', () => {
   });
 
   describe('building process', () => {
+    /**
+     * @param {ApiConsoleProject} project
+     * @return {Promise<void>}
+     */
     async function clearInstanceCache(project) {
       const cacheLocation = path.join(project.cache.cacheFolder, `${project.cache.hash}.zip`);
       await fs.remove(cacheLocation);
@@ -329,7 +350,7 @@ describe('ApiConsoleProject', () => {
 
     // const cacheLocation = path.join(workingDir, 'cache');
     const buildLocation = path.join(workingDir, 'bundle');
-    const apiLocation = path.join('test', 'test-apis', 'api-raml-10.raml')
+    const apiLocation = path.join('test', 'test-apis', 'api-raml-10.raml');
 
     describe('basic build', () => {
       const hash = '925c20e5a61114a95a2c88cd60767ee06e327aff28b462b6d827c27a5c9624ed';
@@ -352,7 +373,7 @@ describe('ApiConsoleProject', () => {
           verbose: true,
           attributes: [{
             test: 'true',
-          }]
+          }],
         };
         instance = new ApiConsoleProject(opts);
         await clearInstanceCache(instance);
@@ -366,7 +387,6 @@ describe('ApiConsoleProject', () => {
 
       it('copies bundle files', async () => {
         const files = [
-          path.join(buildLocation, 'legacy'),
           path.join(buildLocation, 'polyfills'),
           path.join(buildLocation, 'api-model.json'),
           path.join(buildLocation, 'index.html'),
@@ -414,24 +434,18 @@ describe('ApiConsoleProject', () => {
           verbose: true,
           attributes: [{
             test: 'true',
-          }]
+          }],
         };
-        try {
-          const project = new ApiConsoleProject(opts);
-          await clearInstanceCache(project);
-          const cb = new CacheBuild(project.opts, project.logger);
-          const file = path.join(cb.cacheFolder, `${hash}.zip`);
-          await fs.ensureDir(cb.cacheFolder);
-          await fs.copy(
-            path.join(__dirname, 'cached.zip'),
-            path.join(file),
-          );
-          await project.bundle();
-        } catch (e) {
-          console.log('NO I CHUJ!!!!');
-          console.log(e);
-          throw e;
-        }
+        const project = new ApiConsoleProject(opts);
+        await clearInstanceCache(project);
+        const cb = new CacheBuild(project.opts, project.logger);
+        const file = path.join(cb.cacheFolder, `${hash}.zip`);
+        await fs.ensureDir(cb.cacheFolder);
+        await fs.copy(
+          path.join(__dirname, 'cached.zip'),
+          path.join(file),
+        );
+        await project.bundle();
       });
 
       after(async () => {
@@ -440,7 +454,6 @@ describe('ApiConsoleProject', () => {
 
       it('extracts bundle files', async () => {
         const files = [
-          path.join(buildLocation, 'legacy'),
           path.join(buildLocation, 'polyfills'),
           path.join(buildLocation, 'api-model.json'),
           path.join(buildLocation, 'index.html'),
@@ -489,10 +502,24 @@ describe('ApiConsoleProject', () => {
       });
 
       it('uses custom css file', async () => {
-        const files = await fs.readdir(buildLocation);
-        const file = files.find((item) => item.indexOf('apic-import-') === 0);
-        const content = await fs.readFile(path.join(buildLocation, file), 'utf8');
-        assert.include(content, '--test-theme-value:', 'has custom styles');
+        const content = await fs.readFile(path.join(buildLocation, 'index.html'), 'utf8');
+        const root = parse(content);
+        const links = root.querySelectorAll('head link');
+        const link = links.find((item) => {
+          const rel = item.getAttribute('rel');
+          if (rel !== 'preload') {
+            return false;
+          }
+          const as = item.getAttribute('as');
+          if (as !== 'script') {
+            return false;
+          }
+          return true;
+        });
+        const href = link.getAttribute('href');
+        const file = path.join(buildLocation, href);
+        const data = await fs.readFile(file, 'utf8');
+        assert.include(data, '--test-theme-value:', 'has custom styles');
       });
 
       it('uses custom html file', async () => {

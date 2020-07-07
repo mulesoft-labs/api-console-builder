@@ -2,16 +2,16 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { TemplateManager } from '../lib/TemplateManager.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'templates-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
 describe('TemplateManager', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets workingDir property', () => {
       const instance = new TemplateManager(workingDir, logger);
       assert.equal(instance.workingDir, workingDir);
@@ -28,7 +28,7 @@ describe('TemplateManager', () => {
     beforeEach(() => {
       instance = new TemplateManager(workingDir, logger);
     });
-    afterEach(async () => await fs.remove(workingDir));
+    afterEach(async () => fs.remove(workingDir));
 
     it('copies build files to the working directory', async () => {
       await instance.copyTemplate();
@@ -40,6 +40,7 @@ describe('TemplateManager', () => {
       ];
       for (let i = 0, len = files.length; i < len; i++) {
         const file = files[i];
+        // @ts-ignore
         const exists = await fs.exists(path.join(workingDir, file));
         assert.isTrue(exists, `File ${file} exists`);
       }
@@ -52,6 +53,7 @@ describe('TemplateManager', () => {
       ];
       for (let i = 0, len = files.length; i < len; i++) {
         const file = files[i];
+        // @ts-ignore
         const exists = await fs.exists(path.join(workingDir, file));
         assert.isTrue(exists, `File ${file} exists`);
       }

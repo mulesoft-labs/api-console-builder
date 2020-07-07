@@ -2,16 +2,16 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { SourceControl } from '../lib/SourceControl.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'sources-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
 describe('SourceControl', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets opts property', () => {
       const opts = {};
       const instance = new SourceControl(opts, logger);
@@ -33,6 +33,7 @@ describe('SourceControl', () => {
     it('removes default directory', async () => {
       await fs.ensureDir('build');
       await instance.clearOutputDir();
+      // @ts-ignore
       const exists = await fs.exists('build');
       assert.isFalse(exists);
     });
@@ -42,6 +43,7 @@ describe('SourceControl', () => {
       instance.opts.destination = dir;
       await fs.ensureDir(dir);
       await instance.clearOutputDir();
+      // @ts-ignore
       const exists = await fs.exists(dir);
       assert.isFalse(exists);
     });
@@ -60,6 +62,7 @@ describe('SourceControl', () => {
 
     it('created directory exists', async () => {
       const result = await instance.createWorkingDir();
+      // @ts-ignore
       const exists = await fs.exists(result);
       assert.isTrue(exists);
     });
@@ -75,6 +78,7 @@ describe('SourceControl', () => {
       const dir = path.join(workingDir, 'output');
       await fs.ensureDir(dir);
       await instance.cleanup(dir);
+      // @ts-ignore
       const exists = await fs.exists(dir);
       assert.isFalse(exists);
     });
@@ -92,7 +96,7 @@ describe('SourceControl', () => {
     const destination = path.join(workingDir, 'dest');
     beforeEach(async () => {
       instance = new SourceControl({
-        destination
+        destination,
       }, logger);
       simpleFile = path.join(workingDir, 'build', 'simple.js');
       subFile = path.join(workingDir, 'build', 'sub', 'file.js');
@@ -104,12 +108,14 @@ describe('SourceControl', () => {
 
     it('copies a file from main directory', async () => {
       await instance.copyOutput(workingDir, 'build');
+      // @ts-ignore
       const exists = await fs.exists(path.join(destination, 'simple.js'));
       assert.isTrue(exists);
     });
 
     it('copies a file from a sub-directory', async () => {
       await instance.copyOutput(workingDir, 'build');
+      // @ts-ignore
       const exists = await fs.exists(path.join(destination, 'sub', 'file.js'));
       assert.isTrue(exists);
     });

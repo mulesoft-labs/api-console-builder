@@ -2,11 +2,16 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { Bundler } from '../lib/Bundler.js';
+import { dummyLogger } from './Helper.js';
+
+/* eslint-disable no-empty-function */
 
 const workingDir = path.join('test', 'vendor-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
+/**
+ * @return {Promise<void>}
+ */
 async function createPackage() {
   const contentUnix = `echo "test" >> test-file`;
   const contentWindows = `dir > test-file`;
@@ -23,16 +28,15 @@ async function createPackage() {
 }
 
 // Note, this test does not tests whether it actually creates a bundle.
-// This is normally tested by rollup team :)
 // This tests are designer to test whether correct script is executed to
 // run the bundler.
-// Also, the build process (as a whole) is tested in other place.
+// Also, the build process (as a whole) is tested in another place.
 
 describe('Bundler', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets workingDir property', () => {
       const instance = new Bundler(workingDir, logger);
       assert.equal(instance.workingDir, workingDir);
@@ -72,7 +76,7 @@ describe('Bundler', () => {
       await createPackage();
     });
 
-    after(async () => await fs.remove(workingDir));
+    after(async () => fs.remove(workingDir));
 
     it('runs rollup build', async () => {
       const instance = new Bundler(workingDir, logger);

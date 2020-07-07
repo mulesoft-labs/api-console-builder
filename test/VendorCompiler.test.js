@@ -3,35 +3,38 @@ import fs from 'fs-extra';
 import path from 'path';
 import { VendorCompiler } from '../lib/VendorCompiler.js';
 import { DependencyManager } from '../lib/DependencyManager.js';
+import { dummyLogger } from './Helper.js';
 
 const workingDir = path.join('test', 'vendor-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
+/**
+ * @return {Promise<void>}
+ */
 async function createPackage() {
   const pkg = {
-    name: "api-console-bundle",
-    description: "a template to install API dependencies",
+    name: 'api-console-bundle',
+    description: 'a template to install API dependencies',
     repository: {
-      type: "git",
-      url: "git+ssh://git@github.com/mulesoft-labs/api-console-builder.git"
+      type: 'git',
+      url: 'git+ssh://git@github.com/mulesoft-labs/api-console-builder.git',
     },
-    license: "Apache-2.0",
+    license: 'Apache-2.0',
     dependencies: {
       cryptojslib: '3.1.2',
       jsrsasign: '8.0.12',
       jsonlint: '1.6.3',
       codemirror: '5.50.2',
-    }
+    },
   };
   await fs.outputJson(path.join(workingDir, 'package.json'), pkg);
 }
 
 describe('VendorCompiler', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets workingDir property', () => {
       const instance = new VendorCompiler(workingDir, logger);
       assert.equal(instance.workingDir, workingDir);

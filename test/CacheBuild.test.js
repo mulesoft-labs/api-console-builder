@@ -2,16 +2,20 @@ import { assert } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
 import { CacheBuild } from '../lib/CacheBuild.js';
+import { dummyLogger } from './Helper.js';
+
+/** @typedef {import('winston').Logger} Winston */
+
+/* eslint-disable no-empty-function */
 
 const workingDir = path.join('test', 'cache-test');
-const f = () => {};
-const logger = { info: f, log: f, warn: f, error: f, debug: f};
+const logger = dummyLogger();
 
 describe('CacheBuild', () => {
-  before(async () => await fs.ensureDir(workingDir));
-  after(async () => await fs.remove(workingDir));
+  before(async () => fs.ensureDir(workingDir));
+  after(async () => fs.remove(workingDir));
 
-  describe('constructor()', function() {
+  describe('constructor()', () => {
     it('sets opts property', () => {
       const opts = {};
       const instance = new CacheBuild(opts, logger);
@@ -34,12 +38,12 @@ describe('CacheBuild', () => {
     });
 
     it('does not set hash when noCache is set', () => {
-      const instance = new CacheBuild({noCache: true}, logger);
+      const instance = new CacheBuild({ noCache: true }, logger);
       assert.isUndefined(instance.hash);
     });
 
     it('does not set cacheFolder when noCache is set', () => {
-      const instance = new CacheBuild({noCache: true}, logger);
+      const instance = new CacheBuild({ noCache: true }, logger);
       assert.isUndefined(instance.cacheFolder);
     });
   });
@@ -54,7 +58,7 @@ describe('CacheBuild', () => {
 
     it('Creates hash for "local" option', () => {
       const result = instance.createHash({
-        local: 'test'
+        local: 'test',
       });
       assert.typeOf(result, 'string');
       hashes.push(result);
@@ -65,7 +69,7 @@ describe('CacheBuild', () => {
       ['themeFile', 'some-file'],
       ['indexFile', 'other-file'],
       ['appTitle', 'test'],
-      ['attributes', { test: true }]
+      ['attributes', { test: true }],
     ].forEach(([name, value]) => {
       it(`creates a hash for "${name}" option`, () => {
         const opts = {};
@@ -87,7 +91,7 @@ describe('CacheBuild', () => {
       const attributes = { test: true };
       attributes.attributes = attributes;
       const opts = {
-        attributes
+        attributes,
       };
       const result = instance.createHash(opts);
       assert.typeOf(result, 'string');
@@ -158,6 +162,8 @@ describe('CacheBuild', () => {
     });
 
     it('returns false when cache file not found', async () => {
+      const location = path.join(instance.cacheFolder, `${instance.hash}.zip`);
+      await fs.remove(location);
       const result = await instance.hasCache();
       assert.isFalse(result);
     });
@@ -174,12 +180,14 @@ describe('CacheBuild', () => {
 
     it('unzips the archive', async () => {
       await instance._processZip(source, workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'index.html'));
       assert.isTrue(exists);
     });
 
     it('unzips sub-directories', async () => {
       await instance._processZip(source, workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'subdir', 'file.json'));
       assert.isTrue(exists);
     });
@@ -207,6 +215,7 @@ describe('CacheBuild', () => {
 
     it('unzips cache file to the working location', async () => {
       await instance.restore(workingDir);
+      // @ts-ignore
       const exists = await fs.exists(path.join(workingDir, 'index.html'));
       assert.isTrue(exists);
     });
@@ -214,6 +223,10 @@ describe('CacheBuild', () => {
 
   describe('cacheBuild()', () => {
     const srcFolder = path.join(workingDir, 'src');
+
+    /**
+     * @return {Promise<void>}
+     */
     async function createSourcesStructure() {
       const files = [
         path.join(srcFolder, 'legacy', 'apic-import-651009da.js'),
@@ -241,20 +254,22 @@ describe('CacheBuild', () => {
 
     it('creates a zip file', async () => {
       await instance.cacheBuild(srcFolder);
-      const exists = await fs.exists(path.join(workingDir, instance.hash + '.zip'));
+      // @ts-ignore
+      const exists = await fs.exists(path.join(workingDir, `${instance.hash }.zip`));
       assert.isTrue(exists);
     });
 
     it('ignores function when noCache is set', async () => {
       instance.opts.noCache = true;
       await instance.cacheBuild(srcFolder);
-      const exists = await fs.exists(path.join(workingDir, instance.hash + '.zip'));
+      // @ts-ignore
+      const exists = await fs.exists(path.join(workingDir, `${instance.hash }.zip`));
       assert.isFalse(exists);
     });
 
     it('zips all application files', async () => {
       await instance.cacheBuild(srcFolder);
-      const file = path.join(workingDir, instance.hash + '.zip');
+      const file = path.join(workingDir, `${instance.hash }.zip`);
       const dest = path.join(workingDir, 'unzipped');
       await instance._processZip(file, dest);
       const files = [
@@ -268,8 +283,9 @@ describe('CacheBuild', () => {
       ];
 
       for (let i = 0, len = files.length; i < len; i++) {
-        const file = files[i];
-        const exists = await fs.exists(file);
+        const item = files[i];
+        // @ts-ignore
+        const exists = await fs.exists(item);
         assert.isTrue(exists, `${file} exists`);
       }
     });
