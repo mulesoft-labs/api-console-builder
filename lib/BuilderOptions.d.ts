@@ -75,9 +75,9 @@ export declare interface ProjectConfiguration {
    *
    * ```
    * const attributes = [
-   *  'proxyencodeurl',
+   *  'proxyEncodeUrl',
    *  {'proxy': 'https://proxy.domain.com'},
-   *  'notryit',
+   *  'noTryIt',
    *  {'page': 'request'},
    * ]
    * ```
@@ -86,8 +86,8 @@ export declare interface ProjectConfiguration {
    *
    * ```
    * const attributes = [
-   *  'proxyencodeUrl',
-   *  'notryit',
+   *  'proxyEncodeUrl',
+   *  'noTryIt',
    *  {
    *    'proxy': 'https://proxy.domain.com',
    *    'page': 'request'
@@ -99,8 +99,8 @@ export declare interface ProjectConfiguration {
    *
    * ```
    * <api-console
-   *  proxyencodeUrl
-   *  notryit
+   *  proxyEncodeUrl
+   *  noTryIt
    *  page="request"
    *  proxy="https://proxy.domain.com"
    * ></api-console>
@@ -229,7 +229,7 @@ export declare class BuilderOptions {
   /**
    * Validates user input options.
    * Sets `_validationErrors` and `_validationWarnings` arrays on this object
-   * conteining corresponing messages.
+   * containing corresponding messages.
    *
    * @param userOpts User options to check.
    */

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) Mulesoft.
+ * Copyright (C) MuleSoft.
  * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc
@@ -36,7 +36,7 @@ export declare class ApiConsoleProject {
   __setupLogger(opts: BuilderOptions): winston.Logger;
 
   /**
-   * Prints varning messages to the logger.
+   * Prints warning messages to the logger.
    */
   printValidationWarnings(): void;
 

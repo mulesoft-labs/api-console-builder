@@ -1,5 +1,5 @@
 /**
- * Copyright (C) Mulesoft.
+ * Copyright (C) MuleSoft.
  * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc

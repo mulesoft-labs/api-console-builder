@@ -1,5 +1,5 @@
 /**
- * Copyright (C) Mulesoft.
+ * Copyright (C) MuleSoft.
  * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc
@@ -64,7 +64,7 @@ export class CacheBuild {
   _processZip(source: string, destination: string): Promise<void>;
 
   /**
-   * Coppies a file to the destination file.
+   * Copies a file to the destination file.
    * @param zip The source zip file
    * @param entry A currently iterated entry
    * @param destination Folder where to put the file.
@@ -72,7 +72,7 @@ export class CacheBuild {
   _processZipEntry(zip: yauzl.ZipFile, entry: yauzl.Entry, destination: string): Promise<void>;
 
   /**
-   * Coppies entry of a zip file to the destination.
+   * Copies entry of a zip file to the destination.
    * @param zip The source zip file
    * @param entry A currently iterated entry
    * @param destination Folder where to put the file.

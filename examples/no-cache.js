@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { ApiConsoleProject } from '@api-components/api-console-builder';
 import path from 'path';
 
@@ -10,6 +11,7 @@ const project = new ApiConsoleProject({
   apiType: 'RAML 1.0',
   noCache: true,
 });
+
 (async () => {
-  await project.bundle();
+await project.bundle();
 })();

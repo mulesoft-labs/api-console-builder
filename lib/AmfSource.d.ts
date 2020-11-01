@@ -1,5 +1,5 @@
 /**
- * Copyright (C) Mulesoft.
+ * Copyright (C) MuleSoft.
  * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc
@@ -31,7 +31,7 @@ export class AmfSource {
   /**
    * Saves the model to a file.
    * @param model json/ld model
-   * @param file Path to a file where to savbe the model.
+   * @param file Path to a file where to save the model.
    */
   saveModel(model: amf.model.document.BaseUnitWithDeclaresModelAndEncodesModel, file: string): Promise<void>;
 }

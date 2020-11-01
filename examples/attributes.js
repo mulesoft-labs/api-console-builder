@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { ApiConsoleProject } from '@api-components/api-console-builder';
 import path from 'path';
 
@@ -10,14 +11,15 @@ const project = new ApiConsoleProject({
   apiType: 'OAS 2.0',
   apiMediaType: 'application/json',
   attributes: [
-    'no-try-it',
-    'no-extension-banner',
+    'notryit',
+    'noextensionbanner',
     {
-      'responsive-width': '680px',
-      'append-headers': 'x-api-token: test-123\nx-api-console: true'
-    }
-  ]
+      'responsivewidth': '680px',
+      'appendheaders': 'x-api-token: test-123\nx-api-console: true',
+    },
+  ],
 });
+
 (async () => {
-  await project.bundle();
+await project.bundle();
 })();

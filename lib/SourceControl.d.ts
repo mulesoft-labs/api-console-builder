@@ -1,5 +1,5 @@
 /**
- * Copyright (C) Mulesoft.
+ * Copyright (C) MuleSoft.
  * Shared under Apache 2.0 license
  *
  * @author Pawel Psztyc
@@ -37,9 +37,9 @@ export declare class SourceControl {
   createWorkingDir(): Promise<string>;
 
   /**
-   * Cleans up the temporaty directory.
+   * Cleans up the temporary directory.
    *
-   * @param dir Path to the temporaty directory.
+   * @param dir Path to the temporary directory.
    * @returns
    */
   cleanup(dir: string): Promise<void>;
