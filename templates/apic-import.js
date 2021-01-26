@@ -11,8 +11,6 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
-import '@advanced-rest-client/oauth-authorization/oauth1-authorization.js';
-import '@advanced-rest-client/oauth-authorization/oauth2-authorization.js';
-import '@advanced-rest-client/xhr-simple-request/xhr-simple-request.js';
+// eslint-disable-next-line import/no-unresolved
 import 'api-console/api-console-app.js';
 import './styles.css';

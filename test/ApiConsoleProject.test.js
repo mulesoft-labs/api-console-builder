@@ -391,7 +391,6 @@ describe('ApiConsoleProject', () => {
           path.join(buildLocation, 'api-model.json'),
           path.join(buildLocation, 'index.html'),
           path.join(buildLocation, 'vendor.js'),
-          path.join(buildLocation, 'sw.js'),
         ];
 
         for (let i = 0, len = files.length; i < len; i++) {
@@ -458,7 +457,6 @@ describe('ApiConsoleProject', () => {
           path.join(buildLocation, 'api-model.json'),
           path.join(buildLocation, 'index.html'),
           path.join(buildLocation, 'vendor.js'),
-          path.join(buildLocation, 'sw.js'),
           // cached.js is added to the zip file that makes sure that the
           // files comes from the zip.
           path.join(buildLocation, 'cached.js'),
